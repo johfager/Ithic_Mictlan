@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -5,6 +6,12 @@ using Photon.Realtime;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
     void Start()
     {
         Connect();
@@ -36,5 +43,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Success");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel(1);
+        }
     }
 }
