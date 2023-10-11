@@ -33,6 +33,8 @@ public class FirstPersonController : MonoBehaviourPunCallbacks
     //the charachtercompononet for moving us
     CharacterController cc;
 
+    
+    
     private void Start()
     {
         cc = GetComponent<CharacterController>();
