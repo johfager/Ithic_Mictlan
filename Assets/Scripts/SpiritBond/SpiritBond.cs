@@ -1,0 +1,74 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+
+public class SpiritBond : MonoBehaviour
+{
+    // Get references to all 4 players
+    [SerializeField] private GameObject Player1;
+    [SerializeField] private GameObject Player2;
+    [SerializeField] private GameObject Player3;
+    [SerializeField] private GameObject Player4;
+    
+    // Initialize an array that will contain all the players' positions
+    private Transform[] playerPositions;
+
+    // Total distance between players, calculated as the sum of the distance between every player. Damage Multiplier scales directly with this.
+    [SerializeField] private float TotalDistance;
+    // Damage Multiplier. This is the variable that we are trying to calculate
+    [SerializeField] private double bonusMultiplier;
+
+    // Public variable that references the calculated value. Intended for use on other scripts
+    public float BonusMultiplier => (float)bonusMultiplier;
+
+    // Rate at which the bonus multiplier decreases inversely proportional to distance. The lower it is, the slower the damage will decrease whenever distance increases
+    private float decreaseRate = 1.2f;
+    // Controls the distance that has to exist between players before damage starts to decrease. The higher it is, the further apart players must be for falloff to occur
+    private float distanceFalloff = 180.0f;
+
+
+    // Initializes player positions as an array of 4 elements, each containing the Transform of its respective player; TotalDistance as 0.0f
+    void Start(){
+        playerPositions = new Transform[4] 
+            {
+            Player1.transform, 
+            Player2.transform, 
+            Player3.transform, 
+            Player4.transform
+            };
+
+        TotalDistance = 0.0f;
+    }
+
+    void Update()
+    {
+        // Reset the value of total distance to 0
+        // It will increase exponentially if we don't
+        TotalDistance = 0.0f;
+
+
+        // Calculates the total distance between adjacent players contained in the playerPositions Array.
+        // This method ensures that the resulting distance will be consistent regardless of how players are arranged. 
+        // Determines the distance between each adjacent pair of players, then adds the result to TotalDistance
+        for(int i = 0; i < playerPositions.Length; i++) {
+            int nextIndex = (i + 1) % playerPositions.Length;
+            float distance = Vector3.Distance(playerPositions[i].position, playerPositions[nextIndex].position);
+
+            TotalDistance += distance;
+
+        }
+
+        // A mathematical formula that models the exponential decrease of bonusMultiplier inversely proportional to TotalDistance as:
+        // f(t) = -dR^(t-dF/2)+4
+        // Players may stray away from each other up to an effective range of about 65 meters before damage starts to decrease.
+        // The further away players are from each other, the sharper the decline in damage. This decline is hardcapped to 0.5f to avoid leaving players with negative damage
+        // Due to how the formula is written, f(t) cannot be higher than 4.
+        bonusMultiplier = -Math.Pow(decreaseRate, (TotalDistance - distanceFalloff / 2)) + 4.0f;
+        bonusMultiplier = bonusMultiplier < 0.5 ? 0.5 : bonusMultiplier;
+        Debug.Log("bonusMultiplier: " + (float)bonusMultiplier);
+
+        
+
+    }
+}
