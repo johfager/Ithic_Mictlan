@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Items that restore health to players
-public class ComsumableItem : Item{   
+public class ConsumableItem : Item{   
     // Inherit parameters from parent class
     public int id{ get; set; }
     public string name{ get; set; }
@@ -92,4 +92,15 @@ public class OwlWitchItem : Item{
         Debug.Log("UsedOWItem");
     }
 
+}
+
+public class ActiveItem : Item {
+    public int id{ get; set; }
+    public string name{ get; set; }
+    public int rarity{ get; set; }
+    public string description{ get; set; }
+
+    public void applyEffect(){
+        Debug.Log("Activated spacebar item");
+    }
 }
