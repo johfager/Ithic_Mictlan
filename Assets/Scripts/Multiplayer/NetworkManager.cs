@@ -14,7 +14,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        Connect();
+        if (!PhotonNetwork.IsConnected)
+        {
+            Connect();
+        }
     }
 
     // Update is called once per frame
