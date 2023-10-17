@@ -22,6 +22,14 @@ public class Combo : MonoBehaviourPunCallbacks
     void RPC_Combat()
     {
         ps.Play();
-        Debug.Log("Golpe" + photonView.Owner.NickName);
+        Ray ray = new Ray(cTransform.position, cTransform.forward);
+        if (Physics.Raycast(ray,out RaycastHit hit, 10f))
+        {
+            var enemyHealth = hit.collider.GetComponent<HealthManager>();
+            if (enemyHealth)
+            {
+                enemyHealth.TakeDamage(20);
+            }
+        }
     }
 }
