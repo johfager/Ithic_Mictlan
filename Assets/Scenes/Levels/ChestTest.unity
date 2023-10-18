@@ -410,7 +410,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 100, y: 1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -440,7 +440,7 @@ Transform:
   m_GameObject: {fileID: 1069998695}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.1, y: 0, z: -35.3}
+  m_LocalPosition: {x: 0.6, y: 0, z: 7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -495,12 +495,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chestSpawnPoints:
   - {fileID: 1069998696}
-  - {fileID: 1182972600}
-  - {fileID: 1827260537}
   chest: {fileID: 7056306788243686916, guid: 511198219d384134c8311337315ae660, type: 3}
   chestAmount: 3
   time: 100
-  radioSpawn: 10
+  radioSpawn: 100
 --- !u!1 &1182972599
 GameObject:
   m_ObjectHideFlags: 0
