@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 // THIS IS A BASE FOR THE BEHAVIOUR OF THE BOSS
 // SOME THINGS WILL NEED SOME CHANGES
@@ -14,14 +15,18 @@ public class CamazotzBehaviour : MonoBehaviour
         UpsideDownWorldAttackState, InfernalScreechAttackState, ChangeOfPlayerToTargetState, SecondPhaseState, 
         SoulDevourerAttackState, PhaseTransitionState, CamazotzDeathState
     }
-    private State currentState; // Current state of Camazotz
-    public EnemyStats enemyStats; // Reference to the scriptable object
+    [Header("Camazotz States DEBUG ONLY, DO NOT TOUCH")]
+    [SerializeField] private State currentState; // Current state of Camazotz
+    [SerializeField] private EnemyStats enemyStats; // Reference to the scriptable object
     private SphereCollider detectionRange; // Aggro range of Camazotz
-    private GameObject objective; // Objective that the enemy is currently targeting
+    [SerializeField] private GameObject objective; // Objective that the enemy is currently targeting
+    private NavMeshAgent agent; // NavMeshAgent component
+    GameObject[] playerList;
+
     private bool isAtacking; // Aggro flag
     private float playerDistance; // Distance between player and enemy
     //Following variables is public to be able to test in game.
-    public float CurrentCamazotzhealth; 
+    [SerializeField] private float CurrentCamazotzhealth; 
     private float MaxCamazotzhealth; 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +36,14 @@ public class CamazotzBehaviour : MonoBehaviour
         isAtacking = false;
         detectionRange.radius = enemyStats.visionAttributes.visionRange;
         CurrentCamazotzhealth = enemyStats.healthAttributes.maxHealth;
+        playerList = GameObject.FindGameObjectsWithTag("Hero");
+        agent = GetComponent<NavMeshAgent>();
+        CamazotzAgentSetter();
+    }
+
+    void CamazotzAgentSetter()
+    {
+        agent.speed = enemyStats.movementAttributes.movementSpeed;
     }
 
     void Update() {
@@ -61,9 +74,9 @@ public class CamazotzBehaviour : MonoBehaviour
             case State.InitialSelectionOfPlayerToTargetState:
                 Debug.Log("Selecting random player");
                 Debug.Log("Done");
-                GameObject[] playerList = GameObject.FindGameObjectsWithTag("Hero");
                 int pick = Random.Range(0, playerList.Length);
                 objective = playerList[pick];
+                agent.SetDestination(objective.transform.position);
                 Debug.Log("My objective is " + objective);
                 ChangeState(State.FirstPhaseState);
                 break;
@@ -107,12 +120,14 @@ public class CamazotzBehaviour : MonoBehaviour
                 playerDistance = Vector3.Distance(transform.position, objective.transform.position);
                 Debug.Log("Distance to objective is " + playerDistance);
                 // Just for debug porpuse
-                if(playerDistance <= 15)
+                if(playerDistance <= 4)
                 {
+                    agent.stoppingDistance = 4;
                     ChangeState(State.CloseRangeBasicAttackState);
                 }
-                else if(playerDistance > 15)
+                else
                 {
+                    agent.stoppingDistance = playerDistance;
                     ChangeState(State.LargeRangeBasicAttackState);
                 }
 
@@ -120,108 +135,38 @@ public class CamazotzBehaviour : MonoBehaviour
 
             case State.CloseRangeBasicAttackState:
                 Debug.Log("Close range basic attack");
-                attackIndex = Random.Range(0,2);
-                if(CurrentCamazotzhealth <= 0)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 0 && CurrentCamazotzhealth > MaxCamazotzhealth/2)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 0 && CurrentCamazotzhealth <= MaxCamazotzhealth/2)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 1)
-                {
-                    ChangeState(State.PhaseTransitionState);
-                }
+                attackIndex = Random.Range(0,2); // Determines if the attack hit or miss
+                AttacksSoftReset();
+                PhaseChecker(attackIndex);
                 break;
 
             case State.LargeRangeBasicAttackState:
                 Debug.Log("Large range basic attack");
-                attackIndex = Random.Range(0,2);
-                if(CurrentCamazotzhealth <= 0)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 0 && CurrentCamazotzhealth > MaxCamazotzhealth/2)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 0 && CurrentCamazotzhealth <= MaxCamazotzhealth/2)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 1)
-                {
-                    ChangeState(State.PhaseTransitionState);
-                }
+                attackIndex = Random.Range(0,2); // Determines if the attack hit or miss
+                AttacksSoftReset();
+                PhaseChecker(attackIndex);
                 break;
 
             case State.SoulEaterAttackState:
                 Debug.Log("Soul Eater");
                 attackIndex = Random.Range(0,2);
-                if(CurrentCamazotzhealth <= 0)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 0 && CurrentCamazotzhealth > MaxCamazotzhealth/2)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 0 && CurrentCamazotzhealth <= MaxCamazotzhealth/2)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 1)
-                {
-                    ChangeState(State.PhaseTransitionState);
-                }
+                AttacksSoftReset();
+                PhaseChecker(attackIndex);
                 break;
 
             case State.UpsideDownWorldAttackState:
                 Debug.Log("Upside down world");
                 attackIndex = Random.Range(0,2);
-                if(CurrentCamazotzhealth <= 0)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 0 && CurrentCamazotzhealth > MaxCamazotzhealth/2)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 0 && CurrentCamazotzhealth <= MaxCamazotzhealth/2)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 1)
-                {
-                    ChangeState(State.PhaseTransitionState);
-                }
+                AttacksSoftReset();
+                PhaseChecker(attackIndex);
                 break;
 
             case State.InfernalScreechAttackState:
                 Debug.Log("Infernal Screech");
                 Debug.Log("Screeching");
                 attackIndex = Random.Range(0,2);
-                if(CurrentCamazotzhealth <= 0)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 0 && CurrentCamazotzhealth > MaxCamazotzhealth/2)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 0 && CurrentCamazotzhealth <= MaxCamazotzhealth/2)
-                {
-                    ChangeState(State.FirstPhaseState);
-                }
-                else if(attackIndex == 1)
-                {
-                    ChangeState(State.ChangeOfPlayerToTargetState);
-                }
+                AttacksSoftReset();
+                PhaseChecker(attackIndex);
                 break;
 
             case State.ChangeOfPlayerToTargetState:
@@ -266,18 +211,8 @@ public class CamazotzBehaviour : MonoBehaviour
             case State.SoulDevourerAttackState:
                 Debug.Log("Soul Devourer");
                 attackIndex = Random.Range(0, 2);
-                if(attackIndex == 0 && CurrentCamazotzhealth <= MaxCamazotzhealth/2)
-                {
-                    ChangeState(State.SecondPhaseState);
-                }
-                else if(CurrentCamazotzhealth <= 0)
-                {
-                    ChangeState(State.CamazotzDeathState);
-                }
-                else if(attackIndex == 1)
-                {
-                    ChangeState(State.PhaseTransitionState);
-                }
+                AttacksSoftReset();
+                PhaseChecker(attackIndex);
                 break;
 
             case State.PhaseTransitionState:
@@ -307,142 +242,37 @@ public class CamazotzBehaviour : MonoBehaviour
         currentState = newState;
     }
 
-    /*
-    // Update is called once per frame
-    void Update()
-    {
-        CamazotzStates();
-    }
-
-    void CamazotzStates()
-    {
-        Idle();
-    }
-
-    void Idle()
-    {
-        //idle animation
-        //Seek player while idle
-        SeekPlayer();
-    }
-
-    void SeekPlayer()
-    {
-        //seek player animation
-        //if player is in range, set objective to player and aggro
-        if (isAtacking)
-        {
-            Debug.Log("My target is: " + objective.name);
-            Aggro();
-        }
-    }
-
-    void Aggro()
-    {
-        //aggro animation
-        // Rand number to determine which attack to use except basic attack
-        playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-
-        int attack = Random.Range(1, 5);
-        if (attack == 1)
-        {
-            //if cooldown ready use attack
-            SoulEater(playerDistance);
-            // if not, use basic attack
-            BasicAttack(playerDistance);
-        }
-        else if (attack == 2)
-        {  
-            // if cooldown ready use attack
-            UpsideDownWorld();
-            // if not, use basic attack
-            //BasicAttack();
-        }
-        else if (attack == 3)
-        {
-            // if cooldown ready use attack
-            Screech();
-            // if not, use basic attack
-            //BasicAttack();
-        }
-        else if (attack == 4)
-        {
-            //if second phase active and ultimate in cooldown, use ultimate
-            Ultimate();
-            // if not, use basic attack
-            //BasicAttack();
-
-        }
-    }
-
-    void BasicAttack(float distance)
-    {
-        //Calculate distance between player and enemy
-        
-        //if distance is less than 2, use basic attack 1
-        if (distance < 2)
-        {
-            //basic attack 1
-            Debug.Log("Basic Attack close range");
-        }
-        //if distance is more than 2, use basic attack 2
-        else if (distance > 2)
-        {
-            //basic attack 2
-            Debug.Log("Basic Attack large range");
-        }
-    }
-
-    void SoulEater(float distance)
-    {
-        //Soul Eater attack
-        if(distance <= 7)
-        {
-            //Soul Eater close range
-        }
-        else if(distance > 2)
-        {
-            //Soul Eater large range
-        }
-
-    }
-
-    void UpsideDownWorld()
-    {
-        //Upside down world attack
-    }
-
-    void Screech()
-    {
-        //Screech attack, if it lands it changes objective
-    }
-
-    void SecondPhase()
-    {
-        //Second phase animation, triggered when health is below 50%
-    }
-
-    void Ultimate()
-    {
-        //Ultimate attack
-    }
-
-    void CheckHealth()
-    {
-        //if health is below 50%, trigger second phase
-        SecondPhase();
-    }
-
-    void Death()
-    {
-        //death animation
-    }*/
-
     private void OnTriggerEnter(Collider other) {
         if(other.tag == "Hero")
         {
             objective = other.gameObject;
             isAtacking = true;
+        }
+    }
+
+    IEnumerator AttacksSoftReset()
+    {
+        yield return new WaitForSeconds(2.0f);
+        agent.stoppingDistance = 0;
+    }
+
+    private void PhaseChecker(int attackIndex)
+    {
+        if(CurrentCamazotzhealth <= 0)
+        {
+            ChangeState(State.FirstPhaseState);
+        }
+        else if(attackIndex == 0 && CurrentCamazotzhealth > MaxCamazotzhealth/2)
+        {
+            ChangeState(State.FirstPhaseState);
+        }
+        else if(attackIndex == 0 && CurrentCamazotzhealth <= MaxCamazotzhealth/2)
+        {
+            ChangeState(State.FirstPhaseState);
+        }
+        else if(attackIndex == 1)
+        {
+            ChangeState(State.PhaseTransitionState);
         }
     }
 }
