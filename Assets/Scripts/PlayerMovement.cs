@@ -9,14 +9,24 @@ public class PlayerMovement : MonoBehaviour
 
     private CharacterController characterController;
     private Vector3 moveDirection;
+
+    private Vector3 _cameraRelativeMovement;
     private float verticalVelocity;
     private float rotX = 0; // Current camera rotation around the X-axis
     private float currentSpeed;
     private bool isSprinting;
-
+    
+    private Animator animator;
+    
+    
+    //Handling Rotation
+    public float rotationFactorPerFrame = 1.0f;
+    private Vector2 moveInput;
+    private Vector3 localMovementDirection;
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
         if (playerStats != null)
         {
             Debug.Log("PlayerStats successfully loaded");
@@ -31,27 +41,47 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = false;
     }
 
-    private void Update()
+    public void HandleMovement()
     {
+        //HandleRotation();
+        //Movement();
         HandleMovementInput();
         HandleMouseLook();
-    }
 
+    }
+    
+    private void HandleRotation()
+    {
+        Vector3 positionToLookAt;
+
+        positionToLookAt.x = _cameraRelativeMovement.x;
+        //We will never need to rotate around the y-axis.
+        positionToLookAt.y = 0.0f;
+        positionToLookAt.z = _cameraRelativeMovement.z;
+
+        Quaternion currentRotation = transform.rotation;
+        Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+        transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
+    }
     private void HandleMovementInput()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 inputDirection = new Vector3(horizontalInput, 0f, verticalInput);
-        inputDirection = transform.TransformDirection(inputDirection);
+        
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraRight = Camera.main.transform.right;
+
+        // Use the camera's forward and right vectors to calculate movement direction
+        Vector3 inputDirection = cameraForward * verticalInput + cameraRight * horizontalInput;
         inputDirection.Normalize();
 
         // Sprinting toggle
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             isSprinting = true;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             isSprinting = false;
         }
@@ -60,8 +90,18 @@ public class PlayerMovement : MonoBehaviour
         float targetSpeed = isSprinting
             ? playerStats.movementAttributes.movementSpeed * playerStats.movementAttributes.sprintSpeedMultiplier
             : playerStats.movementAttributes.movementSpeed;
-        currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed,
-            playerStats.movementAttributes.sprintGradualAcceleration * Time.deltaTime);
+
+        // Only update the currentSpeed when there's input
+        if (inputDirection != Vector3.zero)
+        {
+            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed,
+                playerStats.movementAttributes.sprintGradualAcceleration * Time.deltaTime);
+        }
+        else
+        {
+            // If there's no input, set currentSpeed to 0 to stop the character from moving
+            currentSpeed = 0f;
+        }
 
         // Apply movement speed
         moveDirection = inputDirection * currentSpeed;
@@ -81,9 +121,79 @@ public class PlayerMovement : MonoBehaviour
         // Apply vertical velocity
         moveDirection.y = verticalVelocity;
 
+        //_cameraRelativeMovement = ConvertToCameraSpace(moveDirection);
         // Move the character
         characterController.Move(moveDirection * Time.deltaTime);
+
+        // Update the 'isWalking' and 'isRunning' parameters in the Animator
+        // Set the Animator parameters
+        animator.SetFloat("HorizontalSpeed", horizontalInput);
+        animator.SetFloat("VerticalSpeed", verticalInput);
     }
+
+    /*private void HandleMovementInput()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        Vector3 inputDirection = new Vector3(horizontalInput, 0f, verticalInput);
+        inputDirection = transform.TransformDirection(inputDirection);
+        inputDirection.Normalize();
+
+        // Sprinting toggle
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            isSprinting = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            isSprinting = false;
+        }
+
+        // Gradual sprint acceleration
+        float targetSpeed = isSprinting
+            ? playerStats.movementAttributes.movementSpeed * playerStats.movementAttributes.sprintSpeedMultiplier
+            : playerStats.movementAttributes.movementSpeed;
+
+
+        // Only update the currentSpeed when there's input
+        if (inputDirection != Vector3.zero)
+        {
+            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed,
+                playerStats.movementAttributes.sprintGradualAcceleration * Time.deltaTime);
+        }
+        else
+        {
+            // If there's no input, set currentSpeed to 0 to stop the character from moving
+            currentSpeed = 0f;
+        }
+
+        // Apply movement speed
+        moveDirection = inputDirection * currentSpeed;
+
+        // Update the 'Speed' parameter in the Animator
+        animator.SetFloat("ForwardSpeed", currentSpeed);
+
+        // Apply gravity
+        ApplyGravity();
+
+        // Jumping
+        if (characterController.isGrounded)
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                verticalVelocity = playerStats.movementAttributes.jumpHeight;
+            }
+        }
+
+        // Apply vertical velocity
+        moveDirection.y = verticalVelocity;
+        
+        _cameraRelativeMovement = ConvertToCameraSpace(moveDirection);
+        // Move the character
+        characterController.Move(_cameraRelativeMovement * Time.deltaTime);
+    }*/
+
 
     private void ApplyGravity()
     {
@@ -97,6 +207,25 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
+    private Vector3 ConvertToCameraSpace(Vector3 vectorToRotate)
+    {
+        //Get forward and right vectors of camera
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraRight = Camera.main.transform.right;
+        cameraForward.y = 0.0f;
+        cameraRight.y = 0.0f;
+
+        cameraForward = cameraForward.normalized;
+        cameraRight = cameraRight.normalized;
+
+        Vector3 cameraForwardZProduct = vectorToRotate.z * cameraForward;
+        Vector3 cameraRightXProduct = vectorToRotate.x  * cameraRight;
+
+        Vector3 vectorRotatedToCameraSpace = cameraForwardZProduct + cameraRightXProduct;
+        
+        return vectorRotatedToCameraSpace;
+    }
     private void HandleMouseLook()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
