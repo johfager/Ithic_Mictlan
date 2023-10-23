@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     IEnumerator InstallCoroutine()
     {
-        yield return new WaitForSeconds(3f);
-        PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 2, 0), Quaternion.identity);
+        yield return new WaitForSeconds(7f);
+        PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(568, 10, -1762.3f), Quaternion.identity);
     }
 }
