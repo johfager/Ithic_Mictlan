@@ -3,12 +3,37 @@ guid: 867d301febb2e104cb82746ed00722b3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ch39_Body
+    second: {fileID: 2100000, guid: 1f72fe76b64a7ea4f8c661b9f48e5b5c, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Ch39_1001_Diffuse
+    second: {fileID: 2800000, guid: 0aef0dd3d48be534eb5dd6b879e6ee0e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Ch39_1001_Glossiness
+    second: {fileID: 2800000, guid: b607bf13cfd194649a324f41a5ab16f3, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Ch39_1001_Normal
+    second: {fileID: 2800000, guid: 08d516a1f14ada244be971a4a352526a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Ch39_1001_Specular
+    second: {fileID: 2800000, guid: 741de0ffc4ffa1146a2a773ab406682d, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
