@@ -12,7 +12,7 @@ public class ConsumableItem : Item{
     public float healthRestored{ get; set; }
     public float manaRestored{ get; set; }
 
-    public void applyEffect(){
+    public override void applyEffect(){
         Debug.Log("UsedHealthItem");
     }
 
@@ -37,7 +37,7 @@ public class BuffConsumable : Item{
 
     public float critChanceBuff{ get; set; }
 
-    public void applyEffect(){
+    public override void applyEffect(){
         Debug.Log("UsedBuffItem");
     }
     
@@ -50,7 +50,7 @@ public class JaguarWarriorItem : Item{
     public int rarity{ get; set; }
     public string description{ get; set; }
 
-    public void applyEffect(){
+    public override void applyEffect(){
         Debug.Log("UsedJWItem");
     }
 
@@ -63,7 +63,7 @@ public class EagleWarriorItem : Item{
     public int rarity{ get; set; }
     public string description{ get; set; }
 
-    public void applyEffect(){
+    public override void applyEffect(){
         Debug.Log("UsedEWItem");
     }
 
@@ -76,7 +76,7 @@ public class ChamanItem : Item{
     public int rarity{ get; set; }
     public string description{ get; set; }
 
-    public void applyEffect(){
+    public override void applyEffect(){
         Debug.Log("UsedChamanItem");
     }
 }
@@ -88,7 +88,7 @@ public class OwlWitchItem : Item{
     public int rarity{ get; set; }
     public string description{ get; set; }
 
-    public void applyEffect(){
+    public override void applyEffect(){
         Debug.Log("UsedOWItem");
     }
 
@@ -100,7 +100,7 @@ public class ActiveItem : Item {
     public int rarity{ get; set; }
     public string description{ get; set; }
 
-    public void applyEffect(){
+    public override void applyEffect(){
         Debug.Log("Activated spacebar item");
     }
 }

@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Item
+public abstract class Item
 {
     // internal id of the item 
-    int id{ get; set; }
+    public int id;
 
     // name of the item which the player will see 
-    string name{ get; set; }
+    public string name;
 
     // 1 - common
     // 2 - rare
     // 3 - very rare
     // 4 - legendary
-    int rarity{ get; set; }
+    public int rarity;
 
     // short description of the item and its effect
-    string description{ get; set; }
+    public string description;
 
-    void applyEffect();
+    public abstract void applyEffect();
 }
