@@ -48,5 +48,6 @@ MonoBehaviour:
   Player2: {fileID: 0}
   Player3: {fileID: 0}
   Player4: {fileID: 0}
+  bondParticles: {fileID: 7100245638349808931, guid: c710d4614bf7e41629b3229a9ebe6116, type: 3}
   TotalDistance: 0
   bonusMultiplier: 0

@@ -28,6 +28,8 @@ public class SpiritBond : MonoBehaviour
     private float distanceFalloff = 180.0f;
 
 
+
+
     // Initializes player positions as an array of 4 elements, each containing the Transform of its respective player; TotalDistance as 0.0f
     void Start(){
         playerPositions = new Transform[4] 
@@ -66,9 +68,26 @@ public class SpiritBond : MonoBehaviour
         // Due to how the formula is written, f(t) cannot be higher than 4.
         bonusMultiplier = -Math.Pow(decreaseRate, (TotalDistance - distanceFalloff / 2)) + 4.0f;
         bonusMultiplier = bonusMultiplier < 0.5 ? 0.5 : bonusMultiplier;
-        Debug.Log("bonusMultiplier: " + (float)bonusMultiplier);
 
-        
+        if(bonusMultiplier > 3.8){
+            ActivateParticleSystems();
+        } else {
+            DeactivateParticleSystems();
+        }
 
+    }
+
+    void ActivateParticleSystems(){
+        foreach (Transform player in playerPositions){
+            GameObject particleSystem = player.transform.Find("Spirit Bond Particles").gameObject;
+            particleSystem.SetActive(true);
+        }
+    }
+
+    void DeactivateParticleSystems(){
+        foreach (Transform player in playerPositions){
+            GameObject particleSystem = player.transform.Find("Spirit Bond Particles").gameObject;
+            particleSystem.SetActive(false);
+        }
     }
 }
