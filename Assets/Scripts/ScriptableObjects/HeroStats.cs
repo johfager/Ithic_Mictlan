@@ -35,6 +35,7 @@ public class HealthAttributes
 [System.Serializable]
 public class CombatAttributes
 {
+    //List of attacks ad combos must be here. 
     public float basicAttackDamage = 10f;            // Basic attack damage
     public float attackSpeed = 1f;                  // Attack speed
 }
