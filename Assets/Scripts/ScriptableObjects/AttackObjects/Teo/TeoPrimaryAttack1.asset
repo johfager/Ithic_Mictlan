@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d06505c561e4f8497d76f78584aaac9, type: 3}
-  m_Name: TeoPrimaryAbility
+  m_Name: TeoPrimaryAttack1
   m_EditorClassIdentifier: 
-  animatorOV: {fileID: 22100000, guid: 9ddb1ac72e2d78f498c040360180524a, type: 2}
+  animatorOV: {fileID: 22100000, guid: 72338bd8c140e6e45a45a53a42523e97, type: 2}
   damage: 5

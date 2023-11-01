@@ -395,16 +395,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   primaryAttack:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 514c1dea1bf18a9438e6af6e6c5f0240, type: 2}
   primaryAbility:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 320a1e6bb9eead44db5076d138557eb3, type: 2}
   secondaryAbility:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: bad4bdeefd0a8ee468279ea3b63755da, type: 2}
   ultimateAbility:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 4c3665d2e1c042c4fb5e176d8d34cda2, type: 2}
   combatStateText: {fileID: 3026352578972948115}
   comboTime: 0.4
   IsInCombatMode: 0
