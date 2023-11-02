@@ -2718,6 +2718,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6197520307193964216, guid: 0f083ed661df2e545b0aa053dc4b826b, type: 3}
+      propertyPath: primaryAttack.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: cc5748ee2f032a345a5009bf23bf5f31, type: 2}
+    - target: {fileID: 6197520307193964216, guid: 0f083ed661df2e545b0aa053dc4b826b, type: 3}
+      propertyPath: primaryAttack.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 41b1d7767b4b8ba4da8cae3ac041aa61, type: 2}
+    - target: {fileID: 6197520307193964216, guid: 0f083ed661df2e545b0aa053dc4b826b, type: 3}
+      propertyPath: primaryAttack.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: bd473fdf470d7a74cb69c006ec46e1d8, type: 2}
+    - target: {fileID: 6197520307193964216, guid: 0f083ed661df2e545b0aa053dc4b826b, type: 3}
+      propertyPath: primaryAttack.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6c7fb2a0a44e5c84b975f7eab6ee0bb5, type: 2}
+    - target: {fileID: 6197520307193964216, guid: 0f083ed661df2e545b0aa053dc4b826b, type: 3}
+      propertyPath: primaryAbility.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: c8783dfb2ffe1644e8c5672e76acf0bd, type: 2}
+    - target: {fileID: 6197520307193964216, guid: 0f083ed661df2e545b0aa053dc4b826b, type: 3}
+      propertyPath: ultimateAbility.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9dd174ac46929ec46829e8bf4ab0cd96, type: 2}
+    - target: {fileID: 6197520307193964216, guid: 0f083ed661df2e545b0aa053dc4b826b, type: 3}
+      propertyPath: secondaryAbility.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 36c7c4b1db3ec5d4e8e6e2948ffca9ac, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
