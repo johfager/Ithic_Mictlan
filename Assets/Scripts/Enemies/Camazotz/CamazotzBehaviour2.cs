@@ -27,11 +27,11 @@ public class CamazotzBehaviour2 : MonoBehaviour
     [SerializeField] private float maxCamazotzHealth;
 
     //Cooldowns for the attacks
-    private float basicAttackCooldown = 0.0f;
-    private float soulEaterCooldown = 0.0f;
-    private float upsideDownWorldCooldown = 0.0f;
-    private float infernalScreechCooldown = 0.0f;
-    private float soulDevourerCooldown = 0.0f;
+    [SerializeField] private float basicAttackCooldown = 0.0f;
+    [SerializeField] private float soulEaterCooldown = 0.0f;
+    [SerializeField] private float upsideDownWorldCooldown = 0.0f;
+    [SerializeField] private float infernalScreechCooldown = 0.0f;
+    [SerializeField] private float soulDevourerCooldown = 0.0f;
 
     void Start()
     {
@@ -176,9 +176,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 agent.stoppingDistance = 15;
                 ChangeState(State.CloseRangeBasicAttackState); // Q4
             }
-            else
+            else if (playerDistance <= 30)
             {
-                agent.stoppingDistance = playerDistance;
+                agent.stoppingDistance = 30;
                 ChangeState(State.LargeRangeBasicAttackState); // Q5
             }
             basicAttackCooldown = 3.0f; // Set a 5-second cooldown for basic attack
@@ -211,11 +211,20 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         if (soulEaterCooldown <= 0.0f)
         {
-            int attackIndex = Random.Range(0, 2);
-            AttacksSoftReset();
-            PhaseChecker(attackIndex);
-            soulEaterCooldown = 10.0f; // Set a 10-second cooldown for Soul Eater attack
-            StartCoroutine(ResetCooldown("SoulEaterCooldown"));
+            playerDistance = Vector3.Distance(transform.position, objective.transform.position);
+            if (playerDistance <= 15)
+            {
+                agent.stoppingDistance = 15;
+                int attackIndex = Random.Range(0, 2);
+                AttacksSoftReset();
+                PhaseChecker(attackIndex);
+                soulEaterCooldown = 10.0f; // Set a 10-second cooldown for Soul Eater attack
+                StartCoroutine(ResetCooldown("SoulEaterCooldown"));
+            }
+            else
+            {
+                ChangeState(State.FirstPhaseState);
+            }
         }
         else
         {
@@ -228,11 +237,20 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         if (upsideDownWorldCooldown <= 0.0f)
         {
-            int attackIndex = Random.Range(0, 2);
-            AttacksSoftReset();
-            PhaseChecker(attackIndex);
-            upsideDownWorldCooldown = 12.0f; // Set a 12-second cooldown for Upside Down World attack
-            StartCoroutine(ResetCooldown("UpsideDownWorldCooldown"));
+            playerDistance = Vector3.Distance(transform.position, objective.transform.position);
+            if (playerDistance <= 15)
+            {
+                agent.stoppingDistance = 15;
+                int attackIndex = Random.Range(0, 2);
+                AttacksSoftReset();
+                PhaseChecker(attackIndex);
+                upsideDownWorldCooldown = 12.0f; // Set a 12-second cooldown for Upside Down World attack
+                StartCoroutine(ResetCooldown("UpsideDownWorldCooldown"));
+            }
+            else
+            {
+                ChangeState(State.FirstPhaseState);
+            }
         }
         else
         {
@@ -245,19 +263,28 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         if (infernalScreechCooldown <= 0.0f)
         {
-            int attackIndex = Random.Range(0, 2);
-            AttacksSoftReset();
-            // PhaseChecker(attackIndex);
-            if (attackIndex == 0)
+            playerDistance = Vector3.Distance(transform.position, objective.transform.position);
+            if (playerDistance <= 30)
             {
-                ChangeState(State.FirstPhaseState);
+                agent.stoppingDistance = 30;
+                int attackIndex = Random.Range(0, 2);
+                AttacksSoftReset();
+                // PhaseChecker(attackIndex);
+                if (attackIndex == 0)
+                {
+                    ChangeState(State.FirstPhaseState);
+                }
+                else
+                {
+                    ChangeState(State.ChangeOfPlayerToTargetState);
+                }
+                infernalScreechCooldown = 15.0f; // Set a 15-second cooldown for Infernal Screech attack
+                StartCoroutine(ResetCooldown("InfernalScreechCooldown"));
             }
             else
             {
-                ChangeState(State.ChangeOfPlayerToTargetState);
+                ChangeState(State.FirstPhaseState);
             }
-            infernalScreechCooldown = 15.0f; // Set a 15-second cooldown for Infernal Screech attack
-            StartCoroutine(ResetCooldown("InfernalScreechCooldown"));
         }
         else
         {
@@ -309,11 +336,20 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         if (soulDevourerCooldown <= 0.0f)
         {
-            int attackIndex = Random.Range(0, 2);
-            AttacksSoftReset();
-            PhaseChecker(attackIndex);
-            soulDevourerCooldown = 20.0f; // Set a 20-second cooldown for Soul Devourer attack
-            StartCoroutine(ResetCooldown("SoulDevourerCooldown"));
+            playerDistance = Vector3.Distance(transform.position, objective.transform.position);
+            if (playerDistance <= 15)
+            {
+                agent.stoppingDistance = 15;
+                int attackIndex = Random.Range(0, 2);
+                AttacksSoftReset();
+                PhaseChecker(attackIndex);
+                soulDevourerCooldown = 20.0f; // Set a 20-second cooldown for Soul Devourer attack
+                StartCoroutine(ResetCooldown("SoulDevourerCooldown"));
+            }
+            else
+            {
+                ChangeState(State.SecondPhaseState);
+            }
         }
         else
         {
