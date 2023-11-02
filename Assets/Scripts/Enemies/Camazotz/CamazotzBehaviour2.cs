@@ -118,7 +118,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
     // Q0
     private void HandleInitialState()
     {
-        GetComponent<MeshRenderer>().material.color = Color.gray;
         if (isAttacking)
         {
             ChangeState(State.InitialSelectionOfPlayerToTargetState);
@@ -138,7 +137,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private void HandleFirstPhaseState()
     {
         Debug.Log("First Phase"); // DONE
-        GetComponent<MeshRenderer>().material.color = Color.yellow;
         int attackIndex = Random.Range(0, 4);
 
         if (currentCamazotzHealth <= 0)
@@ -173,9 +171,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (basicAttackCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 8)
+            if (playerDistance <= 15)
             {
-                agent.stoppingDistance = 8;
+                agent.stoppingDistance = 15;
                 ChangeState(State.CloseRangeBasicAttackState); // Q4
             }
             else
@@ -279,7 +277,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private void HandleSecondPhaseState()
     {
         Debug.Log("Second Phase");
-        GetComponent<MeshRenderer>().material.color = Color.blue;
         int attackIndex = Random.Range(0, 5);
 
         if (currentCamazotzHealth <= 0)
@@ -344,7 +341,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private void HandleCamazotzDeathState()
     {
-        GetComponent<MeshRenderer>().material.color = Color.red;
+        Debug.Log("Camazotz Death");
     }
 
     private void ChangeState(State newState)
@@ -369,7 +366,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private IEnumerator ResetAttack()
     {
         yield return new WaitForSeconds(2.0f);
-        agent.stoppingDistance = 0;
+        agent.stoppingDistance = 15;
     }
 
     private void PhaseChecker(int attackIndex)
@@ -402,7 +399,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
         {
             Debug.Log("Death");
             currentCamazotzHealth = 0;
-            GetComponent<MeshRenderer>().material.color = Color.red;
         }
     }
 
