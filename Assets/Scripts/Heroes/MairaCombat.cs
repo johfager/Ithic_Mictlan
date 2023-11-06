@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Heroes;
 using TMPro;
 using UnityEngine;
 

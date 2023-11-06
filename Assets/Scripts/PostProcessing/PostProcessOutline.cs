@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
 [Serializable]
-[PostProcess(typeof(PostProcessOutlineRenderer), PostProcessEvent.BeforeStack, "Roystan/Post Process Outline")]
+[PostProcess(typeof(PostProcessOutlineRenderer), PostProcessEvent.BeforeStack, "IhticMictlan/Post Process Outline")]
 public sealed class PostProcessOutline : PostProcessEffectSettings
 {
     [Tooltip("Number of pixels between samples that are tested for an edge. When this value is 1, tested samples are adjacent.")]
