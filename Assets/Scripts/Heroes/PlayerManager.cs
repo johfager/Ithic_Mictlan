@@ -5,15 +5,16 @@ namespace Heroes
     public class PlayerManager : MonoBehaviour
     {
         public PlayerMovement playerMovement;
-        //public MairaCombat mairaCombatScript;
         public HeroesCombat heroesCombatScript;
+        public HeroStats heroStats;
         private bool isMoving = true;
         public GameObject heroModel;
 
         void Start()
         {
+            HealthSystem healthSystem = GetComponent<HealthSystem>();
+            healthSystem.Initialize(heroStats.healthAttributes.maxHealth);
             playerMovement = GetComponent<PlayerMovement>();
-            //mairaCombatScript = GetComponent<MairaCombat>();
             heroesCombatScript = GetComponent<HeroesCombat>();
         }
 

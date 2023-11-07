@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthSystem : MonoBehaviour
+public class BossHealthSystem : MonoBehaviour
 {
     public float maxHealth = 100f; // Default max health
     public float currentHealth;
@@ -26,7 +26,6 @@ public class HealthSystem : MonoBehaviour
     private void Die()
     {
         // Implement death logic here, such as destroying the GameObject
-        // Destroy(gameObject);
-        Debug.Log("You died!");
+        Destroy(gameObject);
     }
 }
