@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4978789033171357820
 Transform:
   m_ObjectHideFlags: 0
@@ -229,8 +229,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4659760713753693550}
   - {fileID: 5553920955288129561}
+  - {fileID: 4659760713753693550}
   - {fileID: 938523280054530532}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 6648272451009141453}
   heroesCombatScript: {fileID: 2745691554481449136}
-  heroModel: {fileID: 0}
+  heroModel: {fileID: 5068991605918943907}
 --- !u!114 &6648272451009141453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,8 +311,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 11400000, guid: d316e8b75aa9d934c95e173cf1f1b055, type: 2}
-  playerCamera: {fileID: 0}
+  playerCamera: {fileID: 4659760713753693550}
   mouseSensitivity: 2
+  maxVerticalRotation: 5
+  minVerticalRotation: -5
   rotationFactorPerFrame: 1
 --- !u!114 &2745691554481449136
 MonoBehaviour:
@@ -525,7 +527,7 @@ Transform:
   m_GameObject: {fileID: 8541132230506731954}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.585, y: 1.51, z: -6.868}
+  m_LocalPosition: {x: 0, y: 1.51, z: -6.868}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -565,7 +567,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 45
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -747,6 +749,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 867d301febb2e104cb82746ed00722b3, type: 3}
+--- !u!1 &5068991605918943907 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 867d301febb2e104cb82746ed00722b3, type: 3}
+  m_PrefabInstance: {fileID: 5375544043649464306}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5553920955288129561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 867d301febb2e104cb82746ed00722b3, type: 3}

@@ -5,8 +5,15 @@ public class PlayerMovement : MonoBehaviour
 {
     public HeroStats playerStats; // Reference to the scriptable object
     public Transform playerCamera; // Reference to the player's camera
+    
+    //Camera and Mouse
     public float mouseSensitivity = 2.0f; // Mouse sensitivity for camera movement
+    [SerializeField]
+    private float maxVerticalRotation = 90f;  // Maximum camera rotation angle (in degrees)
+    [SerializeField]
+    private float minVerticalRotation = -90f; // Minimum camera rotation angle (in degrees)
 
+    
     private CharacterController characterController;
     private Vector3 moveDirection;
 
@@ -236,7 +243,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Rotate the camera (X-axis)
         rotX -= mouseY;
-        rotX = Mathf.Clamp(rotX, -90f, 90f); // Limit camera rotation to prevent flipping
+        rotX = Mathf.Clamp(rotX, minVerticalRotation, maxVerticalRotation); // Limit camera rotation to prevent flipping
 
         // Apply camera rotation
         playerCamera.localRotation = Quaternion.Euler(rotX, 0, 0);
