@@ -18,7 +18,7 @@ MonoBehaviour:
     maxSpawn: 1
     enemyPrefab: {fileID: 0}
   movementAttributes:
-    movementSpeed: 20
+    movementSpeed: 10
     gravity: 9.81
   healthAttributes:
     maxHealth: 5000

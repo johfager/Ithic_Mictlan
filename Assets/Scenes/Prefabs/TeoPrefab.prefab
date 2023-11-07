@@ -208,14 +208,15 @@ GameObject:
   - component: {fileID: 2209456980525115632}
   - component: {fileID: 6648272451009141453}
   - component: {fileID: 2745691554481449136}
+  - component: {fileID: 4217895570560313039}
   - component: {fileID: 2371377424218868182}
   m_Layer: 0
   m_Name: TeoPrefab
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &172811064563136445
 Transform:
   m_ObjectHideFlags: 0
@@ -297,6 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 6648272451009141453}
   heroesCombatScript: {fileID: 2745691554481449136}
+  playerStats: {fileID: 11400000, guid: d155e5d5e36cee44199bbbead647f23d, type: 2}
   heroModel: {fileID: 0}
 --- !u!114 &6648272451009141453
 MonoBehaviour:
@@ -327,19 +329,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   primaryAttack:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 514c1dea1bf18a9438e6af6e6c5f0240, type: 2}
   primaryAbility:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 320a1e6bb9eead44db5076d138557eb3, type: 2}
   secondaryAbility:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: bad4bdeefd0a8ee468279ea3b63755da, type: 2}
   ultimateAbility:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 4c3665d2e1c042c4fb5e176d8d34cda2, type: 2}
   combatStateText: {fileID: 3026352578972948115}
   comboTime: 0.4
   IsInCombatMode: 0
+--- !u!114 &4217895570560313039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367014908967302044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dacc2b99c1dd8db4786571e6ba5a0057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!95 &2371377424218868182
 Animator:
   serializedVersion: 5
