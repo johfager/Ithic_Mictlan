@@ -164,6 +164,18 @@ public class CamazotzBehaviour2 : MonoBehaviour
         }
     }
 
+    private void DealDamageToTarget(float damage)
+    {
+        if (objective != null)
+        {
+            HealthSystem targetHealth = objective.GetComponent<HealthSystem>();
+            if (targetHealth != null)
+            {
+                targetHealth.TakeDamage(damage);
+            }
+        }
+    }
+
     // Q3
     private void HandleBasicAttackState()
     {
@@ -193,6 +205,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private void HandleCloseRangeBasicAttackState()
     {
         int attackIndex = Random.Range(0, 2);
+        if (attackIndex == 1) DealDamageToTarget(1);
         AttacksSoftReset();
         PhaseChecker(attackIndex);
     }
@@ -201,6 +214,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private void HandleLargeRangeBasicAttackState()
     {
         int attackIndex = Random.Range(0, 2);
+        if (attackIndex == 1) DealDamageToTarget(1);
         AttacksSoftReset();
         PhaseChecker(attackIndex);
     }
@@ -215,6 +229,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
             {
                 agent.stoppingDistance = 15;
                 int attackIndex = Random.Range(0, 2);
+                if (attackIndex == 1) DealDamageToTarget(1);
                 AttacksSoftReset();
                 PhaseChecker(attackIndex);
                 soulEaterCooldown = 10.0f; // Set a 10-second cooldown for Soul Eater attack
@@ -241,6 +256,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
             {
                 agent.stoppingDistance = 15;
                 int attackIndex = Random.Range(0, 2);
+                if (attackIndex == 1) DealDamageToTarget(1);
                 AttacksSoftReset();
                 PhaseChecker(attackIndex);
                 upsideDownWorldCooldown = 12.0f; // Set a 12-second cooldown for Upside Down World attack
@@ -275,6 +291,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 }
                 else
                 {
+                    DealDamageToTarget(1);
                     ChangeState(State.ChangeOfPlayerToTargetState);
                 }
                 infernalScreechCooldown = 15.0f; // Set a 15-second cooldown for Infernal Screech attack
@@ -291,6 +308,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         }
     }
 
+    // Q9
     private void HandleChangeOfPlayerToTargetState()
     {
         playerList = GameObject.FindGameObjectsWithTag("Hero");
@@ -300,6 +318,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         ChangeState(State.PhaseTransitionState);
     }
 
+    // Q10
     private void HandleSecondPhaseState()
     {
         Debug.Log("Second Phase");
@@ -331,6 +350,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         }
     }
 
+    // Q11
     private void HandleSoulDevourerAttackState()
     {
         if (soulDevourerCooldown <= 0.0f)
@@ -340,6 +360,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
             {
                 agent.stoppingDistance = 15;
                 int attackIndex = Random.Range(0, 2);
+                if(attackIndex == 1) DealDamageToTarget(1);
                 AttacksSoftReset();
                 PhaseChecker(attackIndex);
                 soulDevourerCooldown = 20.0f; // Set a 20-second cooldown for Soul Devourer attack
@@ -356,6 +377,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         }
     }
 
+    // Q12
     private void HandlePhaseTransitionState()
     {
         Debug.Log("Phase Transition");
@@ -400,8 +422,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private IEnumerator ResetAttack()
     {
-        yield return new WaitForSeconds(2.0f);
         agent.stoppingDistance = 15;
+        yield return new WaitForSeconds(2.0f);
     }
 
     private void PhaseChecker(int attackIndex)
