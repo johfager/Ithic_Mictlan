@@ -449,6 +449,8 @@ MonoBehaviour:
   playerStats: {fileID: 11400000, guid: d316e8b75aa9d934c95e173cf1f1b055, type: 2}
   playerCamera: {fileID: 4224865544645636670}
   mouseSensitivity: 2
+  maxVerticalRotation: 5
+  minVerticalRotation: -5
   rotationFactorPerFrame: 1
 --- !u!114 &5181743743342595060
 MonoBehaviour:
@@ -541,7 +543,7 @@ Transform:
   m_GameObject: {fileID: 9024083678708315885}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.415, y: 1.51, z: -6.868}
+  m_LocalPosition: {x: 0, y: 1.51, z: -6.868}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -581,7 +583,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 45
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
