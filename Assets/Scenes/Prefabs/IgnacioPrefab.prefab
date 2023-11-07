@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 6670168449147886222}
   m_Layer: 0
   m_Name: IgnacioPrefab
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -358,16 +358,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   primaryAttack:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: cc5748ee2f032a345a5009bf23bf5f31, type: 2}
+  - {fileID: 11400000, guid: 41b1d7767b4b8ba4da8cae3ac041aa61, type: 2}
+  - {fileID: 11400000, guid: bd473fdf470d7a74cb69c006ec46e1d8, type: 2}
+  - {fileID: 11400000, guid: 6c7fb2a0a44e5c84b975f7eab6ee0bb5, type: 2}
   primaryAbility:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: c8783dfb2ffe1644e8c5672e76acf0bd, type: 2}
   secondaryAbility:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 36c7c4b1db3ec5d4e8e6e2948ffca9ac, type: 2}
   ultimateAbility:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 9dd174ac46929ec46829e8bf4ab0cd96, type: 2}
   combatStateText: {fileID: 6474889916172526336}
   comboTime: 0.4
   IsInCombatMode: 0
