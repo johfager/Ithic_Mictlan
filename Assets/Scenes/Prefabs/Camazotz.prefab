@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3606146242893370889}
   - component: {fileID: 1866030456759785672}
   - component: {fileID: 7271545776716251542}
-  - component: {fileID: 3434760759589023646}
+  - component: {fileID: 430065897914885588}
   - component: {fileID: 4592487565025896572}
   - component: {fileID: 1532970858916454736}
   m_Layer: 0
@@ -73,14 +73,12 @@ MonoBehaviour:
   currentState: 0
   enemyStats: {fileID: 11400000, guid: ef9992c6dbbc7be47a0cbd69e3e6db26, type: 2}
   objective: {fileID: 0}
-  currentCamazotzHealth: 0
-  maxCamazotzHealth: 0
   basicAttackCooldown: 0
   soulEaterCooldown: 0
   upsideDownWorldCooldown: 0
   infernalScreechCooldown: 0
   soulDevourerCooldown: 0
---- !u!114 &3434760759589023646
+--- !u!114 &430065897914885588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,10 +87,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5863352167117713137}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dacc2b99c1dd8db4786571e6ba5a0057, type: 3}
+  m_Script: {fileID: 11500000, guid: 3384675e1f796424a9d4135259bdbf64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  currentHealth: 0
 --- !u!54 &4592487565025896572
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public class HeroesCombat : MonoBehaviour
 
     private float followUpAttackTimer = 0.0f; //Not used
     private float attackDamage;
+    private float attackAoE;
     private string currentAttack;
 
     public TextMeshProUGUI combatStateText;
@@ -44,6 +45,12 @@ public class HeroesCombat : MonoBehaviour
         combatStateText.enabled = false; // Hide the debug text
         anim = GetComponent<Animator>();
         playerManager = GetComponentInParent<PlayerManager>(); // Get the PlayerManager reference
+    }
+
+    void Update()
+    {
+        HandleAttackStateMachine();
+        HandleAreaOfEffectDamage();
     }
 
     public void HandleAttackStateMachine()
@@ -86,6 +93,7 @@ public class HeroesCombat : MonoBehaviour
                 anim.runtimeAnimatorController = attackType[comboCounter].animatorOV;
                 anim.Play(attackAnimationName, 0, 0);
                 attackDamage = attackType[comboCounter].damage;
+                attackAoE = attackType[comboCounter].areaOfEffect;
                 //attackDamage = HeroStats.Instance.combatAttributes.basicAttackDamage;
                 Debug.Log($"Current attack is dealing {attackDamage} damage");
                 comboCounter++;
@@ -103,6 +111,28 @@ public class HeroesCombat : MonoBehaviour
         IsInCombatMode = false;
 
         ExitAttack(currentAttack);
+    }
+
+    private void HandleAreaOfEffectDamage()
+    {
+        if (IsInCombatMode)
+        {
+            // Replace the 'Vector3.forward' with the actual direction you want the frontal area to be.
+            Vector3 frontDirection = transform.forward;
+
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position + frontDirection, attackAoE);
+
+            foreach (Collider collider in hitColliders)
+            {
+                // Check if the collided object has a HealthSystem component
+                HealthSystem healthSystem = collider.GetComponent<HealthSystem>();
+                if (healthSystem != null)
+                {
+                    // Apply damage from the current attack
+                    healthSystem.TakeDamage(attackDamage);
+                }
+            }
+        }
     }
 
     //Not used
