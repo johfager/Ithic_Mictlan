@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 5717382220375327649}
   m_Layer: 0
   m_Name: HeroPrefab
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -602,7 +602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 5717382220375327649}
-  mairaCombatScript: {fileID: 0}
+  heroesCombatScript: {fileID: 0}
   heroModel: {fileID: 0}
 --- !u!114 &5717382220375327649
 MonoBehaviour:

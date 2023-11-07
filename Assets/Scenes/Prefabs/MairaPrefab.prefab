@@ -535,6 +535,7 @@ GameObject:
   - component: {fileID: 809566561963566477}
   - component: {fileID: 2534308856849189679}
   - component: {fileID: 5181743743342595060}
+  - component: {fileID: 5530222888806650600}
   - component: {fileID: 542451080192117134}
   m_Layer: 0
   m_Name: MairaPrefab
@@ -624,6 +625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 2534308856849189679}
   heroesCombatScript: {fileID: 5181743743342595060}
+  playerStats: {fileID: 11400000, guid: 9c605feeaf61b714bbe95cc92dfe8ad7, type: 2}
   heroModel: {fileID: 2356211597995216528}
 --- !u!114 &2534308856849189679
 MonoBehaviour:
@@ -667,6 +669,20 @@ MonoBehaviour:
   combatStateText: {fileID: 8935497057558082835}
   comboTime: 0
   IsInCombatMode: 0
+--- !u!114 &5530222888806650600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8133008710918818007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dacc2b99c1dd8db4786571e6ba5a0057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!95 &542451080192117134
 Animator:
   serializedVersion: 5

@@ -239,6 +239,7 @@ GameObject:
   - component: {fileID: 5622619009204808975}
   - component: {fileID: 7647967678128615262}
   - component: {fileID: 6197520307193964216}
+  - component: {fileID: 3426769998037791045}
   - component: {fileID: 6670168449147886222}
   m_Layer: 0
   m_Name: IgnacioPrefab
@@ -328,6 +329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 7647967678128615262}
   heroesCombatScript: {fileID: 6197520307193964216}
+  playerStats: {fileID: 11400000, guid: ea7b503ee59743e4aa91935c30b1541c, type: 2}
   heroModel: {fileID: 0}
 --- !u!114 &7647967678128615262
 MonoBehaviour:
@@ -371,6 +373,20 @@ MonoBehaviour:
   combatStateText: {fileID: 6474889916172526336}
   comboTime: 0.4
   IsInCombatMode: 0
+--- !u!114 &3426769998037791045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3423656044886117104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dacc2b99c1dd8db4786571e6ba5a0057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!95 &6670168449147886222
 Animator:
   serializedVersion: 5
