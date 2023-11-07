@@ -47,12 +47,6 @@ public class HeroesCombat : MonoBehaviour
         playerManager = GetComponentInParent<PlayerManager>(); // Get the PlayerManager reference
     }
 
-    void Update()
-    {
-        HandleAttackStateMachine();
-        HandleAreaOfEffectDamage();
-    }
-
     public void HandleAttackStateMachine()
     {
         if (currentHeroesAttackState == HeroesAttackState.Idle)
@@ -94,6 +88,7 @@ public class HeroesCombat : MonoBehaviour
                 anim.Play(attackAnimationName, 0, 0);
                 attackDamage = attackType[comboCounter].damage;
                 attackAoE = attackType[comboCounter].areaOfEffect;
+                HandleAreaOfEffectDamage();
                 //attackDamage = HeroStats.Instance.combatAttributes.basicAttackDamage;
                 Debug.Log($"Current attack is dealing {attackDamage} damage");
                 comboCounter++;
@@ -126,10 +121,16 @@ public class HeroesCombat : MonoBehaviour
             {
                 // Check if the collided object has a HealthSystem component
                 HealthSystem healthSystem = collider.GetComponent<HealthSystem>();
+                BossHealthSystem bossHealthSystem = collider.GetComponent<BossHealthSystem>();
                 if (healthSystem != null)
                 {
                     // Apply damage from the current attack
                     healthSystem.TakeDamage(attackDamage);
+                }
+                if (bossHealthSystem != null)
+                {
+                    // Apply damage from the current attack
+                    bossHealthSystem.TakeDamage(attackDamage);
                 }
             }
         }

@@ -26,6 +26,7 @@ public class HealthSystem : MonoBehaviour
     private void Die()
     {
         // Implement death logic here, such as destroying the GameObject
-        Destroy(gameObject);
+        // Destroy(gameObject);
+        Debug.Log("You died!");
     }
 }
