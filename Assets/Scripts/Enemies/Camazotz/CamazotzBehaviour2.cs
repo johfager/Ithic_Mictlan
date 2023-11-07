@@ -23,8 +23,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private bool isAttacking;
     private float playerDistance;
-    [SerializeField] private float currentCamazotzHealth;
-    [SerializeField] private float maxCamazotzHealth;
+    HealthSystem healthSystem;
 
     //Cooldowns for the attacks
     [SerializeField] private float basicAttackCooldown = 0.0f;
@@ -39,8 +38,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
         currentState = State.InitialState;
         isAttacking = false;
         detectionRange.radius = enemyStats.visionAttributes.visionRange;
-        currentCamazotzHealth = enemyStats.healthAttributes.maxHealth;
-        maxCamazotzHealth = enemyStats.healthAttributes.maxHealth;
+        healthSystem = GetComponent<HealthSystem>();
+        healthSystem.Initialize(enemyStats.healthAttributes.maxHealth);
         playerList = GameObject.FindGameObjectsWithTag("Hero");
         agent = GetComponent<NavMeshAgent>();
         CamazotzAgentSetter();
@@ -139,11 +138,11 @@ public class CamazotzBehaviour2 : MonoBehaviour
         Debug.Log("First Phase"); // DONE
         int attackIndex = Random.Range(0, 4);
 
-        if (currentCamazotzHealth <= 0)
+        if (healthSystem.currentHealth <= 0)
         {
             ChangeState(State.CamazotzDeathState); //Q13
         }
-        else if (currentCamazotzHealth <= maxCamazotzHealth / 2)
+        else if (healthSystem.currentHealth <= healthSystem.maxHealth / 2)
         {
             ChangeState(State.SecondPhaseState); // Q10
         }
@@ -306,7 +305,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         Debug.Log("Second Phase");
         int attackIndex = Random.Range(0, 5);
 
-        if (currentCamazotzHealth <= 0)
+        if (healthSystem.currentHealth <= 0)
         {
             ChangeState(State.CamazotzDeathState);
         }
@@ -360,16 +359,16 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private void HandlePhaseTransitionState()
     {
         Debug.Log("Phase Transition");
-        if (currentCamazotzHealth > maxCamazotzHealth / 2)
+        if (healthSystem.currentHealth > healthSystem.maxHealth / 2)
         {
             ChangeState(State.FirstPhaseState);
         }
-        else if (currentCamazotzHealth <= maxCamazotzHealth / 2)
+        else if (healthSystem.currentHealth <= healthSystem.maxHealth / 2)
         {
             isInSecondPhase = true;
             ChangeState(State.SecondPhaseState);
         }
-        else if (currentCamazotzHealth <= 0)
+        else if (healthSystem.currentHealth <= 0)
         {
             ChangeState(State.CamazotzDeathState);
         }
@@ -429,12 +428,12 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
             Debug.Log("Change phase");
-            currentCamazotzHealth = currentCamazotzHealth / 3;
+            healthSystem.TakeDamage(3000);
         }
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
             Debug.Log("Death");
-            currentCamazotzHealth = 0;
+            healthSystem.TakeDamage(10000);
         }
     }
 

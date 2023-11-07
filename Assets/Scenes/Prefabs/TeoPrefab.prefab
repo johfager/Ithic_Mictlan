@@ -276,6 +276,7 @@ GameObject:
   - component: {fileID: 2209456980525115632}
   - component: {fileID: 6648272451009141453}
   - component: {fileID: 2745691554481449136}
+  - component: {fileID: 4217895570560313039}
   - component: {fileID: 2371377424218868182}
   m_Layer: 0
   m_Name: TeoPrefab
@@ -365,6 +366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 6648272451009141453}
   heroesCombatScript: {fileID: 2745691554481449136}
+  playerStats: {fileID: 11400000, guid: d155e5d5e36cee44199bbbead647f23d, type: 2}
   heroModel: {fileID: 0}
 --- !u!114 &6648272451009141453
 MonoBehaviour:
@@ -405,6 +407,20 @@ MonoBehaviour:
   combatStateText: {fileID: 3026352578972948115}
   comboTime: 0.4
   IsInCombatMode: 0
+--- !u!114 &4217895570560313039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367014908967302044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dacc2b99c1dd8db4786571e6ba5a0057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!95 &2371377424218868182
 Animator:
   serializedVersion: 5

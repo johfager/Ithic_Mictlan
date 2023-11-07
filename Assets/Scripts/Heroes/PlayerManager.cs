@@ -8,11 +8,15 @@ public class PlayerManager : MonoBehaviour
     public PlayerMovement playerMovement;
     //public MairaCombat mairaCombatScript;
     public HeroesCombat heroesCombatScript;
+    public HeroStats playerStats; // Reference to the scriptable object
+
     private bool isMoving = true;
     public GameObject heroModel;
 
     void Start()
     {
+        HealthSystem healthSystem = GetComponent<HealthSystem>();
+        healthSystem.Initialize(playerStats.healthAttributes.maxHealth);
         playerMovement = GetComponent<PlayerMovement>();
         //mairaCombatScript = GetComponent<MairaCombat>();
         heroesCombatScript = GetComponent<HeroesCombat>();

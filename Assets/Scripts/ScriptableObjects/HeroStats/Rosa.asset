@@ -20,10 +20,10 @@ MonoBehaviour:
     jumpHeight: 15.5
     jumpAgility: 5
     sprintSpeedMultiplier: 2
+    sprintGradualAcceleration: 5
   healthAttributes:
-    maxHealth: 200
+    maxHealth: 250
     healthRegen: 0.1
-    currentHealth: 200
   combatAttributes:
     basicAttackDamage: 10
     attackSpeed: 1
