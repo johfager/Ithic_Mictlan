@@ -23,7 +23,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private bool isAttacking;
     private float playerDistance;
-    HealthSystem healthSystem;
+    BossHealthSystem healthSystem;
 
     //Cooldowns for the attacks
     [SerializeField] private float basicAttackCooldown = 0.0f;
@@ -38,7 +38,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         currentState = State.InitialState;
         isAttacking = false;
         detectionRange.radius = enemyStats.visionAttributes.visionRange;
-        healthSystem = GetComponent<HealthSystem>();
+        healthSystem = GetComponent<BossHealthSystem>();
         healthSystem.Initialize(enemyStats.healthAttributes.maxHealth);
         playerList = GameObject.FindGameObjectsWithTag("Hero");
         agent = GetComponent<NavMeshAgent>();
