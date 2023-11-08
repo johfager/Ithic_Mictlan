@@ -5,17 +5,21 @@ using UnityEngine.AI;
 
 public class XoloController : MonoBehaviour
 {
-    public NavMeshAgent agent;
-    public Animator animControl;
+    private NavMeshAgent agent;
+    private Animator animControl;
     private float speed;
     private bool isRunning;
+    private int numOfTouches;
 
     void Start() {
+        agent = GetComponent<NavMeshAgent>();
+        animControl = GetComponent<Animator>();
         speed = agent.speed;
     }
 
     void Update() {
         speed = agent.speed;
+        // Animation handling 
         if(speed == 10)
         {
             isRunning = true;
@@ -25,6 +29,7 @@ public class XoloController : MonoBehaviour
             isRunning = false;
         }
 
+        // Setting parameters of the animator
         animControl.SetBool("isRunning", isRunning);
         animControl.SetFloat("Speed", speed);
         
