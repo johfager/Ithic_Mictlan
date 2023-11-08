@@ -580,6 +580,9 @@ MonoBehaviour:
   combatStateText: {fileID: 8102501434506333892}
   comboTime: 0
   IsInCombatMode: 0
+  enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 384
 --- !u!114 &2826736688382291076
 MonoBehaviour:
   m_ObjectHideFlags: 0
