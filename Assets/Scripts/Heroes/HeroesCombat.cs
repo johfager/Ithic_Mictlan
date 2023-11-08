@@ -34,6 +34,8 @@ public class HeroesCombat : MonoBehaviour
     [SerializeField] private int secondaryAbilityTimerUI;
     [SerializeField] private int UltimateAbilityTimerUI;
 
+    [SerializeField] LayerMask enemyLayerMask;
+
     private enum HeroesAttackState
     {
         Idle,
@@ -114,6 +116,12 @@ public class HeroesCombat : MonoBehaviour
         ExitAttack(currentAttack);
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + transform.forward, attackAoE);
+    }
+
     private void HandleAreaOfEffectDamage()
     {
         if (IsInCombatMode)
@@ -121,22 +129,25 @@ public class HeroesCombat : MonoBehaviour
             // Replace the 'Vector3.forward' with the actual direction you want the frontal area to be.
             Vector3 frontDirection = transform.forward;
 
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position + frontDirection, attackAoE);
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position + frontDirection, attackAoE, enemyLayerMask);
 
             foreach (Collider collider in hitColliders)
             {
-                // Check if the collided object has a HealthSystem component
-                HealthSystem healthSystem = collider.GetComponent<HealthSystem>();
-                BossHealthSystem bossHealthSystem = collider.GetComponent<BossHealthSystem>();
-                if (healthSystem != null)
+                if (collider.gameObject.tag == "Enemy")
                 {
-                    // Apply damage from the current attack
-                    healthSystem.TakeDamage(attackDamage);
-                }
-                if (bossHealthSystem != null)
-                {
-                    // Apply damage from the current attack
-                    bossHealthSystem.TakeDamage(attackDamage);
+                    // Check if the collided object has a HealthSystem component
+                    HealthSystem healthSystem = collider.GetComponent<HealthSystem>();
+                    BossHealthSystem bossHealthSystem = collider.GetComponent<BossHealthSystem>();
+                    if (healthSystem != null)
+                    {
+                        // Apply damage from the current attack
+                        healthSystem.TakeDamage(attackDamage);
+                    }
+                    if (bossHealthSystem != null)
+                    {
+                        // Apply damage from the current attack
+                        bossHealthSystem.TakeDamage(attackDamage);
+                    }
                 }
             }
         }

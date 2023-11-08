@@ -28,4 +28,4 @@ MonoBehaviour:
     attackSpeed: 1
     numberOfSkills: 1
   visionAttributes:
-    visionRange: 19
+    visionRange: 20
