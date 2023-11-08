@@ -27,6 +27,12 @@ public class HeroesCombat : MonoBehaviour
 
     private PlayerManager playerManager; //Not used
     public bool IsInCombatMode;
+    
+    
+    //For UI
+    [SerializeField] private int primaryAbilityTimerUI;
+    [SerializeField] private int secondaryAbilityTimerUI;
+    [SerializeField] private int UltimateAbilityTimerUI;
 
     private enum HeroesAttackState
     {

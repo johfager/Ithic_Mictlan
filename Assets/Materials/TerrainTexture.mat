@@ -41,22 +41,22 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FresnelBrightness: 0
-    - _FresnelPower: 0
-    - _FresnelShadowDropoff: 0
-    - _HighIntensity: 6.15
+    - _FresnelBrightness: 0.065
+    - _FresnelPower: 0.73
+    - _FresnelShadowDropoff: 0.287
+    - _HighIntensity: 4.38
     - _LightScalar: 2.01
-    - _LowIntensity: 2.24
+    - _LowIntensity: 1.91
     - _OutlineSize: 0
-    - _RampLevels: 14
-    - _RimAlpha: 0
-    - _RimDropOff: 0
-    - _RimPower: 0
+    - _RampLevels: 9
+    - _RimAlpha: 0.065
+    - _RimDropOff: 0.508
+    - _RimPower: 0.767
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
-    - _HighColor: {r: 0.3962264, g: 0.3836465, b: 0.35660377, a: 1}
-    - _LowColor: {r: 0.9433962, g: 0.6710573, b: 0.867739, a: 1}
+    - _FresnelColor: {r: 0.8784314, g: 0.33333334, b: 0.3137255, a: 1}
+    - _HighColor: {r: 0.31783548, g: 0.8773585, b: 0.6162477, a: 1}
+    - _LowColor: {r: 0.8784314, g: 0.33333334, b: 0.3137255, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.8784314, g: 0.3137255, b: 0.5764706, a: 1}
   m_BuildTextureStacks: []
