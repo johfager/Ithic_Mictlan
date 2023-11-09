@@ -79,7 +79,12 @@ namespace BBUnity.Actions
                 }
                 else
                 {
-                    Debug.Log("Ahhh ");
+                    if(XoloController.instance.CatchCheck() == true)
+                    {
+                        Debug.Log(":C");
+                        navAgent.speed = 0;
+                        return gameObject.transform.position;
+                    }
                     navAgent.speed = speed;
                     navAgent.angularSpeed = angularSpeed;
                     navAgent.acceleration = acceleration;
@@ -91,7 +96,6 @@ namespace BBUnity.Actions
         /// <remarks>When the task is aborted, it stops the navAgentMesh.</remarks>
         public override void OnAbort()
         {
-            Debug.Log("YEEEE");
             navAgent.speed = 3.5f;
             navAgent.angularSpeed = 120f;
             navAgent.acceleration = 8f;
