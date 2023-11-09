@@ -11,6 +11,7 @@ public class CharacterAttributes
     public string characterName = "default";
 }
 
+
 // Serializable class for movement attributes
 [System.Serializable]
 public class MovementAttributes
@@ -47,6 +48,14 @@ public class LassoAttributes
     public float lassoCircleDiameter = 10f;          // Diameter of the lasso circle
 }
 
+[System.Serializable]
+public class AbilityAttributes
+{
+    public HeroAttackObject primaryAbility;
+    public HeroAttackObject secondaryAbility;
+    public HeroAttackObject ultimateAbility;
+}
+
 // Create a ScriptableObject asset for hero stats
 [CreateAssetMenu(fileName = "FILENAME", menuName = "Hero Stats", order = 0)] 
 public class HeroStats : ScriptableObject
@@ -56,8 +65,9 @@ public class HeroStats : ScriptableObject
     public HealthAttributes healthAttributes;        // Health attributes
     public CombatAttributes combatAttributes;        // Combat attributes
     public LassoAttributes lassoAttributes;          // Lasso attributes
+    public AbilityAttributes abilityAttributes;     // Ability attributes
+    
 
     // Add more attributes as needed
 
-    // You can update the version number if you make changes to the script
 }
