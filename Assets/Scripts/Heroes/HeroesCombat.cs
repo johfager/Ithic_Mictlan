@@ -225,6 +225,7 @@ public class HeroesCombat : MonoBehaviour
         Debug.Log($"Starting cooldown for {currentAttack}.");
         // Wait for the animation to finish
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        
 
         IsInCombatMode = false;
 
