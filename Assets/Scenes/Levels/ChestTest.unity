@@ -632,8 +632,6 @@ MonoBehaviour:
   chestAmount: 3
   time: 100
   radioSpawn: 100
-  prevChest: {x: 0, y: 0, z: 0}
-  direction: {x: 0, y: 0, z: 0}
 --- !u!1 &1182972599
 GameObject:
   m_ObjectHideFlags: 0

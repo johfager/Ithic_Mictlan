@@ -16,7 +16,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
     [SerializeField] private State currentState; //Current state of the Camazotz
     private bool isInSecondPhase; //Checks if the Camazotz is in the second phase
     [SerializeField] private EnemyStats enemyStats;
-    private SphereCollider detectionRange; //Aggro range of the Camazotz
     [SerializeField] private GameObject objective;
     private NavMeshAgent agent;
     private GameObject[] playerList;
@@ -34,13 +33,13 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     void Start()
     {
-        detectionRange = GetComponent<SphereCollider>();
         currentState = State.InitialState;
-        isAttacking = false;
-        detectionRange.radius = enemyStats.visionAttributes.visionRange;
+        isAttacking = true;
         healthSystem = GetComponent<BossHealthSystem>();
         healthSystem.Initialize(enemyStats.healthAttributes.maxHealth);
         playerList = GameObject.FindGameObjectsWithTag("Hero");
+        if(playerList.Length == 0) Debug.Log("No players found");
+        else Debug.Log(playerList.Length);
         agent = GetComponent<NavMeshAgent>();
         CamazotzAgentSetter();
     }
@@ -168,6 +167,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         if (objective != null)
         {
+            Debug.Log("Dealing damage to target");
             HealthSystem targetHealth = objective.GetComponent<HealthSystem>();
             if (targetHealth != null)
             {
@@ -291,6 +291,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("Infernal Screech");
                     DealDamageToTarget(1);
                     ChangeState(State.ChangeOfPlayerToTargetState);
                 }
@@ -311,6 +312,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
     // Q9
     private void HandleChangeOfPlayerToTargetState()
     {
+        Debug.Log("Change of Player to Target");
         playerList = GameObject.FindGameObjectsWithTag("Hero");
         int pick = Random.Range(0, playerList.Length);
         objective = playerList[pick];
@@ -404,15 +406,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private void ChangeState(State newState)
     {
         currentState = newState;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Hero")
-        {
-            objective = other.gameObject;
-            isAttacking = true;
-        }
     }
 
     private void AttacksSoftReset()
