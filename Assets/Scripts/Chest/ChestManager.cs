@@ -7,7 +7,6 @@ public class ChestManager : MonoBehaviour
     [SerializeField] private Transform[] chestSpawnPoints;
     [SerializeField] private GameObject chest;
     [SerializeField] private int chestAmount;
-    [SerializeField] private int time;
     [SerializeField] private float radioSpawn;
     private Vector3 prevChest = new Vector3(0,0,0);
     private Vector3 direction;
@@ -34,7 +33,10 @@ public class ChestManager : MonoBehaviour
 
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radioSpawn);
+        for(int i = 0; i < chestSpawnPoints.Length; i++)
+        {
+            Gizmos.DrawWireSphere(chestSpawnPoints[i].position, radioSpawn);
+        }
     }
 
 }

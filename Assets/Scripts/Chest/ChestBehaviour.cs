@@ -26,7 +26,7 @@ public class ChestBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Hero"))
         {
             playerInsideTrigger = true;
         }
@@ -34,7 +34,7 @@ public class ChestBehaviour : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Hero"))
         {
             playerInsideTrigger = false;
         }
