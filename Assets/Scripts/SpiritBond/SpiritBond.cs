@@ -12,7 +12,9 @@ public class SpiritBond : MonoBehaviour
     [SerializeField] private GameObject Player4;
     
     // Initialize an array that will contain all the players' positions
-    private Transform[] playerPositions;
+    public Transform[] playerPositions;
+
+    private Transform[] PlayerPositionsDelta;
 
     // Total distance between players, calculated as the sum of the distance between every player. Damage Multiplier scales directly with this.
     [SerializeField] private float TotalDistance;
@@ -26,6 +28,8 @@ public class SpiritBond : MonoBehaviour
     private float decreaseRate = 1.2f;
     // Controls the distance that has to exist between players before damage starts to decrease. The higher it is, the further apart players must be for falloff to occur
     private float distanceFalloff = 180.0f;
+
+    
 
 
 
@@ -41,6 +45,11 @@ public class SpiritBond : MonoBehaviour
             };
 
         TotalDistance = 0.0f;
+
+        PlayerPositionsDelta = playerPositions;
+
+        
+        
     }
 
     void Update()
@@ -75,6 +84,61 @@ public class SpiritBond : MonoBehaviour
             DeactivateParticleSystems();
         }
 
+        CalculatePlayerOrder();
+
+    }
+
+    void BubbleSort(Transform[] playerPos, Vector3 front, Vector3 center){
+        Transform temp;
+        bool swapped;
+        for (int i = 0; i < playerPos.Length; i++){
+            swapped = false;
+            for (int j = 0; j < playerPos.Length; j++){
+                if (GetAngle(center, front, playerPos[j].position) > GetAngle(center, front, playerPos[j + 1].position)){
+                    temp = playerPos[j];
+                    playerPos[j] = playerPos[j + 1];
+                    playerPos[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            if (swapped == false)
+                break;
+        }
+    }
+
+    float GetAngle(Vector3 center, Vector3 front, Vector3 angle){
+        float calculatedAngle = Vector3.SignedAngle(angle - center, front, center);
+
+        float FinalAngle = (calculatedAngle > 0) ? calculatedAngle : calculatedAngle + 360;
+    
+        return FinalAngle;
+        
+    }
+
+    void CalculatePlayerOrder(){
+        // find the vertex of the angle. this is used in every calculation
+        Vector3 centroid = FindCentroid();
+        // find the point directly in front of the centroid. this is the control vector to make all comparisons from
+        Vector3 front = centroid + new Vector3(0, 0, 20);
+        Debug.DrawRay(centroid, front, new Color(255, 0, 0, 255));
+        
+
+        BubbleSort(PlayerPositionsDelta, front, centroid);
+
+    }
+
+    Vector3 FindCentroid(){
+        float centroidX = 0, centroidZ = 0;
+        foreach (Transform vertex in playerPositions){
+            centroidX += vertex.position.x;
+            centroidZ += vertex.position.z;
+        }
+        centroidX /= playerPositions.Length;
+        centroidZ /= playerPositions.Length;
+
+        Vector3 centroid = new Vector3(centroidX, 0, centroidZ);
+
+        return centroid;
     }
 
     void ActivateParticleSystems(){
