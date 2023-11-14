@@ -13,6 +13,14 @@ public class HealthSystem : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    public void HealPlayer(float damage){
+        currentHealth += damage;
+        if (currentHealth > maxHealth){
+            currentHealth = maxHealth;
+            Debug.Log("Player's health was maxed out");
+        }
+    }
+
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
