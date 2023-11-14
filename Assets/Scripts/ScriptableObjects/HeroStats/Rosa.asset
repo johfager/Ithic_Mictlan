@@ -13,19 +13,23 @@ MonoBehaviour:
   m_Name: Rosa
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
-    characterName: default
+    characterName: Rosa
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1
     jumpHeight: 15.5
     jumpAgility: 5
     sprintSpeedMultiplier: 2
+    sprintGradualAcceleration: 5
   healthAttributes:
-    maxHealth: 200
+    maxHealth: 250
     healthRegen: 0.1
-    currentHealth: 200
   combatAttributes:
     basicAttackDamage: 10
     attackSpeed: 1
   lassoAttributes:
     lassoCircleDiameter: 10
+  abilityAttributes:
+    primaryAbility: {fileID: 11400000, guid: bcfdd3e657aa1c94c851be4ae2082233, type: 2}
+    secondaryAbility: {fileID: 11400000, guid: d67f2dfd9b723b740b830d72f1c635c1, type: 2}
+    ultimateAbility: {fileID: 11400000, guid: 97159ccb196672c47930358b92860371, type: 2}
