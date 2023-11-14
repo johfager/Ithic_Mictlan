@@ -711,7 +711,7 @@ GameObject:
   - component: {fileID: 1099401923913741354}
   - component: {fileID: 6322882683255132418}
   m_Layer: 0
-  m_Name: Fantasy_Polygon_Chest_level_01
+  m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -727,7 +727,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25754, y: 0.25754, z: 0.25754}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3374856007896480029}
@@ -770,6 +770,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInsideTrigger: 0
   animator: {fileID: 3049585352295219088}
+  trigger: {fileID: 0}
 --- !u!65 &6322882683255132418
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -6,12 +6,16 @@ using UnityEngine.AI;
 public class XoloController : MonoBehaviour
 {
     public static XoloController instance;
+    public GameObject mainBody;
     private NavMeshAgent agent;
     private Animator animControl;
+    private SphereCollider catchCollider;
     private float speed;
+    private float catchRange;
     private bool isRunning;
     private bool wasCatched;
-    private int numOfTouches;
+    private bool canBeGrabbed;
+
     private void Awake() {
         if(instance == null)
         {
@@ -20,12 +24,14 @@ public class XoloController : MonoBehaviour
     }
 
     void Start() {
-        agent = GetComponent<NavMeshAgent>();
-        animControl = GetComponent<Animator>();
+        agent = mainBody.GetComponent<NavMeshAgent>();
+        animControl = mainBody.GetComponent<Animator>();
+        catchCollider = GetComponent<SphereCollider>();
         speed = agent.speed;
+        catchRange = catchCollider.radius;
         isRunning = false;
         wasCatched = false;
-        numOfTouches = 0;
+        canBeGrabbed = false;
     }
 
     void Update() {
@@ -34,27 +40,36 @@ public class XoloController : MonoBehaviour
         if(speed == 10)
         {
             isRunning = true;
-            numOfTouches = 1;
         }
         else if(speed == 3.5f)
         {
             isRunning = false;
-            numOfTouches = 0;
         }
 
         // Setting parameters of the animator
         animControl.SetBool("isRunning", isRunning);
         animControl.SetFloat("Speed", speed);
+
+        // Catch logic
+        if(canBeGrabbed)
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                StopRun();
+            }
+        }
         
     }
 
     public void StopRun()
     {
-        Debug.Log("Stoping");
         wasCatched = true;
-        animControl.SetBool("isRunning", false);
+        isRunning = false;
+        canBeGrabbed = false;
+        animControl.SetBool("isRunning", isRunning);
         animControl.SetFloat("Speed", 0);
         animControl.SetBool("hasStopped", wasCatched);
+        StartCoroutine(DispawnXolo());
         
     }
 
@@ -63,14 +78,24 @@ public class XoloController : MonoBehaviour
         return wasCatched;
     }
 
-    private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.tag == "Hero" && wasCatched == false)
+    private void OnTriggerEnter(Collider other) {
+        if(other.tag == "Hero")
         {
-            numOfTouches = 2;
-           StopRun();
-            Debug.Log("You catched me");
+            canBeGrabbed = true;
         }
+    }
 
+    private void OnTriggerExit(Collider other) {
+        if(other.tag == "Hero")
+        {
+            canBeGrabbed = false;
+        }
+    }
+
+    private IEnumerator DispawnXolo()
+    {
+        yield return new WaitForSeconds(6f);
+        Destroy(mainBody);
     }
 
 }

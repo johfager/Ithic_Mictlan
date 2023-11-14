@@ -8,6 +8,8 @@ public class ChestBehaviour : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private BoxCollider trigger;
 
+    private PlayerInventory _currentPlayerInventory;
+
     void Start()
     {
         trigger = GetComponent<BoxCollider>();
@@ -26,22 +28,26 @@ public class ChestBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Hero"))
         {
             playerInsideTrigger = true;
+            _currentPlayerInventory = other.gameObject.GetComponent<PlayerInventory>();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Hero"))
         {
             playerInsideTrigger = false;
+            
         }
     }
 
     IEnumerator WaitAndDestroy()
     {
+        _currentPlayerInventory.AddItem(ItemManager.Instance.ChooseRandomCommonItem());
+        _currentPlayerInventory = null; 
         yield return new WaitForSeconds(10);
         Destroy(gameObject);
     }
