@@ -26,6 +26,8 @@ public class AhuizotlBehaviour : MonoBehaviour
     private float cacaoDrop;
     private bool attackCoolDown;
 
+    private Animator animator;
+
 
     void Start()
     {
@@ -36,6 +38,7 @@ public class AhuizotlBehaviour : MonoBehaviour
         atackDamage = enemyStats.combatAttributes.basicAttackDamage;
         cacaoDrop = enemyStats.baseAttributes.CacaoDrop;
         attackCoolDown = true;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
