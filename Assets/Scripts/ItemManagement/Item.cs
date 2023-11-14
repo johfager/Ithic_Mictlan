@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public abstract class Item
 {
     // internal id of the item 
@@ -19,5 +20,5 @@ public abstract class Item
     // short description of the item and its effect
     public string description;
 
-    public abstract void applyEffect();
+    
 }

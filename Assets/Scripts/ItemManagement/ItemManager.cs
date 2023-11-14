@@ -4,67 +4,18 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
-    public ActiveItem[] ActiveItems;
-    public ConsumableItem[] ConsumableItems;
-    public BuffConsumable[] BuffConsumables;
-    public JaguarWarriorItem[] JaguarWarriorItems;
-    public EagleWarriorItem[] EagleWarriorItems;
-    public ChamanItem[] ChamanItems;
-    public OwlWitchItem[] OwlWitchItems;
 
-    void Awake(){
-        ConsumableItems = new ConsumableItem[]
-        {
-            new ConsumableItem
-            {
-                id = 101,
-                name = "Tamal de dulce",
-                rarity = 1,
-                description = "Un tamal de dulce siquesi. Recupera 30 de salud",
-                healthRestored = 30.0f,
-                manaRestored = 0,
-            },
-            
+    // Warrior Shield. Defense buff
+    // Cempasuchil flower. Healing item
+    // Obsidian collar. Boosts crit chance
+    // Jade orb. ???
 
-        };
+    public static ItemManager Instance;
+    
+    public Item[] CommonItemPool;
 
-        ActiveItems = new ActiveItem[]
-        {
-            new ActiveItem{
-                id = 201,
-                name = "Orbe misterioso",
-                rarity = 2,
-                description = "Un orbe misterioso. Su efecto es aleatorio",  
-            },
-            
-
-        };
-
-        BuffConsumables = new BuffConsumable[]
-        {
-            new BuffConsumable {
-                id = 301,
-                name = "Makahuitl",
-                rarity = 1,
-                description = "Incrementa el daño base del usuario en 15%", 
-
-                healthBuff = 0,
-                defenseBuff = 0,
-
-                fallSpeed = 0,
-                movSpeedBuff = 0,
-                jumpHeightBuff = 0,
-
-                dmgBuff = 1.2f,
-                atkSpeedBuff = 0,
-
-                critChanceBuff = 0,
-            },
-            
-
-        };
-
-        JaguarWarriorItems = new JaguarWarriorItem[]
+    public Item[] RareItemPool;
+    public JaguarWarriorItem[] JaguarWarriorItems = new JaguarWarriorItem[]
         {
             new JaguarWarriorItem{
                 id = 401,
@@ -74,8 +25,7 @@ public class ItemManager : MonoBehaviour
             },
             
         };
-
-        EagleWarriorItems = new EagleWarriorItem[]
+    public EagleWarriorItem[] EagleWarriorItems = new EagleWarriorItem[]
         {
             new EagleWarriorItem{
                 id = 501,
@@ -85,8 +35,7 @@ public class ItemManager : MonoBehaviour
             },
 
         };
-
-        ChamanItems = new ChamanItem[]
+    public ChamanItem[] ChamanItems = new ChamanItem[]
         {
             new ChamanItem{
                 id = 601,
@@ -96,8 +45,7 @@ public class ItemManager : MonoBehaviour
             },
 
         };
-
-        OwlWitchItems = new OwlWitchItem[]
+    public OwlWitchItem[] OwlWitchItems = new OwlWitchItem[]
         {
             new OwlWitchItem{
                 id = 701,
@@ -107,5 +55,112 @@ public class ItemManager : MonoBehaviour
             },
 
         };
+
+    void Awake(){
+        if (Instance != null && Instance != this) { 
+            Destroy(this); 
+        } else { 
+            Instance = this; 
+        } 
+
+        CommonItemPool = new Item[]
+        {
+            new ConsumableItem
+            {
+                id = 101,
+                name = "Flor de Cempasuchil",
+                rarity = 1,
+                description = "Recupera 30 de salud",
+                healthRestored = 30.0f,
+                
+            },
+
+            new ConsumableItem
+            {
+                id = 102,
+                name = "Tamal de dulce",
+                rarity = 1,
+                description = "Recupera 80 de salud",
+                healthRestored = 30.0f,
+                
+            },
+
+            new BuffConsumable {
+                id = 301,
+                name = "Makahuitl",
+                rarity = 1,
+                description = "Incrementa el daño base del usuario en 15%", 
+
+                healthBuff = 1f,
+                defenseBuff = 1f,
+
+                fallSpeed = 1f,
+                movSpeedBuff = 1f,
+                jumpHeightBuff = 1f,
+
+                dmgBuff = 1.15f,
+                atkSpeedBuff = 1f,
+
+                critChanceBuff = 1f,
+            },
+
+            new BuffConsumable {
+                id = 302,
+                name = "Escudo de guerrero",
+                rarity = 1,
+                description = "Incrementa la defensa base del usuario en 15%", 
+
+                healthBuff = 1f,
+                defenseBuff = 1.15f,
+
+                fallSpeed = 1f,
+                movSpeedBuff = 1f,
+                jumpHeightBuff = 1f,
+
+                dmgBuff = 1f,
+                atkSpeedBuff = 1f,
+
+                critChanceBuff = 1f,
+            }, 
+
+            new BuffConsumable {
+                id = 302,
+                name = "Colgante de obsidiana",
+                rarity = 1,
+                description = "Incrementa la probabilidad de critco del usuario en 15%", 
+
+                healthBuff = 1f,
+                defenseBuff = 1f,
+
+                fallSpeed = 1f,
+                movSpeedBuff = 1f,
+                jumpHeightBuff = 1f,
+
+                dmgBuff = 1f,
+                atkSpeedBuff = 1f,
+
+                critChanceBuff = 1.15f,
+            }, 
+            
+
+        };
+
+        RareItemPool = new Item[] {
+            new ActiveItem{
+                id = 201,
+                name = "Orbe misterioso",
+                rarity = 2,
+                description = "Un orbe misterioso. Su efecto es aleatorio",  
+            },
+        };
+        
+
+    }
+
+    public Item ChooseRandomCommonItem(){
+        int randomIndex = Random.Range(0, CommonItemPool.Length);
+        Item item = CommonItemPool[randomIndex];
+        
+        return item;
     }
 }
