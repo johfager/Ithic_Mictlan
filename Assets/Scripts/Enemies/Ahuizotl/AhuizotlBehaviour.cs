@@ -8,6 +8,7 @@ public class AhuizotlBehaviour : MonoBehaviour
 {
     [SerializeField, Header("Ahuizotl Scriptable Object")] private EnemyStats enemyStats; // El scriptable object que contiene la info del Ahuizotl
     [SerializeField] private Transform target; // El objetivo actual del agente
+    [SerializeField] private GameObject targetObject; // El objecto del objetivo
     public float scanRadius = 5f; // Radio de escaneo alrededor del agente 
     public LayerMask targetLayer; // Capa de objetos objetivo
     private float moveSpeed; // Velocidad de movimiento del agente
@@ -20,17 +21,26 @@ public class AhuizotlBehaviour : MonoBehaviour
     public float circleSpeed = 1f; // Velocidad del movimiento circular
 
     // Estadisticas base del Ahuizotl
-    
+    private float health;
+    private float atackDamage;
+    private float cacaoDrop;
+    private bool attackCoolDown;
+
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        moveSpeed = agent.speed;
+        moveSpeed = enemyStats.movementAttributes.movementSpeed;
         spawnPoint = transform.position;
+        health = enemyStats.healthAttributes.maxHealth;
+        atackDamage = enemyStats.combatAttributes.basicAttackDamage;
+        cacaoDrop = enemyStats.baseAttributes.CacaoDrop;
+        attackCoolDown = true;
     }
 
     void Update()
     {
+        // Detection and movement logic
         if (sharedTarget == null)
         {
             // Move in a circular pattern
@@ -47,6 +57,15 @@ public class AhuizotlBehaviour : MonoBehaviour
             // Usa el objetivo compartido
             target = sharedTarget;
             agent.SetDestination(target.position);
+        }
+
+        // TODO: CAMBIAR LA FORMA EN LA QUE SE HACE EL GET COMPONENT >:c ESTA MAL HACER EL SET TODO EL TIEMPO 
+
+        // Attack logic
+        if(AhuizotlAttack.instance.GetAttackState() && attackCoolDown)
+        {
+            attackCoolDown = false;
+            StartCoroutine(attackSpeedController());
         }
     }
 
@@ -81,5 +100,14 @@ public class AhuizotlBehaviour : MonoBehaviour
         // Draw a wire sphere to visualize the scanRadius in the scene view
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, scanRadius);
+    }
+
+    private IEnumerator attackSpeedController()
+    {
+        Debug.Log("ATTACK >:c");
+        targetObject = AhuizotlAttack.instance.GetTarget();
+        targetObject.GetComponent<HealthSystem>().TakeDamage(atackDamage);
+        yield return new WaitForSeconds(5f);
+        attackCoolDown = true;
     }
 }
