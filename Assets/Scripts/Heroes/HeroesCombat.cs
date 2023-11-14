@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
 using Heroes;
 using UnityEngine;
 using TMPro;
@@ -19,6 +20,7 @@ public class HeroesCombat : MonoBehaviour
     private float lastComboEnd;
     private int comboCounter;
     private Animator anim;
+    private RuntimeAnimatorController originalAnim;
 
     private float followUpAttackTimer = 0.0f; //Not used
     private float attackDamage;
@@ -79,6 +81,8 @@ public class HeroesCombat : MonoBehaviour
         
         combatStateText.enabled = false; // Hide the debug text
         anim = GetComponent<Animator>();
+        originalAnim = anim.runtimeAnimatorController;
+        
         playerManager = GetComponentInParent<PlayerManager>(); // Get the PlayerManager reference
         
     }
@@ -169,6 +173,10 @@ public class HeroesCombat : MonoBehaviour
     
     public void HandleAttackStateMachine()
     {
+        if(currentAttack != null)
+        {
+            ExitAttack(currentAttack);
+        }
         if (currentHeroesAttackState == HeroesAttackState.Idle)
         {
             if (Input.GetMouseButtonDown(0))
@@ -209,12 +217,13 @@ public class HeroesCombat : MonoBehaviour
     private IEnumerator StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType)
     {
         IsInCombatMode = true;
-        if (Time.time - lastComboEnd > 0.5f && comboCounter < attackType.Count)
-        {
+        if ((Time.time - lastComboEnd > 0.5f && comboCounter < attackType.Count))
+        {   
             CancelInvoke("EndCombo");
-
+            Debug.Log("Inside First If condition in StartAttackAnimation");
             if (Time.time - lastClickedTime >= comboTime)
             {
+                Debug.Log("Inside Second IF condition in StartAttackAnimation");
                 anim.runtimeAnimatorController = attackType[comboCounter].animatorOV;
                 anim.Play(attackAnimationName, 0, 0);
                 attackDamage = attackType[comboCounter].damage;
@@ -229,18 +238,20 @@ public class HeroesCombat : MonoBehaviour
                 }
             }
         }
-        StartCoroutine(ResetCooldown(currentAttack));
         Debug.Log($"Starting cooldown for {currentAttack}.");
-        // Wait for the animation to finish
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-        
+        StartCoroutine(ResetCooldown(currentAttack));
 
         IsInCombatMode = false;
-
-        
         ExitAttack(currentAttack);
+        
+        //anim.runtimeAnimatorController = originalAnim;
 
-
+        // Wait for the animation to finish
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        Debug.Log("Finished playing animation.");
+        Debug.Log(originalAnim + " is the original animation controller");
+        //anim.runtimeAnimatorController = originalAnim;
+        Debug.Log(anim.runtimeAnimatorController.name);
     }
 
     private void OnDrawGizmos()
@@ -359,12 +370,19 @@ private IEnumerator ResetCooldown(string cooldownType)
 
     void ExitAttack(string attackTagName)
     {
+        
+        /*Debug.Log("Animatorcurrentclipinfo: "+ anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        Debug.Log(attackTagName + "      " + anim.GetCurrentAnimatorStateInfo(0).IsName(attackTagName) + anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName));
+        */
         if (attackTagName != null)
         {
-            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f &&
-                anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName))
+            /*if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f &&
+                anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == attackTagName)*/
+            /*if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f)  */
+            if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName))
             {
-                Invoke("EndCombo", 1);
+                Debug.Log("Inside if statement of exitattack");
+                Invoke("EndCombo", 0.5f);
             }
         }
     }
