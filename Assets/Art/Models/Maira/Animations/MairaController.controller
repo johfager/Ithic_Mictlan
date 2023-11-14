@@ -49,7 +49,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: -203655887218126122, guid: 2d754f9a88f047d4bbab132b0f659a96, type: 3}
-  m_Tag: MairaUltimateAbility
+  m_Tag: UltimateAbility
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -142,7 +142,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: -203655887218126122, guid: ba8201156cee1d247ba3cfd94263f89b, type: 3}
-  m_Tag: MairaPrimaryAbility
+  m_Tag: PrimaryAbility
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -422,7 +422,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: -203655887218126122, guid: a32f6fe2ed7c2b6499e0bf7628570188, type: 3}
-  m_Tag: MairaSecondaryAbility
+  m_Tag: SecondaryAbility
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
