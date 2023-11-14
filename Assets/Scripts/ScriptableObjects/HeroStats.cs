@@ -39,6 +39,8 @@ public class CombatAttributes
     //List of attacks ad combos must be here. 
     public float basicAttackDamage = 10f;            // Basic attack damage
     public float attackSpeed = 1f;                  // Attack speed
+    public float criticalHitChance = 1.0f;           // Crit Chance
+    public float defense = 1.0f;                    // Defense
 }
 
 // Serializable class for lasso attributes
