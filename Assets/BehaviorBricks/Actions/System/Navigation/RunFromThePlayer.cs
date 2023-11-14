@@ -57,7 +57,6 @@ namespace BBUnity.Actions
             BoxCollider boxCollider = area != null ? area.GetComponent<BoxCollider>() : null;
             if (boxCollider != null)
             {
-                Debug.Log("SAVED");
                 return new Vector3(UnityEngine.Random.Range(area.transform.position.x - area.transform.localScale.x * boxCollider.size.x * 0.5f,
                                                             area.transform.position.x + area.transform.localScale.x * boxCollider.size.x * 0.5f),
                                    area.transform.position.y,
@@ -81,7 +80,6 @@ namespace BBUnity.Actions
                 {
                     if(XoloController.instance.CatchCheck() == true)
                     {
-                        Debug.Log(":C");
                         navAgent.speed = 0;
                         return gameObject.transform.position;
                     }
