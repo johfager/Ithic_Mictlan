@@ -38,8 +38,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
         healthSystem = GetComponent<BossHealthSystem>();
         healthSystem.Initialize(enemyStats.healthAttributes.maxHealth);
         playerList = GameObject.FindGameObjectsWithTag("Hero");
-        if(playerList.Length == 0) Debug.Log("No players found");
-        else Debug.Log(playerList.Length);
         agent = GetComponent<NavMeshAgent>();
         CamazotzAgentSetter();
     }
@@ -167,7 +165,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         if (objective != null)
         {
-            Debug.Log("Dealing damage to target");
             HealthSystem targetHealth = objective.GetComponent<HealthSystem>();
             if (targetHealth != null)
             {
