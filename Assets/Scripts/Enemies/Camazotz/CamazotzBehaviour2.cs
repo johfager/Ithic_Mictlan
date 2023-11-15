@@ -263,14 +263,12 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 int attackIndex = Random.Range(0, 2);
                 if (attackIndex == 1)
                 {
-                    Debug.Log("Soul Eater");
                     currentAnimationBool = "SoulEaterHit";
                     animator.SetBool(currentAnimationBool, true);
                     DealDamageToTarget(1);
                 }
                 else
                 {
-                    Debug.Log("Soul Eater Miss");
                     currentAnimationBool = "SoulEaterMiss";
                     animator.SetBool(currentAnimationBool, true);
                 }
@@ -301,7 +299,20 @@ public class CamazotzBehaviour2 : MonoBehaviour
             {
                 agent.stoppingDistance = 15;
                 int attackIndex = Random.Range(0, 2);
-                if (attackIndex == 1) DealDamageToTarget(1);
+                if (attackIndex == 1)
+                {
+                    Debug.Log("Upside Down World Hit");
+                    currentAnimationBool = "UpsideDownWorldHit";
+                    animator.SetBool(currentAnimationBool, true);
+                    DealDamageToTarget(1);
+                }
+                else
+                {
+                    Debug.Log("Upside Down World Miss");
+                    currentAnimationBool = "UpsideDownWorldMiss";
+                    animator.SetBool(currentAnimationBool, true);
+                }
+                StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
                 AttacksSoftReset();
                 PhaseChecker(attackIndex);
                 upsideDownWorldCooldown = 12.0f; // Set a 12-second cooldown for Upside Down World attack
