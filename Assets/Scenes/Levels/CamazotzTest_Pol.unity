@@ -646,10 +646,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2506840619801775783, guid: c250e611cbf3954448e384fe6f2ad283, type: 3}
-      propertyPath: m_Avatar
-      value: 
-      objectReference: {fileID: 9000000, guid: e5289738b31e8cc408844123a99ca4a1, type: 3}
     - target: {fileID: 6454154051156726909, guid: c250e611cbf3954448e384fe6f2ad283, type: 3}
       propertyPath: m_Name
       value: CamazotzAnimations
