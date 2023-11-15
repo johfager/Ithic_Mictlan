@@ -177,10 +177,10 @@ public class CamazotzBehaviour2 : MonoBehaviour
         }
     }
 
-    private IEnumerator ResetBooleanParametersAfterDelay(string animationBool)
+    private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, float delay = 1.0f)
     {
         // Assuming your animation duration is 1 second, adjust the time as needed
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(delay);
 
         // Reset the boolean parameters after the animation is complete
         animator.SetBool(animationBool, false);
@@ -242,7 +242,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
         int attackIndex = Random.Range(0, 2);
         if (attackIndex == 1)
         {
-            Debug.Log("Long Range Basic Attack");
             currentAnimationBool = "LongRange";
             animator.SetBool(currentAnimationBool, true);
             DealDamageToTarget(1);
@@ -262,7 +261,20 @@ public class CamazotzBehaviour2 : MonoBehaviour
             {
                 agent.stoppingDistance = 15;
                 int attackIndex = Random.Range(0, 2);
-                if (attackIndex == 1) DealDamageToTarget(1);
+                if (attackIndex == 1)
+                {
+                    Debug.Log("Soul Eater");
+                    currentAnimationBool = "SoulEaterHit";
+                    animator.SetBool(currentAnimationBool, true);
+                    DealDamageToTarget(1);
+                }
+                else
+                {
+                    Debug.Log("Soul Eater Miss");
+                    currentAnimationBool = "SoulEaterMiss";
+                    animator.SetBool(currentAnimationBool, true);
+                }
+                StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
                 AttacksSoftReset();
                 PhaseChecker(attackIndex);
                 soulEaterCooldown = 10.0f; // Set a 10-second cooldown for Soul Eater attack
