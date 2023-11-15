@@ -25,6 +25,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
     BossHealthSystem healthSystem;
 
     [SerializeField] private Animator animator;
+    private string currentAnimationBool;
 
     //Cooldowns for the attacks
     [SerializeField] private float basicAttackCooldown = 0.0f;
@@ -40,7 +41,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
         healthSystem = GetComponent<BossHealthSystem>();
         healthSystem.Initialize(enemyStats.healthAttributes.maxHealth);
         playerList = GameObject.FindGameObjectsWithTag("Hero");
-        Debug.Log(playerList.Length);
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         CamazotzAgentSetter();
@@ -177,6 +177,15 @@ public class CamazotzBehaviour2 : MonoBehaviour
         }
     }
 
+    private IEnumerator ResetBooleanParametersAfterDelay(string animationBool)
+    {
+        // Assuming your animation duration is 1 second, adjust the time as needed
+        yield return new WaitForSeconds(1.0f);
+
+        // Reset the boolean parameters after the animation is complete
+        animator.SetBool(animationBool, false);
+    }
+
     // Q3
     private void HandleBasicAttackState()
     {
@@ -208,10 +217,20 @@ public class CamazotzBehaviour2 : MonoBehaviour
         int attackIndex = Random.Range(0, 2);
         if (attackIndex == 1)
         {
-            Debug.Log("Basic Right Attack");
-            animator.SetBool("BasicRight", true);
-            DealDamageToTarget(1);
-            animator.SetBool("BasicRight", false);
+            int left_Right = Random.Range(0, 2);
+            if (left_Right == 0)
+            {
+                currentAnimationBool = "BasicRight";
+                animator.SetBool(currentAnimationBool, true);
+                DealDamageToTarget(1);
+            }
+            else
+            {
+                currentAnimationBool = "BasicLeft";
+                animator.SetBool(currentAnimationBool, true);
+                DealDamageToTarget(1);
+            }
+            StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
         }
         AttacksSoftReset();
         PhaseChecker(attackIndex);
@@ -221,7 +240,14 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private void HandleLargeRangeBasicAttackState()
     {
         int attackIndex = Random.Range(0, 2);
-        if (attackIndex == 1) DealDamageToTarget(1);
+        if (attackIndex == 1)
+        {
+            Debug.Log("Long Range Basic Attack");
+            currentAnimationBool = "LongRange";
+            animator.SetBool(currentAnimationBool, true);
+            DealDamageToTarget(1);
+        }
+        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
         AttacksSoftReset();
         PhaseChecker(attackIndex);
     }
@@ -298,7 +324,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Infernal Screech");
                     DealDamageToTarget(1);
                     ChangeState(State.ChangeOfPlayerToTargetState);
                 }
