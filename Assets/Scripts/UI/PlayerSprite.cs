@@ -13,6 +13,7 @@ public class PlayerSprite : MonoBehaviour
     }
 
     public void SelectCharacter() {
-        Debug.Log(playerDataScriptableObject.baseAttributes.characterName);
+        UISelectScreenManager.instance.SetCharacterInfo(playerDataScriptableObject.baseAttributes.characterName,
+        playerDataScriptableObject.baseAttributes.description);
     } 
 }
