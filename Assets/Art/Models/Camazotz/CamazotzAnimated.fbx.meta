@@ -1055,8 +1055,8 @@ ModelImporter:
       name: Armature|MovementFlying
       takeName: Armature|MovementFlying
       internalID: -4186594926150518245
-      firstFrame: 0
-      lastFrame: 50
+      firstFrame: 20
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
