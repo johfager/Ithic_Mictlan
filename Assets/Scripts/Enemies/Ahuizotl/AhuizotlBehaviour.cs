@@ -24,12 +24,13 @@ public class AhuizotlBehaviour : MonoBehaviour
     private float health;
     private float atackDamage;
     private float cacaoDrop;
-    private bool attackCoolDown;
+    private bool canBite;
+    private bool targetWasFound;
 
     private Animator animator;
 
 
-    void Start()
+    void OnEnable()
     {
         agent = GetComponent<NavMeshAgent>();
         moveSpeed = enemyStats.movementAttributes.movementSpeed;
@@ -37,8 +38,10 @@ public class AhuizotlBehaviour : MonoBehaviour
         health = enemyStats.healthAttributes.maxHealth;
         atackDamage = enemyStats.combatAttributes.basicAttackDamage;
         cacaoDrop = enemyStats.baseAttributes.CacaoDrop;
-        attackCoolDown = true;
+        canBite = true;
+        targetWasFound = false;
         animator = GetComponent<Animator>();
+        animator.SetBool("targetWasFound", targetWasFound);
     }
 
     void Update()
@@ -59,16 +62,20 @@ public class AhuizotlBehaviour : MonoBehaviour
         {
             // Usa el objetivo compartido
             target = sharedTarget;
+            targetWasFound = true;
             agent.SetDestination(target.position);
         }
+
+        animator.SetBool("targetWasFound", targetWasFound);
 
         // TODO: CAMBIAR LA FORMA EN LA QUE SE HACE EL GET COMPONENT >:c ESTA MAL HACER EL SET TODO EL TIEMPO 
 
         // Attack logic
-        if(AhuizotlAttack.instance.GetAttackState() && attackCoolDown)
+        if(AhuizotlAttack.instance.GetAttackState() && canBite)
         {
-            attackCoolDown = false;
+            animator.SetBool("canAttack", AhuizotlAttack.instance.GetAttackState());
             StartCoroutine(attackSpeedController());
+            Debug.Log("After this :p");
         }
     }
 
@@ -95,6 +102,7 @@ public class AhuizotlBehaviour : MonoBehaviour
 
             // Asignar el objetivo encontrado a TODOS los agentes
             sharedTarget = closestTarget;
+            targetWasFound = true;
         }
     }
 
@@ -108,9 +116,14 @@ public class AhuizotlBehaviour : MonoBehaviour
     private IEnumerator attackSpeedController()
     {
         Debug.Log("ATTACK >:c");
+        animator.SetBool("canBite", canBite);
+        canBite = false;
+        animator.SetBool("canBite", canBite);
         targetObject = AhuizotlAttack.instance.GetTarget();
         targetObject.GetComponent<HealthSystem>().TakeDamage(atackDamage);
         yield return new WaitForSeconds(5f);
-        attackCoolDown = true;
+        Debug.Log("I AM GONNA SMESH U >:c");
+        canBite = true;
+        animator.SetBool("canBite", canBite);
     }
 }
