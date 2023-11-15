@@ -51,7 +51,6 @@ namespace Heroes
             {
                 playerMovement.HandleMovement();
             }
-            Debug.Log("combat mode is: " + heroesCombatScript.IsInCombatMode.ToString());
             heroesCombatScript.HandleAttackStateMachine();
 
         

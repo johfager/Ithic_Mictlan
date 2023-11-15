@@ -24,6 +24,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private float playerDistance;
     BossHealthSystem healthSystem;
 
+    [SerializeField] private Animator animator;
+
     //Cooldowns for the attacks
     [SerializeField] private float basicAttackCooldown = 0.0f;
     [SerializeField] private float soulEaterCooldown = 0.0f;
@@ -38,7 +40,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
         healthSystem = GetComponent<BossHealthSystem>();
         healthSystem.Initialize(enemyStats.healthAttributes.maxHealth);
         playerList = GameObject.FindGameObjectsWithTag("Hero");
+        Debug.Log(playerList.Length);
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         CamazotzAgentSetter();
     }
 
@@ -126,13 +130,13 @@ public class CamazotzBehaviour2 : MonoBehaviour
         int pick = Random.Range(0, playerList.Length);
         objective = playerList[pick];
         agent.SetDestination(objective.transform.position);
+        animator.SetBool("Idle", false);
         ChangeState(State.FirstPhaseState);
     }
 
     // Q2
     private void HandleFirstPhaseState()
     {
-        Debug.Log("First Phase"); // DONE
         int attackIndex = Random.Range(0, 4);
 
         if (healthSystem.currentHealth <= 0)
@@ -202,7 +206,13 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private void HandleCloseRangeBasicAttackState()
     {
         int attackIndex = Random.Range(0, 2);
-        if (attackIndex == 1) DealDamageToTarget(1);
+        if (attackIndex == 1)
+        {
+            Debug.Log("Basic Right Attack");
+            animator.SetBool("BasicRight", true);
+            DealDamageToTarget(1);
+            animator.SetBool("BasicRight", false);
+        }
         AttacksSoftReset();
         PhaseChecker(attackIndex);
     }
@@ -359,7 +369,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
             {
                 agent.stoppingDistance = 15;
                 int attackIndex = Random.Range(0, 2);
-                if(attackIndex == 1) DealDamageToTarget(1);
+                if (attackIndex == 1) DealDamageToTarget(1);
                 AttacksSoftReset();
                 PhaseChecker(attackIndex);
                 soulDevourerCooldown = 20.0f; // Set a 20-second cooldown for Soul Devourer attack
