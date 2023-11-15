@@ -67,6 +67,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
             case State.FirstPhaseState:
                 HandleFirstPhaseState();
+                agent.SetDestination(objective.transform.position);
                 break;
 
             case State.BasicAttackState:
@@ -99,6 +100,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
             case State.SecondPhaseState:
                 HandleSecondPhaseState();
+                agent.SetDestination(objective.transform.position);
                 break;
 
             case State.SoulDevourerAttackState:
@@ -301,14 +303,12 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 int attackIndex = Random.Range(0, 2);
                 if (attackIndex == 1)
                 {
-                    Debug.Log("Upside Down World Hit");
                     currentAnimationBool = "UpsideDownWorldHit";
                     animator.SetBool(currentAnimationBool, true);
                     DealDamageToTarget(1);
                 }
                 else
                 {
-                    Debug.Log("Upside Down World Miss");
                     currentAnimationBool = "UpsideDownWorldMiss";
                     animator.SetBool(currentAnimationBool, true);
                 }
@@ -347,7 +347,11 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("Infernal Screech");
+                    currentAnimationBool = "InfernalScreech";
+                    animator.SetBool(currentAnimationBool, true);
                     DealDamageToTarget(1);
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
                     ChangeState(State.ChangeOfPlayerToTargetState);
                 }
                 infernalScreechCooldown = 15.0f; // Set a 15-second cooldown for Infernal Screech attack
