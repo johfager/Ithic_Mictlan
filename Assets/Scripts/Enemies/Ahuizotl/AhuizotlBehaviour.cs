@@ -26,8 +26,10 @@ public class AhuizotlBehaviour : MonoBehaviour
     private float cacaoDrop;
     private bool canBite;
     private bool targetWasFound;
+    private bool isDead;
 
     private Animator animator;
+    private HealthSystem myAhuizotlHealth;
 
 
     void OnEnable()
@@ -40,12 +42,16 @@ public class AhuizotlBehaviour : MonoBehaviour
         cacaoDrop = enemyStats.baseAttributes.CacaoDrop;
         canBite = true;
         targetWasFound = false;
+        isDead = false;
         animator = GetComponent<Animator>();
+        myAhuizotlHealth = GetComponent<HealthSystem>();
         animator.SetBool("targetWasFound", targetWasFound);
     }
 
     void Update()
     {
+        CheckHealth();
+
         // Detection and movement logic
         if (sharedTarget == null)
         {
@@ -71,12 +77,20 @@ public class AhuizotlBehaviour : MonoBehaviour
         // TODO: CAMBIAR LA FORMA EN LA QUE SE HACE EL GET COMPONENT >:c ESTA MAL HACER EL SET TODO EL TIEMPO 
 
         // Attack logic
-        if(AhuizotlAttack.instance.GetAttackState() && canBite)
+        if(AhuizotlAttack.instance.GetAttackState())
+        {
+            if(canBite)
+            {
+                StartCoroutine(attackSpeedController());
+            }
+            animator.SetBool("canAttack", AhuizotlAttack.instance.GetAttackState());
+        }
+
+        if(!AhuizotlAttack.instance.GetAttackState())
         {
             animator.SetBool("canAttack", AhuizotlAttack.instance.GetAttackState());
-            StartCoroutine(attackSpeedController());
-            Debug.Log("After this :p");
         }
+        
     }
 
     void ScanForTarget()
@@ -113,16 +127,31 @@ public class AhuizotlBehaviour : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, scanRadius);
     }
 
+    public void CheckHealth()
+    {
+        if(myAhuizotlHealth.currentHealth <= 0)
+        {
+            isDead = true;
+            animator.SetBool("isDead", isDead);
+            StartCoroutine(KillAhuizotl());
+        }
+    }
+
+    private IEnumerator KillAhuizotl()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
+    }
+
     private IEnumerator attackSpeedController()
     {
-        Debug.Log("ATTACK >:c");
         animator.SetBool("canBite", canBite);
         canBite = false;
         animator.SetBool("canBite", canBite);
         targetObject = AhuizotlAttack.instance.GetTarget();
         targetObject.GetComponent<HealthSystem>().TakeDamage(atackDamage);
+        gameObject.transform.LookAt(targetObject.transform);
         yield return new WaitForSeconds(5f);
-        Debug.Log("I AM GONNA SMESH U >:c");
         canBite = true;
         animator.SetBool("canBite", canBite);
     }
