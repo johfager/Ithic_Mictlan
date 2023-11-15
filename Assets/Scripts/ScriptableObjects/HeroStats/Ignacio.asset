@@ -13,19 +13,26 @@ MonoBehaviour:
   m_Name: Ignacio
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
-    characterName: default
+    characterName: Ignacio
+    description: "Descripci\xF3n de Ignacio"
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1
     jumpHeight: 15.5
     jumpAgility: 5
     sprintSpeedMultiplier: 2
+    sprintGradualAcceleration: 5
   healthAttributes:
     maxHealth: 200
     healthRegen: 0.1
-    currentHealth: 200
   combatAttributes:
     basicAttackDamage: 10
     attackSpeed: 1
+    criticalHitChance: 1
+    defense: 1
   lassoAttributes:
     lassoCircleDiameter: 10
+  abilityAttributes:
+    primaryAbility: {fileID: 0}
+    secondaryAbility: {fileID: 0}
+    ultimateAbility: {fileID: 0}
