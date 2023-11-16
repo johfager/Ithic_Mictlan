@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 782cb4ff35ae67c4da3087251db6a291
+guid: 2d754f9a88f047d4bbab132b0f659a96
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,27 +33,27 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: MairaRightStrafe
+      name: OLDMairaUltimateAbility
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 21
+      lastFrame: 140
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 1
+      loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 1
+      heightFromFeet: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -528,18 +528,18 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Maira(Clone)
+    - name: Ch43_nonPBR(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Ch43
-      parentName: Maira(Clone)
+      parentName: Ch43_nonPBR(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:Hips
-      parentName: Maira(Clone)
+      parentName: Ch43_nonPBR(Clone)
       position: {x: 0.00001216134, y: 0.77745223, z: 0.015593855}
       rotation: {x: -0.0000003914289, y: 0.0000031694283, z: -0.000023152841, w: 1}
       scale: {x: 1, y: 1, z: 1}
