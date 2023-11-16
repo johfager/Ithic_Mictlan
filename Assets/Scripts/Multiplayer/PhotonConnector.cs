@@ -44,15 +44,14 @@ public class PhotonConnector : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby() {
 
         // Si te unisste a un lobby, lees la informacion y muestras los canvas correspondientes
-        UIMenuController.HideLoadingScreenCanvasGroupTween();
+        UIMenuController.HideCanvasGroup(UIMenuController.GetCanvasGroup("loadingPanel"));
         if(!nicknameSet)
         {
             UIMenuController.SetPlayerNickname(savedNickname);
-            UIMenuController.ShowSetNicknameCanvasGroupTween();
+            UIMenuController.ShowCanvasGroup(UIMenuController.GetCanvasGroup("nickNamePanel"));
             nicknameSet = true;
         }
-        UIMenuController.ShowMenuButtonsCanvasGroupTween();
-        UIMenuController.ShowTitleCanvasGroupTween();
+        UIMenuController.ShowCanvasGroup(UIMenuController.GetCanvasGroup("mainMenuPanel"));
 
         // Coloca un nickname al azar
         if (string.IsNullOrEmpty(PhotonNetwork.NickName))
@@ -79,7 +78,7 @@ public class PhotonConnector : MonoBehaviourPunCallbacks
         string roomName = UIMenuController.GetCreateRoomName();
         if(roomName != "")
         {
-            UIMenuController.HideCreateRoomCanvasGroupTween();
+            UIMenuController.HideCanvasGroup(UIMenuController.GetCanvasGroup("createRoomPanel"));
 
             RoomOptions roomOptions = new RoomOptions
             {
@@ -88,11 +87,7 @@ public class PhotonConnector : MonoBehaviourPunCallbacks
             PhotonNetwork.CreateRoom(roomName, roomOptions);
             
             UIMenuController.SetLoadingText("Creating Room...");
-            UIMenuController.ShowLoadingScreenCanvasGroupTween();
-        }
-        else 
-        {
-            UIMenuController.ToggleNoRoomNameText(true);
+            UIMenuController.ShowCanvasGroup(UIMenuController.GetCanvasGroup("loadingPanel"));
         }
     }
 
@@ -101,8 +96,8 @@ public class PhotonConnector : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnJoinedRoom()
     {
-        UIMenuController.HideLoadingScreenCanvasGroupTween();
-        UIMenuController.ShowJoinedRoomCanvasGroupTween();
+        UIMenuController.HideCanvasGroup(UIMenuController.GetCanvasGroup("loadingPanel"));
+        UIMenuController.ShowCanvasGroup(UIMenuController.GetCanvasGroup("joinedRoomPanel"));
         UIMenuController.SetJoinedRoomName(PhotonNetwork.CurrentRoom.Name);
 
         ListPlayersInRoom();
@@ -176,7 +171,7 @@ public class PhotonConnector : MonoBehaviourPunCallbacks
                 errorMessage += message;
                 break;
         }
-        UIMenuController.ShowErrorCanvasGroupTween();
+        UIMenuController.ShowCanvasGroup(UIMenuController.GetCanvasGroup("errorPanel"));
         UIMenuController.SetErrorText(errorMessage);
     }
 
@@ -186,8 +181,8 @@ public class PhotonConnector : MonoBehaviourPunCallbacks
     public void LeaveRoom()
     {
         UIMenuController.SetLoadingText("Leaving Room...");
-        UIMenuController.ShowLoadingScreenCanvasGroupTween();
-        UIMenuController.HideJoinedRoomCanvasGroupTween();
+        UIMenuController.ShowCanvasGroup(UIMenuController.GetCanvasGroup("loadingPanel"));
+        UIMenuController.HideCanvasGroup(UIMenuController.GetCanvasGroup("joinedRoomPanel"));
 
         PhotonNetwork.LeaveRoom();
     }
@@ -197,9 +192,8 @@ public class PhotonConnector : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnLeftRoom()
     {
-        UIMenuController.HideLoadingScreenCanvasGroupTween();
-        UIMenuController.ShowMenuButtonsCanvasGroupTween();
-        UIMenuController.ShowTitleCanvasGroupTween();
+        UIMenuController.HideCanvasGroup(UIMenuController.GetCanvasGroup("loadingPanel"));
+        UIMenuController.ShowCanvasGroup(UIMenuController.GetCanvasGroup("playOptionsPanel"));
     }
 
     /// <summary>
@@ -225,8 +219,8 @@ public class PhotonConnector : MonoBehaviourPunCallbacks
     public void JoinRoom(RoomInfo roomInfo)
     {
         UIMenuController.SetLoadingText("Joining Room...");
-        UIMenuController.ShowLoadingScreenCanvasGroupTween();
-        UIMenuController.HideRoomBrowserCanvasGroupTween();
+        UIMenuController.ShowCanvasGroup(UIMenuController.GetCanvasGroup("loadingPanel"));
+        UIMenuController.HideCanvasGroup(UIMenuController.GetCanvasGroup("roomBrowserPanel"));
 
         PhotonNetwork.JoinRoom(roomInfo.Name);
 

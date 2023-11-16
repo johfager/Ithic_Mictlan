@@ -31,12 +31,12 @@ public class UIMenuController : MonoBehaviour
     // Plain texts
     [Header("Plain texts")]
     [SerializeField] private TMP_Text loadingText;
-    [SerializeField] private TMP_InputField joinedNameText;
-    [SerializeField] private TMP_InputField errorText;
+    [SerializeField] private TMP_Text joinedNameText;
+    [SerializeField] private TMP_Text errorText;
 
     // Buttons
     [Header("Buttons")]
-    [SerializeField] private Button startGameButton;
+    [SerializeField] private GameObject startGameButton;
 
 
 
@@ -45,207 +45,153 @@ public class UIMenuController : MonoBehaviour
     /// </summary>
     public void InitGameScreen()
     {
-        
+        startGameButton.SetActive(false);
+
+        // Esconder todos los canvas groups
+        characterSelectorPanel.alpha = 0f;
+        characterSelectorPanel.interactable = false;
+        characterSelectorPanel.blocksRaycasts = false;
+
+        mainMenuPanel.alpha = 0f;
+        mainMenuPanel.interactable = false;
+        mainMenuPanel.blocksRaycasts = false;
+
+        playOptionsPanel.alpha = 0f;
+        playOptionsPanel.interactable = false;
+        playOptionsPanel.blocksRaycasts = false;
+
+        configPanel.alpha = 0f;
+        configPanel.interactable = false;
+        configPanel.blocksRaycasts = false;
+
+        creditsPanel.alpha = 0f;
+        creditsPanel.interactable = false;
+        creditsPanel.blocksRaycasts = false;
+
+        roomBrowserPanel.alpha = 0f;
+        roomBrowserPanel.interactable = false;
+        roomBrowserPanel.blocksRaycasts = false;
+
+        joinedRoomPanel.alpha = 0f;
+        joinedRoomPanel.interactable = false;
+        joinedRoomPanel.blocksRaycasts = false;
+
+        errorPanel.alpha = 0f;
+        errorPanel.interactable = false;
+        errorPanel.blocksRaycasts = false;
+
+        loadingPanel.alpha = 0f;
+        loadingPanel.interactable = false;
+        loadingPanel.blocksRaycasts = false;
+
+        createRoomPanel.alpha = 0f;
+        createRoomPanel.interactable = false;
+        createRoomPanel.blocksRaycasts = false;
+
+        nickNamePanel.alpha = 0f;
+        nickNamePanel.interactable = false;
+        nickNamePanel.blocksRaycasts = false;
+
+        loadingText.text = "Cargando...";
     }
-/*
-    /// <summary>
-    /// Sets the loading screen text
-    /// </summary>
-    /// <param name="text"></param>
-    public void SetLoadingText(string text) => loadingScreenText.text = text;
 
-    /// <summary>
-    /// Gets the created room name
-    /// </summary>
-    /// <returns></returns>
-    public string GetCreateRoomName() => createRoomNameInputField.text;
-
-    /// <summary>
-    /// Sets the joined room name
-    /// </summary>
-    /// <param name="roomName"></param>
-    public void SetJoinedRoomName(string roomName) => joinedRoomNameText.text = "Room : " + roomName;
-
-    /// <summary>
-    /// Sets the error screen text
-    /// </summary>
-    /// <param name="errorName"></param>
-    public void SetErrorText(string errorName) => errorText.text = errorName;
-
-    /// <summary>
-    /// Gets the player nickname
-    /// </summary>
-    /// <returns></returns>
-    public string GetPlayerNickname() => setNicknameInputField.text;
-
-    /// <summary>
-    /// Gets the player nickname
-    /// </summary>
-    /// <returns></returns>
-    public void SetPlayerNickname(string nickname) => setNicknameInputField.text = nickname;
-
-    /// <summary>
-    /// Activates the start game button
-    /// </summary>
-    /// <param name="status"></param>
+    public void SetLoadingText(string text) => loadingText.text = text;
+    public string GetCreateRoomName() => roomNameInput.text;
+    public string GetPlayerNickname() => nickNameInput.text;
     public void ActivateStartGameButton(bool status) => startGameButton.SetActive(status);
+    public void SetJoinedRoomName(string roomName) => joinedNameText.text = "Room : " + roomName;
+    public void SetErrorText(string errorName) => errorText.text = errorName;
+    public void SetPlayerNickname(string nickname) => nickNameInput.text = nickname;
 
-    private void ToggleCanvasGroupWithTween(CanvasGroup canvasGroup, float targetAlpha, bool interactable, bool blocksRaycasts){
-        LeanTween.alphaCanvas(canvasGroup, targetAlpha, 0.5f).setOnComplete(() =>
+    public void ShowCanvasGroup(CanvasGroup canvasGroup)
+    {
+        LeanTween.alphaCanvas(canvasGroup, 1f, 0.5f).setOnComplete(() =>
         {
-            canvasGroup.interactable = interactable;
-            canvasGroup.blocksRaycasts = blocksRaycasts;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
         });
     }
 
-    /// <summary>
-    /// Hides the title canvas group using tween
-    /// </summary>
-    public void HideTitleCanvasGroupTween()
+    public void HideCanvasGroup(CanvasGroup canvasGroup)
     {
-        ToggleCanvasGroupWithTween(titleCanvasGroup, 0f, false, false);
-    }
-
-    /// <summary>
-    /// Shows the title canvas group using tween
-    /// </summary>
-    public void ShowTitleCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(titleCanvasGroup, 1f, true, true);
-    }
-
-    /// <summary>
-    /// Hides the menu buttons canvas group using tween
-    /// </summary>
-    public void HideMenuButtonsCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(menuButtonsCanvasGroup, 0f, false, false);
-    }
-
-    /// <summary>
-    /// Shows the menu buttons canvas group using tween
-    /// </summary>
-    public void ShowMenuButtonsCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(menuButtonsCanvasGroup, 1f, true, true);
-    }
-
-    /// <summary>
-    /// Hides the loading screen canvas group using tween
-    /// </summary>
-    public void HideLoadingScreenCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(loadingScreenCanvasGroup, 0f, false, false);
-    }
-
-    /// <summary>
-    /// Shows the loading screen canvas group using tween
-    /// </summary>
-    public void ShowLoadingScreenCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(loadingScreenCanvasGroup, 1f, true, true);
-    }
-
-    /// <summary>
-    /// Hides the create room canvas group using tween
-    /// </summary>
-    public void HideCreateRoomCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(createRoomCanvasGroup, 0f, false, false);
-    }
-
-    /// <summary>
-    /// Shows the create room canvas group using tween
-    /// </summary>
-    public void ShowCreateRoomCanvasGroupTween()
-    {
-        noRoomNameText.gameObject.SetActive(false);
-        createRoomNameInputField.text = "";
-        ToggleCanvasGroupWithTween(createRoomCanvasGroup, 1f, true, true);
-    }
-
-    /// <summary>
-    /// Hides the joined room canvas group using tween
-    /// </summary>
-    public void HideJoinedRoomCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(joinedRoomCanvasGroup, 0f, false, false);
-    }
-
-    /// <summary>
-    /// Shows the joined room canvas group using tween
-    /// </summary>
-    public void ShowJoinedRoomCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(joinedRoomCanvasGroup, 1f, true, true);
-    }
-
-    /// <summary>
-    /// Hides the error canvas group using tween
-    /// </summary>
-    public void HideErrorCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(errorCanvasGroup, 0f, false, false);
-    }
-
-    /// <summary>
-    /// Shows the error canvas group using tween
-    /// </summary>
-    public void ShowErrorCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(errorCanvasGroup, 1f, true, true);
-    }
-
-    /// <summary>
-    /// Hides the room browser canvas group using tween
-    /// </summary>
-    public void HideRoomBrowserCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(roomBrowserCanvasGroup, 0f, false, false);
-    }
-
-    /// <summary>
-    /// Shows the room browser canvas group using tween
-    /// </summary>
-    public void ShowRoomBrowserCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(roomBrowserCanvasGroup, 1f, true, true);
-    }
-
-    /// <summary>
-    /// Hides the set nickname canvas group using tween
-    /// </summary>
-    public void HideSetNicknameCanvasGroupTween()
-    {
-        ToggleCanvasGroupWithTween(setNicknameCanvasGroup, 0f, false, false);
-    }
-
-    /// <summary>
-    /// Shows the set nickname canvas group using tween
-    /// </summary>
-    public void ShowSetNicknameCanvasGroupTween()
-    {
-        //setNicknameInputField.text = "";
-        ToggleCanvasGroupWithTween(setNicknameCanvasGroup, 1f, true, true);
-    }
-
-    public void ToggleNoRoomNameText(bool status) => noRoomNameText.gameObject.SetActive(status);
-
-    // Colocar en todos los botones en el editor
-    public void PreventDoubleClick()
-    {
-        Button button = EventSystem.current.currentSelectedGameObject.GetComponent<Button>(); 
-        if (button != null)
+        LeanTween.alphaCanvas(canvasGroup, 0f, 0.5f).setOnComplete(() =>
         {
-            button.interactable = false;
-            // Reactivar boton despues de 1 segundo
-            StartCoroutine(EnableButtonAfterDelay(button, 1f));
-        }
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        });
     }
 
-    private IEnumerator EnableButtonAfterDelay(Button button, float delay)
+    public CanvasGroup GetCanvasGroup(string canvasGroup)
+    {
+        CanvasGroup CGtoSend = new CanvasGroup();
+        if(canvasGroup == "characterSelectorPanel")
+        {
+            CGtoSend = characterSelectorPanel;
+        }
+        else if(canvasGroup == "mainMenuPanel")
+        {
+            CGtoSend = mainMenuPanel;
+        }
+        else if(canvasGroup == "playOptionsPanel")
+        {
+            CGtoSend = playOptionsPanel;
+        }
+        else if(canvasGroup == "configPanel")
+        {
+            CGtoSend = configPanel;
+        }
+        else if(canvasGroup == "creditsPanel")
+        {
+            CGtoSend = creditsPanel;
+        }
+        else if(canvasGroup == "roomBrowserPanel")
+        {
+            CGtoSend = roomBrowserPanel;
+        }
+        else if(canvasGroup == "joinedRoomPanel")
+        {
+            CGtoSend = joinedRoomPanel;
+        }
+        else if(canvasGroup == "errorPanel")
+        {
+            CGtoSend = errorPanel;
+        }
+        else if(canvasGroup == "loadingPanel")
+        {
+            CGtoSend = loadingPanel;
+        }
+        else if(canvasGroup == "createRoomPanel")
+        {
+            CGtoSend = createRoomPanel;
+        }
+        else if(canvasGroup == "nickNamePanel")
+        {
+            CGtoSend = nickNamePanel;
+        }
+        return CGtoSend;
+    }
+
+    public void DoubleClickPrevent(Button button)
+    {
+        button.interactable = false;
+        StartCoroutine(EnableButtonAfterDelay(button, 2f));
+    }
+
+    public IEnumerator EnableButtonAfterDelay(Button button, float delay)
     {
         yield return new WaitForSeconds(delay);
         button.interactable = true;
-    }*/
+    }
+
+    public void ResetInputField(string inputField)
+    {
+        if(inputField == "roomNameInput")
+        {
+            roomNameInput.text = "";
+        }
+        else if(inputField == "nickNameInput")
+        {
+            nickNameInput.text = "";
+        }
+    }
 }
