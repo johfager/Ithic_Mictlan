@@ -124,7 +124,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 3833193635708964226, guid: e5289738b31e8cc408844123a99ca4a1, type: 3}
+  m_Motion: {fileID: 3833193635708964226, guid: 8f4d63e6d6bc10b4d92c1ab6aa5bcb35, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -151,7 +151,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -6586034758617171028, guid: e5289738b31e8cc408844123a99ca4a1, type: 3}
+  m_Motion: {fileID: -6586034758617171028, guid: 8f4d63e6d6bc10b4d92c1ab6aa5bcb35, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -178,7 +178,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2728774163978485389, guid: e5289738b31e8cc408844123a99ca4a1, type: 3}
+  m_Motion: {fileID: 8174872494747537379, guid: 8f4d63e6d6bc10b4d92c1ab6aa5bcb35, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -205,7 +205,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 5530826035005320967, guid: e5289738b31e8cc408844123a99ca4a1, type: 3}
+  m_Motion: {fileID: 5530826035005320967, guid: 8f4d63e6d6bc10b4d92c1ab6aa5bcb35, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -232,7 +232,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 8174872494747537379, guid: e5289738b31e8cc408844123a99ca4a1, type: 3}
+  m_Motion: {fileID: 8174872494747537379, guid: 8f4d63e6d6bc10b4d92c1ab6aa5bcb35, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -259,7 +259,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 928989069321473645, guid: e5289738b31e8cc408844123a99ca4a1, type: 3}
+  m_Motion: {fileID: 928989069321473645, guid: 8f4d63e6d6bc10b4d92c1ab6aa5bcb35, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -311,7 +311,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1636553544277060505, guid: e5289738b31e8cc408844123a99ca4a1, type: 3}
+  m_Motion: {fileID: -1636553544277060505, guid: 8f4d63e6d6bc10b4d92c1ab6aa5bcb35, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -436,7 +436,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 8537839873989964038, guid: e5289738b31e8cc408844123a99ca4a1, type: 3}
+  m_Motion: {fileID: 8537839873989964038, guid: 8f4d63e6d6bc10b4d92c1ab6aa5bcb35, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -581,55 +581,55 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 1
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: BasicRight
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: BasicLeft
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: LongRange
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: SoulEaterHit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: SoulEaterMiss
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: UpsideDownWorldHit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: UpsideDownWorldMiss
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: InfernalScreech
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -813,7 +813,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 3158929235050771920, guid: e5289738b31e8cc408844123a99ca4a1, type: 3}
+  m_Motion: {fileID: 3158929235050771920, guid: 8f4d63e6d6bc10b4d92c1ab6aa5bcb35, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -839,7 +839,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1092903799136904274, guid: e5289738b31e8cc408844123a99ca4a1, type: 3}
+  m_Motion: {fileID: -1092903799136904274, guid: 8f4d63e6d6bc10b4d92c1ab6aa5bcb35, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

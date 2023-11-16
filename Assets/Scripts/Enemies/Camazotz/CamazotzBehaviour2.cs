@@ -198,6 +198,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         objectiveController.enabled = true;
         objective.GetComponent<PlayerMovement>().enabled = true;
+        agent.isStopped = false;
         agent.SetDestination(objective.transform.position);
     }
 
@@ -288,18 +289,19 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 Quaternion oldHeroRotation;
                 if (attackIndex == 1)
                 {
+                    agent.isStopped = true;
                     DealDamageToTarget(1);
                     objectiveController.enabled = false;
                     objective.GetComponent<PlayerMovement>().enabled = false;
-                    objective.GetComponent<Collider>().enabled = false;
                     currentAnimationBool = "SoulEaterHit";
                     animator.SetBool(currentAnimationBool, true);
                     oldHeroRotation = objective.transform.rotation;
+                    objective.transform.rotation = Quaternion.Euler(0, 0, 0);
                     //objective.GetComponent<Animator>().SetBool("Struggle", true);
                     objective.transform.SetParent(CamazotzHand.transform);
                     objective.transform.localPosition = Vector3.zero;
-                    Debug.Break();
-                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation));
+                    objective.transform.localRotation = Quaternion.Euler(27.588f, 136.45f, 33.142f);
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, 3.0f));
                 }
                 else
                 {
@@ -333,18 +335,28 @@ public class CamazotzBehaviour2 : MonoBehaviour
             {
                 agent.stoppingDistance = 2;
                 int attackIndex = Random.Range(0, 2);
+                Quaternion oldHeroRotation;
                 if (attackIndex == 1)
                 {
+                    agent.isStopped = true;
+                    DealDamageToTarget(1);
+                    objectiveController.enabled = false;
+                    objective.GetComponent<PlayerMovement>().enabled = false;
                     currentAnimationBool = "UpsideDownWorldHit";
                     animator.SetBool(currentAnimationBool, true);
-                    DealDamageToTarget(1);
+                    oldHeroRotation = objective.transform.rotation;
+                    //objective.GetComponent<Animator>().SetBool("Struggle", true);
+                    objective.transform.SetParent(CamazotzHand.transform);
+                    objective.transform.localPosition = Vector3.zero;
+                    objective.transform.localRotation = Quaternion.Euler(27.588f, 136.45f, 33.142f);
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, 3.0f));
                 }
                 else
                 {
                     currentAnimationBool = "UpsideDownWorldMiss";
                     animator.SetBool(currentAnimationBool, true);
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
                 }
-                StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
                 AttacksSoftReset();
                 PhaseChecker(attackIndex);
                 upsideDownWorldCooldown = 12.0f; // Set a 12-second cooldown for Upside Down World attack
