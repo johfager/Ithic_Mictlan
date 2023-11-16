@@ -217,14 +217,14 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (basicAttackCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 2)
+            if (playerDistance <= 3)
             {
-                agent.stoppingDistance = 2;
+                agent.stoppingDistance = 3;
                 ChangeState(State.CloseRangeBasicAttackState); // Q4
             }
-            else if (playerDistance <= 4)
+            else if (playerDistance <= 5)
             {
-                agent.stoppingDistance = 4;
+                agent.stoppingDistance = 5;
                 ChangeState(State.LargeRangeBasicAttackState); // Q5
             }
             basicAttackCooldown = 3.0f; // Set a 5-second cooldown for basic attack
@@ -282,9 +282,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (soulEaterCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 2)
+            if (playerDistance <= 3)
             {
-                agent.stoppingDistance = 2;
+                agent.stoppingDistance = 3;
                 int attackIndex = Random.Range(0, 2);
                 Quaternion oldHeroRotation;
                 if (attackIndex == 1)
@@ -331,9 +331,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (upsideDownWorldCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 2)
+            if (playerDistance <= 3)
             {
-                agent.stoppingDistance = 2;
+                agent.stoppingDistance = 3;
                 int attackIndex = Random.Range(0, 2);
                 Quaternion oldHeroRotation;
                 if (attackIndex == 1)
@@ -379,9 +379,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (infernalScreechCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 4)
+            if (playerDistance <= 5)
             {
-                agent.stoppingDistance = 4;
+                agent.stoppingDistance = 5;
                 int attackIndex = Random.Range(0, 2);
                 AttacksSoftReset();
                 // PhaseChecker(attackIndex);
@@ -462,9 +462,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (soulDevourerCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 2)
+            if (playerDistance <= 3)
             {
-                agent.stoppingDistance = 2;
+                agent.stoppingDistance = 3;
                 int attackIndex = Random.Range(0, 2);
                 if (attackIndex == 1) DealDamageToTarget(1);
                 AttacksSoftReset();
@@ -519,7 +519,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private IEnumerator ResetAttack()
     {
-        agent.stoppingDistance = 2;
+        agent.stoppingDistance = 3;
         yield return new WaitForSeconds(2.0f);
     }
 
