@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,6 +18,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private bool isInSecondPhase; //Checks if the Camazotz is in the second phase
     [SerializeField] private EnemyStats enemyStats;
     [SerializeField] private GameObject objective;
+    CharacterController objectiveController;
+    public GameObject CamazotzHand;
     private NavMeshAgent agent;
     private GameObject[] playerList;
 
@@ -132,6 +135,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         int pick = Random.Range(0, playerList.Length);
         objective = playerList[pick];
         agent.SetDestination(objective.transform.position);
+        objectiveController = objective.GetComponent<CharacterController>();
         animator.SetBool("Idle", false);
         ChangeState(State.FirstPhaseState);
     }
@@ -179,6 +183,24 @@ public class CamazotzBehaviour2 : MonoBehaviour
         }
     }
 
+    private IEnumerator ResetBooleanParametersAfterDelay(string animationBool,  Quaternion oldHeroRotation, float delay = 1.0f)
+    {
+        // Assuming your animation duration is 1 second, adjust the time as needed
+        yield return new WaitForSeconds(delay);
+
+        // Reset the boolean parameters after the animation is complete
+        animator.SetBool(animationBool, false);
+        objective.GetComponent<Animator>().SetBool("Struggle", false);
+        objective.transform.SetParent(null);
+        objective.transform.position = transform.position + transform.forward * 5;
+        objective.transform.rotation = oldHeroRotation;
+
+        yield return new WaitForSeconds(2.0f);
+        objectiveController.enabled = true;
+        objective.GetComponent<PlayerMovement>().enabled = true;
+        agent.SetDestination(objective.transform.position);
+    }
+
     private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, float delay = 1.0f)
     {
         // Assuming your animation duration is 1 second, adjust the time as needed
@@ -194,14 +216,14 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (basicAttackCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 15)
+            if (playerDistance <= 2)
             {
-                agent.stoppingDistance = 15;
+                agent.stoppingDistance = 2;
                 ChangeState(State.CloseRangeBasicAttackState); // Q4
             }
-            else if (playerDistance <= 30)
+            else if (playerDistance <= 4)
             {
-                agent.stoppingDistance = 30;
+                agent.stoppingDistance = 4;
                 ChangeState(State.LargeRangeBasicAttackState); // Q5
             }
             basicAttackCooldown = 3.0f; // Set a 5-second cooldown for basic attack
@@ -259,22 +281,32 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (soulEaterCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 15)
+            if (playerDistance <= 2)
             {
-                agent.stoppingDistance = 15;
+                agent.stoppingDistance = 2;
                 int attackIndex = Random.Range(0, 2);
+                Quaternion oldHeroRotation;
                 if (attackIndex == 1)
                 {
+                    DealDamageToTarget(1);
+                    objectiveController.enabled = false;
+                    objective.GetComponent<PlayerMovement>().enabled = false;
+                    objective.GetComponent<Collider>().enabled = false;
                     currentAnimationBool = "SoulEaterHit";
                     animator.SetBool(currentAnimationBool, true);
-                    DealDamageToTarget(1);
+                    oldHeroRotation = objective.transform.rotation;
+                    //objective.GetComponent<Animator>().SetBool("Struggle", true);
+                    objective.transform.SetParent(CamazotzHand.transform);
+                    objective.transform.localPosition = Vector3.zero;
+                    Debug.Break();
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation));
                 }
                 else
                 {
                     currentAnimationBool = "SoulEaterMiss";
                     animator.SetBool(currentAnimationBool, true);
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
                 }
-                StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
                 AttacksSoftReset();
                 PhaseChecker(attackIndex);
                 soulEaterCooldown = 10.0f; // Set a 10-second cooldown for Soul Eater attack
@@ -297,9 +329,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (upsideDownWorldCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 15)
+            if (playerDistance <= 2)
             {
-                agent.stoppingDistance = 15;
+                agent.stoppingDistance = 2;
                 int attackIndex = Random.Range(0, 2);
                 if (attackIndex == 1)
                 {
@@ -335,9 +367,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (infernalScreechCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 30)
+            if (playerDistance <= 4)
             {
-                agent.stoppingDistance = 30;
+                agent.stoppingDistance = 4;
                 int attackIndex = Random.Range(0, 2);
                 AttacksSoftReset();
                 // PhaseChecker(attackIndex);
@@ -376,6 +408,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         int pick = Random.Range(0, playerList.Length);
         objective = playerList[pick];
         agent.SetDestination(objective.transform.position);
+        objectiveController = objective.GetComponent<CharacterController>();
         ChangeState(State.PhaseTransitionState);
     }
 
@@ -417,9 +450,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (soulDevourerCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 15)
+            if (playerDistance <= 2)
             {
-                agent.stoppingDistance = 15;
+                agent.stoppingDistance = 2;
                 int attackIndex = Random.Range(0, 2);
                 if (attackIndex == 1) DealDamageToTarget(1);
                 AttacksSoftReset();
@@ -474,7 +507,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private IEnumerator ResetAttack()
     {
-        agent.stoppingDistance = 15;
+        agent.stoppingDistance = 2;
         yield return new WaitForSeconds(2.0f);
     }
 
