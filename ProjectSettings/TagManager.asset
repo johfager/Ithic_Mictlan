@@ -8,6 +8,7 @@ TagManager:
   - Floor
   - Grass
   - Enemy
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - NotPostProcessing
   - Enemy
   - Boss
-  - 
+  - Ground
   - 
   - 
   - 
