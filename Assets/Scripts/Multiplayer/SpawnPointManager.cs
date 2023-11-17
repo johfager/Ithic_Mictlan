@@ -8,6 +8,7 @@ public class SpawnPointManager : MonoBehaviour
     [SerializeField] public Transform[] spawns;
     private Transform playerSpawn;
     [SerializeField] private GameObject playerPrefab;
+    private GameObject playerToChange;
 
     void Awake() {
         if(instance == null)
@@ -23,34 +24,38 @@ public class SpawnPointManager : MonoBehaviour
 
     public Transform SetSpawnPoint(int HeroID)
     {
+        Transform newSpawn = gameObject.transform;
+
         if(HeroID == 1)
         {
             Debug.Log("Your character is Maira");
-            playerSpawn = spawns[0];
+            newSpawn = spawns[0];
         }
         if(HeroID == 2)
         {
             Debug.Log("Your character is Teo");
-            playerSpawn = spawns[1];
+            newSpawn = spawns[1];
         }
         if(HeroID == 3)
         {
             Debug.Log("Your character is Ignacio");
-            playerSpawn = spawns[2];
+            newSpawn = spawns[2];
         }
         if(HeroID == 4)
         {
             Debug.Log("Your character is Rosa");
-            playerSpawn = spawns[3];
+            newSpawn = spawns[3];
         }
 
-        return playerSpawn;
+        return newSpawn;
     }
 
-    public void SpawnPlayer(int ID)
+    public void SpawnPlayer(int ID, string player)
     {
         playerSpawn = SetSpawnPoint(ID);
-        Instantiate(playerPrefab, playerSpawn.position, Quaternion.Euler(playerSpawn.rotation.eulerAngles.x, playerSpawn.rotation.eulerAngles.y, playerSpawn.rotation.eulerAngles.z));
+        playerToChange = GameObject.Find(player);
+        playerToChange.transform.position = playerSpawn.position;
+        playerToChange.transform.rotation = Quaternion.Euler(playerSpawn.rotation.x, playerSpawn.rotation.y, playerSpawn.rotation.z);
     }
 
 

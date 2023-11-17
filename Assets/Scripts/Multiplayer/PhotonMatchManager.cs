@@ -38,7 +38,6 @@ public class PhotonMatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             SceneManager.LoadScene(0);
         }
-        NewPlayerSent(PhotonNetwork.NickName);
     }
 
     void Update()

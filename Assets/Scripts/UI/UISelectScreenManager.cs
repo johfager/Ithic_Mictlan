@@ -71,7 +71,7 @@ public class UISelectScreenManager : MonoBehaviour
 
         photonMatchManager.ChangeStatSent(PhotonNetwork.LocalPlayer.ActorNumber, 0, HeroID);
 
-        SpawnPointManager.instance.SpawnPlayer(HeroID);
+        SpawnPointManager.instance.SpawnPlayer(HeroID, PhotonNetwork.NickName);
 
         HideSelectScreen();
     }

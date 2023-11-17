@@ -6,6 +6,53 @@ using Photon.Pun;
 [DisallowMultipleComponent]
 public class PhotonSpawnPlayer : MonoBehaviour
 {
+    [SerializeField] private GameObject playerPrefab;
+    private PhotonSpawnPlayer instance;
+    [SerializeField] private string playerPrefabPath;
+    [SerializeField] private GameObject player;
+    [SerializeField] private PhotonMatchManager photonMatchManager;
+
+
+    public PhotonSpawnPlayer Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+            instance = this;
+            }
+            return instance;
+        }
+    }
+
+    void Start() {
+        StartCoroutine(InitialSpawn());
+        
+    }
+
+    private IEnumerator InitialSpawn()
+    {
+        yield return new WaitForSeconds(1f);
+        if (PhotonNetwork.IsConnected &&
+             FindObjectOfType<PhotonMatchManager>().gameState != PhotonMatchManager.GameStates.EndGame &&
+             player == null)
+        {
+            SpawnPlayer();
+            photonMatchManager.NewPlayerSent(PhotonNetwork.NickName);
+        }
+    }
+
+    private void SpawnPlayer()
+    {
+        playerPrefabPath = "Students/" + playerPrefab.name;
+        
+        player = PhotonNetwork.Instantiate(playerPrefabPath, new Vector3(0,0,0), Quaternion.identity);
+        player.name = PhotonNetwork.NickName;
+     }
+
+
+
+
     // [SerializeField] private GameObject playerPrefab;
     // [SerializeField] private GameObject playerDeath;
     // private PhotonSpawnPlayer instance;
