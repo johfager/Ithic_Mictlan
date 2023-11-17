@@ -12,6 +12,7 @@ public class UISelectScreenManager : MonoBehaviour
     [SerializeField] private CanvasGroup characterSelectorPanel;
     [SerializeField] private Button readyButton;
     [SerializeField] private TMP_Text waitingText;
+    private int HeroID;
 
     private bool isCharacterSelected;
 
@@ -40,6 +41,24 @@ public class UISelectScreenManager : MonoBehaviour
         selectedCharacter.text = name;
         charcterDescription.text = desc;
         readyButton.interactable = true;
+
+        if(name == "Maira")
+        {
+            HeroID = 1;
+        }
+        if(name == "Teo")
+        {
+            HeroID = 2;
+        }
+        if(name == "Ignacio")
+        {
+            HeroID = 3;
+        }
+        if(name == "Rosa")
+        {
+            HeroID = 4;
+        }
+
     }
 
     public void SelectCharacter()
@@ -47,6 +66,10 @@ public class UISelectScreenManager : MonoBehaviour
         isCharacterSelected = true;
         readyButton.interactable = false;
         waitingText.gameObject.SetActive(true);
+
+        SpawnPointManager.instance.SpawnPlayer(HeroID);
+
+        HideSelectScreen();
     }
 
     public void HideSelectScreen()
