@@ -185,7 +185,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private IEnumerator ResetBooleanParametersAfterDelay(string animationBool,  Quaternion oldHeroRotation, float delay = 1.0f)
     {
-        // Assuming your animation duration is 1 second, adjust the time as needed
         yield return new WaitForSeconds(delay);
 
         // Reset the boolean parameters after the animation is complete
@@ -294,10 +293,10 @@ public class CamazotzBehaviour2 : MonoBehaviour
                     objectiveController.enabled = false;
                     objective.GetComponent<PlayerMovement>().enabled = false;
                     currentAnimationBool = "SoulEaterHit";
+                    objective.GetComponent<Animator>().SetBool("Struggle", true);
                     animator.SetBool(currentAnimationBool, true);
                     oldHeroRotation = objective.transform.rotation;
                     objective.transform.rotation = Quaternion.Euler(0, 0, 0);
-                    //objective.GetComponent<Animator>().SetBool("Struggle", true);
                     objective.transform.SetParent(CamazotzHand.transform);
                     objective.transform.localPosition = Vector3.zero;
                     objective.transform.localRotation = Quaternion.Euler(27.588f, 136.45f, 33.142f);
@@ -344,8 +343,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
                     objective.GetComponent<PlayerMovement>().enabled = false;
                     currentAnimationBool = "UpsideDownWorldHit";
                     animator.SetBool(currentAnimationBool, true);
+                    objective.GetComponent<Animator>().SetBool("Struggle", true);
                     oldHeroRotation = objective.transform.rotation;
-                    //objective.GetComponent<Animator>().SetBool("Struggle", true);
                     objective.transform.SetParent(CamazotzHand.transform);
                     objective.transform.localPosition = Vector3.zero;
                     objective.transform.localRotation = Quaternion.Euler(27.588f, 136.45f, 33.142f);
