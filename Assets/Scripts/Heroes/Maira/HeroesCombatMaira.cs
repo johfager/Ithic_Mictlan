@@ -238,8 +238,8 @@ namespace Heroes.Maira
 
             // Wait for the animation to finish
             yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-            IsInCombatMode = false;
             ExitAttack(currentAttack);
+            IsInCombatMode = false;
         }
 
         private void OnDrawGizmos()
@@ -256,10 +256,10 @@ namespace Heroes.Maira
                 Vector3 frontDirection = transform.forward;
 
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position + frontDirection, attackAoE, enemyLayerMask);
-
+                Debug.Log("Amount of colliders hit: " + hitColliders.Length);
                 foreach (Collider collider in hitColliders)
                 {
-                    if (collider.gameObject.tag == "Enemy")
+                    if (collider.gameObject.CompareTag("Enemy"))
                     {
                         // Check if the collided object has a HealthSystem component
                         HealthSystem healthSystem = collider.GetComponent<HealthSystem>();
