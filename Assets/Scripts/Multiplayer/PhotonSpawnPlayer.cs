@@ -44,7 +44,7 @@ public class PhotonSpawnPlayer : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        playerPrefabPath = "Students/" + playerPrefab.name;
+        playerPrefabPath = "Heroes/" + playerPrefab.name;
         
         player = PhotonNetwork.Instantiate(playerPrefabPath, new Vector3(0,0,0), Quaternion.identity);
         player.name = PhotonNetwork.NickName;

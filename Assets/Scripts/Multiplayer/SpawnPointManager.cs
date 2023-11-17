@@ -52,6 +52,7 @@ public class SpawnPointManager : MonoBehaviour
 
     public void SpawnPlayer(int ID, string player)
     {
+        Debug.Log("SPAWN THIS");
         playerSpawn = SetSpawnPoint(ID);
         playerToChange = GameObject.Find(player);
         playerToChange.transform.position = playerSpawn.position;
