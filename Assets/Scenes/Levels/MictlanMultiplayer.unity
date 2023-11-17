@@ -834,7 +834,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 8.333333
+  m_VoxelSize: 1.3333334
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 871ee5fb00790ac40a2809a57eaa3216, type: 2}
   m_BuildHeightMesh: 0
@@ -3324,6 +3324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playersInfo: []
+  selectScreenManager: {fileID: 2984950551184755124}
   gameState: 0
   waitTimeAfterEnding: 10
 --- !u!114 &2085253265
@@ -4570,6 +4571,11 @@ MonoBehaviour:
   readyButton: {fileID: 2674144455099787779}
   waitingText: {fileID: 328834790780505736}
   photonMatchManager: {fileID: 2085253264}
+  characterButtons:
+  - {fileID: 2445811357631860530}
+  - {fileID: 2156899092662504513}
+  - {fileID: 789892607457496896}
+  - {fileID: 7080233633590426874}
 --- !u!114 &3081230851069397052
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ public class PhotonMatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     }
 
     [SerializeField] private List<PhotonPlayerInfo> _playersInfo = new List<PhotonPlayerInfo>();
+    [SerializeField] private UISelectScreenManager selectScreenManager;
     
     public enum GameStates
     {
@@ -165,6 +166,7 @@ public class PhotonMatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
                     {
                         case 0:
                             _playersInfo[i].HeroID = amountToChange;
+                            selectScreenManager.DisableButton(_playersInfo[i].HeroID);
                             Debug.Log($"Player [{_playersInfo[i].PlayerName}] has [{_playersInfo[i].HeroID}] as hero ID");
                             break;
                         case 1:

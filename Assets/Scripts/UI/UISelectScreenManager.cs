@@ -14,6 +14,8 @@ public class UISelectScreenManager : MonoBehaviour
     [SerializeField] private Button readyButton;
     [SerializeField] private TMP_Text waitingText;
     [SerializeField] private PhotonMatchManager photonMatchManager;
+    [SerializeField] private Button[] characterButtons;
+
     private int HeroID;
 
     private bool isCharacterSelected;
@@ -46,19 +48,19 @@ public class UISelectScreenManager : MonoBehaviour
 
         if(name == "Maira")
         {
-            HeroID = 1;
+            HeroID = 0;
         }
         if(name == "Teo")
         {
-            HeroID = 2;
+            HeroID = 1;
         }
         if(name == "Ignacio")
         {
-            HeroID = 3;
+            HeroID = 2;
         }
         if(name == "Rosa")
         {
-            HeroID = 4;
+            HeroID = 3;
         }
 
     }
@@ -81,5 +83,11 @@ public class UISelectScreenManager : MonoBehaviour
         characterSelectorPanel.alpha = 0f;
         characterSelectorPanel.interactable = false;
         characterSelectorPanel.blocksRaycasts = false;
+    }
+
+    public void DisableButton(int ID)
+    {
+        Debug.Log("Yeah");
+        characterButtons[ID].interactable = false;
     }
 }

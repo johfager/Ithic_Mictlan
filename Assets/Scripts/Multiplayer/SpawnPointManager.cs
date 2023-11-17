@@ -54,9 +54,10 @@ public class SpawnPointManager : MonoBehaviour
     {
         Debug.Log("SPAWN THIS");
         playerSpawn = SetSpawnPoint(ID);
-        playerToChange = GameObject.Find(player);
-        playerToChange.transform.position = playerSpawn.position;
-        playerToChange.transform.rotation = Quaternion.Euler(playerSpawn.rotation.x, playerSpawn.rotation.y, playerSpawn.rotation.z);
+        Instantiate(playerPrefab, playerSpawn.position, Quaternion.Euler(playerSpawn.rotation.x, playerSpawn.rotation.y, playerSpawn.rotation.z));
+        //playerToChange = GameObject.Find(player);
+        //playerToChange.transform.position = playerSpawn.position;
+        //playerToChange.transform.rotation = Quaternion.Euler(playerSpawn.rotation.x, playerSpawn.rotation.y, playerSpawn.rotation.z);
     }
 
 
