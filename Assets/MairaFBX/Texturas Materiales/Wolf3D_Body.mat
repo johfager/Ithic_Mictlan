@@ -100,15 +100,15 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HighIntensity: 4.33
+    - _HighIntensity: 2.21
     - _LightScalar: 1
-    - _LowIntensity: 2.24
+    - _LowIntensity: 1.65
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OutlineSize: 5
     - _Parallax: 0.02
-    - _RampLevels: 2
+    - _RampLevels: 5
     - _RimAlpha: 0.213
     - _RimDropOff: 0.263
     - _RimPower: 0.268
