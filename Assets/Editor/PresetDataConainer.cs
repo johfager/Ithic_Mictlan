@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace FlexibleCelShader
+﻿namespace Editor
 {
 
     [System.Serializable]

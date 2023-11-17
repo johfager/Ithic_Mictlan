@@ -9795,7 +9795,7 @@ GameObject:
   - component: {fileID: 1978534067935698136}
   - component: {fileID: 633445311573630295}
   m_Layer: 0
-  m_Name: SmokeParticleEffect
+  m_Name: ExplosionParticleEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

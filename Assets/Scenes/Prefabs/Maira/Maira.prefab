@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 7506028873804807037}
   - component: {fileID: 6115848762604520390}
   m_Layer: 0
-  m_Name: MairaPrefab
+  m_Name: Maira
   m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -609,7 +609,7 @@ MonoBehaviour:
   UltimateAbilityTimerUI: 0
   enemyLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 4294967295
   _heroStats: {fileID: 11400000, guid: 9c605feeaf61b714bbe95cc92dfe8ad7, type: 2}
   primaryAbilityCooldownImage: {fileID: 8173341407837091323}
   secondaryAbilityCooldownImage: {fileID: 3835568753109005656}
@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wrestlingRingPrefab: {fileID: 4103312645100775649, guid: 4c5281fabc5b63d44a7b86860586fd9b, type: 3}
-  spawningVFXPrefab: {fileID: 0}
+  spawningVFXPrefab: {fileID: 3047881726803682454, guid: c5ab7f63e991f7842986c104ec4d0979, type: 3}
   duration: 5
 --- !u!1 &8573997138404090445
 GameObject:
