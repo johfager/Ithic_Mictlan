@@ -38,6 +38,7 @@ public class PhotonMatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             SceneManager.LoadScene(0);
         }
+        NewPlayerSent(PhotonNetwork.NickName);
     }
 
     void Update()
@@ -103,7 +104,7 @@ public class PhotonMatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
             object[] package = new object[5];
             package[0] = playerName;
             package[1] = 10;
-            package[2] = 250;
+            package[2] = 250f;
             package[3] = PhotonNetwork.LocalPlayer.ActorNumber;
 
             // Envia el paquete a todos los jugadores en la room
@@ -154,12 +155,13 @@ public class PhotonMatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
             int statToUpdate = (int) dataReceived[1];
             int amountToChange = (int) dataReceived[2];
             
+
+            Debug.Log("THIS IS PLAYERS INFO "+ _playersInfo.Count);
+
             for (int i = 0; i < _playersInfo.Count; i++)
             {
-                Debug.Log("Estoy en el for");
                 if (_playersInfo[i].PlayerID == sendingActor)
                 {
-                    Debug.Log($"Player [{_playersInfo[i].PlayerName}] has sent a change stat event");
                     switch (statToUpdate)
                     {
                         case 0:
