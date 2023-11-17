@@ -29,7 +29,7 @@ namespace Heroes.Maira
             }
         }
 
-        void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
             // Ensure materials are reverted back to original state when quitting
             if (!isQuitting)
