@@ -21,7 +21,7 @@ namespace Heroes.Maira
                 particleSystem.Play();
             }
 
-            // Optional: Destroy the VFX after it finishes playing
+            // Destroy the VFX after it finishes playing
             Destroy(landingVFX, particleSystem.main.duration);
         }
     }
