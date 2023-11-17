@@ -16,7 +16,8 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: <Root Transform>
-    rigImportErrors: 
+    rigImportErrors: "Copied Avatar Rig Configuration mis-match. Transform hierarchy
+      does not match:\n\tTransform 'Hips' for human bone 'Hips' not found\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -528,18 +529,18 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Ch43_nonPBR(Clone)
+    - name: Maira(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Ch43
-      parentName: Ch43_nonPBR(Clone)
+      parentName: Maira(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:Hips
-      parentName: Ch43_nonPBR(Clone)
+      parentName: Maira(Clone)
       position: {x: 0.00001216134, y: 0.77745223, z: 0.015593855}
       rotation: {x: -0.0000003914289, y: 0.0000031694283, z: -0.000023152841, w: 1}
       scale: {x: 1, y: 1, z: 1}

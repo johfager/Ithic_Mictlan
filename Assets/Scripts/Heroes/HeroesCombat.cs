@@ -241,17 +241,13 @@ public class HeroesCombat : MonoBehaviour
         Debug.Log($"Starting cooldown for {currentAttack}.");
         StartCoroutine(ResetCooldown(currentAttack));
 
-        IsInCombatMode = false;
-        ExitAttack(currentAttack);
         
-        //anim.runtimeAnimatorController = originalAnim;
+        
 
         // Wait for the animation to finish
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-        Debug.Log("Finished playing animation.");
-        Debug.Log(originalAnim + " is the original animation controller");
-        //anim.runtimeAnimatorController = originalAnim;
-        Debug.Log(anim.runtimeAnimatorController.name);
+        IsInCombatMode = false;
+        ExitAttack(currentAttack);
     }
 
     private void OnDrawGizmos()
@@ -368,17 +364,10 @@ private IEnumerator ResetCooldown(string cooldownType)
 
 
 
-    void ExitAttack(string attackTagName)
+void ExitAttack(string attackTagName)
     {
-        
-        /*Debug.Log("Animatorcurrentclipinfo: "+ anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
-        Debug.Log(attackTagName + "      " + anim.GetCurrentAnimatorStateInfo(0).IsName(attackTagName) + anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName));
-        */
         if (attackTagName != null)
         {
-            /*if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f &&
-                anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == attackTagName)*/
-            /*if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f)  */
             if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName))
             {
                 Debug.Log("Inside if statement of exitattack");
