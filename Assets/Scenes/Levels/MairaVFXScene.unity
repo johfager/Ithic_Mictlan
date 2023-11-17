@@ -735,6 +735,30 @@ PrefabInstance:
       propertyPath: enemyLayerMask.m_Bits
       value: 128
       objectReference: {fileID: 0}
+    - target: {fileID: 3402314975584612206, guid: ad015df271b26c048b8012aad4874715, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3402314975584612206, guid: ad015df271b26c048b8012aad4874715, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3402314975584612206, guid: ad015df271b26c048b8012aad4874715, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5413918405688352064, guid: ad015df271b26c048b8012aad4874715, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5413918405688352064, guid: ad015df271b26c048b8012aad4874715, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5413918405688352064, guid: ad015df271b26c048b8012aad4874715, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5724556685861808395, guid: ad015df271b26c048b8012aad4874715, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-
+namespace UnityTechnologies.ParticlePack.Shared.Ramps.Editor
+{
     [CustomEditor(typeof(RampAsset))]
-    public class RampAssetEditor : Editor
+    public class RampAssetEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
@@ -19,8 +18,8 @@ using UnityEngine;
             var t = new Texture2D(r.size, r.size, TextureFormat.ARGB32, mipChain: true);
             var p = t.GetPixels();
             for (var x = 0; x < r.size; x++)
-                for (var y = 0; y < r.size; y++)
-                    p[r.up ? y + (r.size - x - 1) * r.size : x + y * r.size] = r.gradient.Evaluate(x * 1f / r.size);
+            for (var y = 0; y < r.size; y++)
+                p[r.up ? y + (r.size - x - 1) * r.size : x + y * r.size] = r.gradient.Evaluate(x * 1f / r.size);
             t.SetPixels(p);
             t.Apply();
             var bytes = t.EncodeToPNG();
@@ -31,3 +30,4 @@ using UnityEngine;
             AssetDatabase.Refresh();
         }
     }
+}
