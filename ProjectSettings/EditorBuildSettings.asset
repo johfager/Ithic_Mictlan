@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Lobby_Humberto.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
-    path: Assets/Scenes/Levels/First.unity
-    guid: 5a482af9f5e2948b49853c720c295ad5
+  - enabled: 1
+    path: Assets/Scenes/Levels/Chucho.unity
+    guid: a28e456adba17f64ab2aca7718ede3ed
   m_configObjects: {}
