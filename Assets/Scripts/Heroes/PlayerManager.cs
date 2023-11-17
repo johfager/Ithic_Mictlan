@@ -8,7 +8,6 @@ namespace Heroes
         public HeroesCombat heroesCombatScript;
         public HeroStats heroStats;
         private bool isMoving = true;
-        public GameObject heroModel;
 
         void Start()
         {
@@ -20,23 +19,7 @@ namespace Heroes
 
         void Update()
         {
-            // // Check if the player is in combat mode
-            // if (mairaCombatScript.IsInCombatMode)
-            // {
-            //     isMoving = false; // Disable movement
-            // }
-            // else
-            // {
-            //     isMoving = true; // Enable movement
-            // }
 
-            // if (isMoving)
-            // {
-            //     playerMovement.HandleMovement();
-            // }
-            // Debug.Log("combat mode is: " + mairaCombatScript.IsInCombatMode.ToString());
-            // mairaCombatScript.HandleAttackStateMachine();
-        
             // Check if the player is in combat mode
             if (heroesCombatScript.IsInCombatMode)
             {
@@ -51,7 +34,7 @@ namespace Heroes
             {
                 playerMovement.HandleMovement();
             }
-            Debug.Log("combat mode is: " + heroesCombatScript.IsInCombatMode.ToString());
+           //Debug.Log("combat mode is: " + heroesCombatScript.IsInCombatMode.ToString());
             heroesCombatScript.HandleAttackStateMachine();
 
         

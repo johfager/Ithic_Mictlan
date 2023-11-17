@@ -9,5 +9,5 @@ AnimatorOverrideController:
   m_Name: MairaPrimaryAttack3
   m_Controller: {fileID: 9100000, guid: 05b61325a264401458f1a2f245802b89, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: -203655887218126122, guid: 0a500bde8fd085447854433ec1c1a145, type: 3}
-    m_OverrideClip: {fileID: -203655887218126122, guid: a495f7050eb55044797b9ce44c35b43c, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 3884de1668d24e14e92afbaa1fddb7a9, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4a78e0f72d17ee64a801d8f65bd7146b, type: 2}
