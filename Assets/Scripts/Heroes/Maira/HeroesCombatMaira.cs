@@ -114,8 +114,6 @@ namespace Heroes.Maira
                     }
                     else
                     {
-                        //cooldownImage.fillAmount = cooldown / initialCooldownValue; // Update the fill amount
-                        Debug.Log("Current Cooldown is: " + cooldown.ToString("F1") + " seconds");
                         cooldownText.text = cooldown.ToString("F1"); // Display cooldown timer
                     }
                 }
@@ -131,7 +129,6 @@ namespace Heroes.Maira
                 primaryAbilityCooldownText.enabled = true;
             }
             primaryAbilityCooldown = _heroStats.abilityAttributes.primaryAbility.cooldown;
-            Debug.Log("This is primaryAbilityCooldown: " + primaryAbilityCooldown.ToString("F1") + " seconds");
             StartCoroutine(StartAttackAnimation(currentAttack, primaryAbility));
         }
 
@@ -217,10 +214,8 @@ namespace Heroes.Maira
             if ((Time.time - lastComboEnd > 0.5f && comboCounter < attackType.Count))
             {   
                 CancelInvoke("EndCombo");
-                Debug.Log("Inside First If condition in StartAttackAnimation");
                 if (Time.time - lastClickedTime >= comboTime)
                 {
-                    Debug.Log("Inside Second IF condition in StartAttackAnimation");
                     anim.runtimeAnimatorController = attackType[comboCounter].animatorOV;
                     anim.Play(attackAnimationName, 0, 0);
                     attackDamage = attackType[comboCounter].damage;
@@ -367,7 +362,6 @@ namespace Heroes.Maira
             {
                 if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName))
                 {
-                    Debug.Log("Inside if statement of exitattack");
                     Invoke("EndCombo", 0.5f);
                 }
             }
