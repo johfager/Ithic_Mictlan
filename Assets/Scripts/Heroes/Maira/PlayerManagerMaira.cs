@@ -34,10 +34,10 @@ namespace Heroes.Maira
             {
                 playerMovement.HandleMovement();
             }
-           //Debug.Log("combat mode is: " + heroesCombatScript.IsInCombatMode.ToString());
+
             heroesCombatScript.HandleAttackStateMachine();
 
-        
+
         }
     }
 }
