@@ -171,6 +171,12 @@ public class UIMenuController : MonoBehaviour
         return CGtoSend;
     }
 
+    public void GoSelectorScreen()
+    {
+        HideCanvasGroup(GetCanvasGroup("joinedRoomPanel"));
+        ShowCanvasGroup(GetCanvasGroup("characterSelectorPanel"));
+    }
+
     public void DoubleClickPrevent(Button button)
     {
         button.interactable = false;
