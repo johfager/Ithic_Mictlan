@@ -8,7 +8,6 @@ namespace Heroes
         public HeroesCombat heroesCombatScript;
         public HeroStats heroStats;
         private bool isMoving = true;
-        public GameObject heroModel;
 
         void Start()
         {
