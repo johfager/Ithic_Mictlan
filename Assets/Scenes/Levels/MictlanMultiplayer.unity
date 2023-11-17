@@ -3278,6 +3278,53 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: a98c17ec
+--- !u!1 &2085253262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2085253263}
+  - component: {fileID: 2085253264}
+  m_Layer: 0
+  m_Name: Photon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2085253263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085253262}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 635.0393, y: 452.14075, z: 215.91621}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2085253264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085253262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ceab333d4ac7f4a9983fc0ad71ace7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playersInfo: []
+  gameState: 0
+  waitTimeAfterEnding: 10
 --- !u!1 &2093967327
 GameObject:
   m_ObjectHideFlags: 0
@@ -4248,21 +4295,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!4 &2583890379872022374
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9025627951697067168}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7538523019756972316}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2674144455099787779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4625,6 +4657,7 @@ MonoBehaviour:
   characterSelectorPanel: {fileID: 6163311871963779553}
   readyButton: {fileID: 2674144455099787779}
   waitingText: {fileID: 328834790780505736}
+  photonMatchManager: {fileID: 2085253264}
 --- !u!114 &3081230851069397052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5515,7 +5548,6 @@ Transform:
   - {fileID: 6583786948083603770}
   - {fileID: 4741503162831410643}
   - {fileID: 6210481172578511280}
-  - {fileID: 2583890379872022374}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7610436478993012011
@@ -5772,22 +5804,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!1 &9025627951697067168
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2583890379872022374}
-  m_Layer: 0
-  m_Name: Photon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &9049729142106754102
 GameObject:
   m_ObjectHideFlags: 0
@@ -5848,3 +5864,4 @@ SceneRoots:
   - {fileID: 2896770226429931647}
   - {fileID: 1849141566}
   - {fileID: 763093943}
+  - {fileID: 2085253263}

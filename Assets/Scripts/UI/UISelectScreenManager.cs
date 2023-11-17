@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 using TMPro;
 
 public class UISelectScreenManager : MonoBehaviour
@@ -12,6 +13,7 @@ public class UISelectScreenManager : MonoBehaviour
     [SerializeField] private CanvasGroup characterSelectorPanel;
     [SerializeField] private Button readyButton;
     [SerializeField] private TMP_Text waitingText;
+    [SerializeField] private PhotonMatchManager photonMatchManager;
     private int HeroID;
 
     private bool isCharacterSelected;
@@ -66,6 +68,8 @@ public class UISelectScreenManager : MonoBehaviour
         isCharacterSelected = true;
         readyButton.interactable = false;
         waitingText.gameObject.SetActive(true);
+
+        photonMatchManager.ChangeStatSent(PhotonNetwork.LocalPlayer.ActorNumber, 0, HeroID);
 
         SpawnPointManager.instance.SpawnPlayer(HeroID);
 

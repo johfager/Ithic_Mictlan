@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Lobby_Humberto.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Levels/Chucho.unity
-    guid: a28e456adba17f64ab2aca7718ede3ed
+    path: Assets/Scenes/Levels/MictlanMultiplayer.unity
+    guid: 2644efee55e26e844bf6d17847c9d8f7
   m_configObjects: {}
