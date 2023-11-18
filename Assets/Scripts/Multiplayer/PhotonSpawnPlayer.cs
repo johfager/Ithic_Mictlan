@@ -6,7 +6,10 @@ using Photon.Pun;
 [DisallowMultipleComponent]
 public class PhotonSpawnPlayer : MonoBehaviour
 {
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject rosaPrefab;
+    [SerializeField] private GameObject teoPrefab;
+    [SerializeField] private GameObject ignacioPrefab;
+    [SerializeField] private GameObject mairaPrefab;
     private PhotonSpawnPlayer instance;
     [SerializeField] private string playerPrefabPath;
     [SerializeField] private GameObject player;
@@ -41,13 +44,38 @@ public class PhotonSpawnPlayer : MonoBehaviour
         }
     }
 
-    private void SpawnPlayer()
+    public void SpawnPlayer(int ID, Transform spawnPos)
     {
-        playerPrefabPath = "Heroes/" + playerPrefab.name;
-        
-        player = PhotonNetwork.Instantiate(playerPrefabPath, new Vector3(0,0,0), Quaternion.identity);
-        player.name = PhotonNetwork.NickName;
-     }
+        if(ID == 0)
+        {
+            playerPrefabPath = "Heroes/" + rosaPrefab.name;
+            
+            player = PhotonNetwork.Instantiate(playerPrefabPath, spawnPos.position, Quaternion.Euler(spawnPos.rotation.x, spawnPos.rotation.y, spawnPos.rotation.z));
+            player.name = "Maira";
+        }
+        else if(ID == 1)
+        {
+            playerPrefabPath = "Heroes/" + rosaPrefab.name;
+            
+            player = PhotonNetwork.Instantiate(playerPrefabPath, spawnPos.position, Quaternion.Euler(spawnPos.rotation.x, spawnPos.rotation.y, spawnPos.rotation.z));
+            player.name = "Teo";
+        }
+        if(ID == 2)
+        {
+            playerPrefabPath = "Heroes/" + rosaPrefab.name;
+            
+            player = PhotonNetwork.Instantiate(playerPrefabPath, spawnPos.position, Quaternion.Euler(spawnPos.rotation.x, spawnPos.rotation.y, spawnPos.rotation.z));
+            player.name = "Ignacio";
+        }
+        if(ID == 3)
+        {
+            playerPrefabPath = "Heroes/" + rosaPrefab.name;
+            
+            player = PhotonNetwork.Instantiate(playerPrefabPath, spawnPos.position, Quaternion.Euler(spawnPos.rotation.x, spawnPos.rotation.y, spawnPos.rotation.z));
+            player.name = "Rosa";
+
+        }
+    }
 
 
 

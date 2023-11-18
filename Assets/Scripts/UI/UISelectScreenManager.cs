@@ -82,6 +82,19 @@ public class UISelectScreenManager : MonoBehaviour
 
     }
 
+    public void StartMatch()
+    {
+
+        GameObject rosa = GameObject.Find("Rosa");
+        rosa.GetComponent<PlayerMovement>().enabled = true;
+        rosa.GetComponent<Heroes.PlayerManager>().enabled = true;
+        rosa.GetComponent<HeroesCombat>().enabled = true;
+        rosa.GetComponent<HealthSystem>().enabled = true;
+
+        HideSelectScreen();
+
+    }
+
     public void SelectCharacter()
     {
         isCharacterSelected = true;
@@ -91,9 +104,7 @@ public class UISelectScreenManager : MonoBehaviour
         photonMatchManager.ChangeStatSent(PhotonNetwork.LocalPlayer.ActorNumber, 0, HeroID);
         photonView.RPC("DisableButton", RpcTarget.All, HeroID);
 
-        // SpawnPointManager.instance.SpawnPlayer(HeroID, PhotonNetwork.NickName);
-
-        // HideSelectScreen();
+        SpawnPointManager.instance.SpawnPlayer(HeroID);
     }
 
     public void HideSelectScreen()

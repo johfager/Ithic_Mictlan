@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
                 "Failed to load the scriptable object. Check the path and ensure it's in the Resources folder.");
         }
 
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 

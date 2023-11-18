@@ -2755,7 +2755,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1589006212}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2984950551184755124}
+        m_TargetAssemblyTypeName: UISelectScreenManager, Assembly-CSharp
+        m_MethodName: StartMatch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1589006212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3385,6 +3397,7 @@ MonoBehaviour:
   - {fileID: 773179301}
   - {fileID: 634575166}
   playerPrefab: {fileID: 4868826238426160607, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
+  photonSpawn: {fileID: 2085253265}
 --- !u!1 &1963916697
 GameObject:
   m_ObjectHideFlags: 0
@@ -3594,7 +3607,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f5a3c46fe53df843b4785b0e9ed19a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 2536448845342471352, guid: 7bb133fbf6a26384094c66a1ceda6c43, type: 3}
+  rosaPrefab: {fileID: 2536448845342471352, guid: 7bb133fbf6a26384094c66a1ceda6c43, type: 3}
+  teoPrefab: {fileID: 2536448845342471352, guid: 7bb133fbf6a26384094c66a1ceda6c43, type: 3}
+  ignacioPrefab: {fileID: 2536448845342471352, guid: 7bb133fbf6a26384094c66a1ceda6c43, type: 3}
+  mairaPrefab: {fileID: 2536448845342471352, guid: 7bb133fbf6a26384094c66a1ceda6c43, type: 3}
   playerPrefabPath: 
   player: {fileID: 0}
   photonMatchManager: {fileID: 2085253264}
@@ -6035,7 +6051,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 0
   OwnershipTransfer: 0
   observableSearch: 0
   ObservedComponents:
