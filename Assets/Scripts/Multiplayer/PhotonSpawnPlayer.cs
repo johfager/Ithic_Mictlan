@@ -55,14 +55,14 @@ public class PhotonSpawnPlayer : MonoBehaviour
         }
         else if(ID == 1)
         {
-            playerPrefabPath = "Heroes/" + rosaPrefab.name;
+            playerPrefabPath = "Heroes/" + teoPrefab.name;
             
             player = PhotonNetwork.Instantiate(playerPrefabPath, spawnPos.position, Quaternion.Euler(spawnPos.rotation.x, spawnPos.rotation.y, spawnPos.rotation.z));
             player.name = "Teo";
         }
         if(ID == 2)
         {
-            playerPrefabPath = "Heroes/" + rosaPrefab.name;
+            playerPrefabPath = "Heroes/" + ignacioPrefab.name;
             
             player = PhotonNetwork.Instantiate(playerPrefabPath, spawnPos.position, Quaternion.Euler(spawnPos.rotation.x, spawnPos.rotation.y, spawnPos.rotation.z));
             player.name = "Ignacio";

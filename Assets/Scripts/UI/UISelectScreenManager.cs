@@ -85,13 +85,17 @@ public class UISelectScreenManager : MonoBehaviour
     public void StartMatch()
     {
 
-        GameObject rosa = GameObject.Find("Rosa");
-        rosa.GetComponent<PlayerMovement>().enabled = true;
-        rosa.GetComponent<Heroes.PlayerManager>().enabled = true;
-        rosa.GetComponent<HeroesCombat>().enabled = true;
-        rosa.GetComponent<HealthSystem>().enabled = true;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Hero");
 
-        HideSelectScreen();
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i].GetComponent<PlayerMovement>().enabled = true;
+            players[i].GetComponent<Heroes.PlayerManager>().enabled = true;
+            players[i].GetComponent<HeroesCombat>().enabled = true;
+            players[i].GetComponent<HealthSystem>().enabled = true;
+        }
+
+        photonView.RPC("HideSelectScreen", RpcTarget.All);
 
     }
 
@@ -107,6 +111,7 @@ public class UISelectScreenManager : MonoBehaviour
         SpawnPointManager.instance.SpawnPlayer(HeroID);
     }
 
+    [PunRPC]
     public void HideSelectScreen()
     {
         characterSelectorPanel.alpha = 0f;
@@ -121,7 +126,7 @@ public class UISelectScreenManager : MonoBehaviour
         playersReady++;
         if(PhotonNetwork.IsMasterClient)
         {
-            if(playersReady == 4)
+            if(playersReady == 2)
             {
                 startGameButton.interactable = true;
             }

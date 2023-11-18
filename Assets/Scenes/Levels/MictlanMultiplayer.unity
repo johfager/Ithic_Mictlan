@@ -3608,8 +3608,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rosaPrefab: {fileID: 2536448845342471352, guid: 7bb133fbf6a26384094c66a1ceda6c43, type: 3}
-  teoPrefab: {fileID: 2536448845342471352, guid: 7bb133fbf6a26384094c66a1ceda6c43, type: 3}
-  ignacioPrefab: {fileID: 2536448845342471352, guid: 7bb133fbf6a26384094c66a1ceda6c43, type: 3}
+  teoPrefab: {fileID: 2367014908967302044, guid: b252dddbfe2f2214190bd3c33797818f, type: 3}
+  ignacioPrefab: {fileID: 3423656044886117104, guid: 89f32e9539b4ca14c8082786249fa2df, type: 3}
   mairaPrefab: {fileID: 2536448845342471352, guid: 7bb133fbf6a26384094c66a1ceda6c43, type: 3}
   playerPrefabPath: 
   player: {fileID: 0}
