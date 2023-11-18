@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Heroes.Maira
+namespace Heroes.Rosa
 {
-    public class HeroesCombatMaira : MonoBehaviour
+    public class HeroesCombatRosa : MonoBehaviour
     {
         public List<HeroAttackObject> primaryAttack;
         public List<HeroAttackObject> primaryAbility;
@@ -27,16 +27,17 @@ namespace Heroes.Maira
         private float attackSpeed;
         private float attackSpeedMultiplier = 1.0f;
 
-
         public TextMeshProUGUI combatStateText;
         [SerializeField] float comboTime = 0.4f;
 
         private PlayerManager playerManager; //Not used
         public bool IsInCombatMode;
-        
     
-        //For hitboxes
-        Vector3 _currentAttackDirection;
+    
+        //For UI
+        [SerializeField] private int primaryAbilityTimerUI;
+        [SerializeField] private int secondaryAbilityTimerUI;
+        [SerializeField] private int UltimateAbilityTimerUI;
 
         [SerializeField] LayerMask enemyLayerMask;
 
@@ -76,11 +77,8 @@ namespace Heroes.Maira
             InitializeCooldownUI(secondaryAbilityCooldownImage, ref secondaryAbilityCooldownText);
             InitializeCooldownUI(ultimateAbilityCooldownImage, ref ultimateAbilityCooldownText);
 
-            attackSpeed = _heroStats.combatAttributes.attackSpeed;
 
-            
-            _currentAttackDirection = transform.position;
-            
+            attackSpeed = _heroStats.combatAttributes.attackSpeed;
             
             combatStateText.enabled = false; // Hide the debug text
             anim = GetComponent<Animator>();
@@ -135,10 +133,7 @@ namespace Heroes.Maira
                 primaryAbilityCooldownText.enabled = true;
             }
             primaryAbilityCooldown = _heroStats.abilityAttributes.primaryAbility.cooldown;
-
-            _currentAttackDirection = -transform.up;
-            //We call on this with 0f spheresize to wait with hitbox until Maira lands.
-            StartCoroutine(StartAttackAnimation(currentAttack, primaryAbility, _currentAttackDirection ));
+            StartCoroutine(StartAttackAnimation(currentAttack, primaryAbility));
         }
 
 
@@ -152,8 +147,7 @@ namespace Heroes.Maira
             }
             secondaryAbilityCooldown = _heroStats.abilityAttributes.secondaryAbility.cooldown;
 
-            _currentAttackDirection = Vector3.zero;
-            StartCoroutine(StartAttackAnimation(currentAttack, secondaryAbility, _currentAttackDirection));
+            StartCoroutine(StartAttackAnimation(currentAttack, secondaryAbility));
         }
 
         private void HandleUltimateAbility()
@@ -164,11 +158,8 @@ namespace Heroes.Maira
                 ultimateAbilityCooldownImage.enabled = true;
                 ultimateAbilityCooldownText.enabled = true;
             }
-
             ultimateAbilityCooldown = _heroStats.abilityAttributes.ultimateAbility.cooldown;
-            
-            _currentAttackDirection = Vector3.zero;
-            StartCoroutine(StartAttackAnimation(currentAttack, ultimateAbility, _currentAttackDirection));
+            StartCoroutine(StartAttackAnimation(currentAttack, ultimateAbility));
         }
 
         private void UpdateCooldowns()
@@ -180,10 +171,10 @@ namespace Heroes.Maira
     
         public void HandleAttackStateMachine()
         {
-            /*if(currentAttack != null)
+            if(currentAttack != null)
             {
                 ExitAttack(currentAttack);
-            }*/
+            }
             if (currentHeroesAttackState == HeroesAttackState.Idle)
             {
                 if (Input.GetMouseButtonDown(0))
@@ -192,8 +183,7 @@ namespace Heroes.Maira
                     {
                         currentAttack = "PrimaryAttack";
                         basicAttackCooldown = 0.1f;
-                        _currentAttackDirection = transform.forward * 2;
-                        StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection));
+                        StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack));
                     }
                 }
                 else if (Input.GetMouseButtonDown(1))
@@ -222,25 +212,21 @@ namespace Heroes.Maira
         }
 
 
-        private IEnumerator StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType,Vector3 direction)
+        private IEnumerator StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType)
         {
-            if (attackType.Count <= comboCounter)
-            {
-                comboCounter = 0;
-            }
             IsInCombatMode = true;
-            if ((Time.time - lastComboEnd > 0.5f))
+            if ((Time.time - lastComboEnd > 0.5f && comboCounter < attackType.Count))
             {   
                 CancelInvoke("EndCombo");
                 if (Time.time - lastClickedTime >= comboTime)
                 {
                     anim.runtimeAnimatorController = attackType[comboCounter].animatorOV;
-                    anim.Play(attackAnimationName, 0, 0);
                     anim.speed = attackSpeed * attackSpeedMultiplier;
+                    anim.Play(attackAnimationName, 0, 0);
                     attackDamage = attackType[comboCounter].damage;
                     Debug.Log($"Current attack is dealing {attackDamage} damage");
                     attackAoE = attackType[comboCounter].areaOfEffect;
-                    HandleAreaOfEffectDamage(attackAoE, direction);
+                    HandleAreaOfEffectDamage();
                     comboCounter++;
                     lastClickedTime = Time.time;
                     if (comboCounter >= attackType.Count)
@@ -252,35 +238,33 @@ namespace Heroes.Maira
             Debug.Log($"Starting cooldown for {currentAttack}.");
             StartCoroutine(ResetCooldown(currentAttack));
 
+        
+        
+
             // Wait for the animation to finish
             yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-            ExitAttack(currentAttack);
             IsInCombatMode = false;
+            ExitAttack(currentAttack);
         }
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            
-            Gizmos.DrawWireSphere(transform.position + _currentAttackDirection, attackAoE);
+            Gizmos.DrawWireSphere(transform.position + transform.forward, attackAoE);
         }
-        
-        public void TriggerAreaOfEffectDamageForPrimaryAbility()
-        {
-            Debug.Log("Inside TriggerAreaOfEffectDamageForPrimaryAbility");
-            IsInCombatMode = true;
-            HandleAreaOfEffectDamage(primaryAbility[0].areaOfEffect, _currentAttackDirection);
-            IsInCombatMode = false;
-        }
-        private void HandleAreaOfEffectDamage(float sphereSize, Vector3 direction)
+
+        private void HandleAreaOfEffectDamage()
         {
             if (IsInCombatMode)
             {
-                Collider[] hitColliders = Physics.OverlapSphere(transform.position + direction, sphereSize, enemyLayerMask);
-                Debug.Log("Amount of colliders hit: " + hitColliders.Length);
+                // Replace the 'Vector3.forward' with the actual direction you want the frontal area to be.
+                Vector3 frontDirection = transform.forward;
+
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position + frontDirection, attackAoE, enemyLayerMask);
+
                 foreach (Collider collider in hitColliders)
                 {
-                    if (collider.gameObject.CompareTag("Enemy"))
+                    if (collider.gameObject.tag == "Enemy")
                     {
                         // Check if the collided object has a HealthSystem component
                         HealthSystem healthSystem = collider.GetComponent<HealthSystem>();

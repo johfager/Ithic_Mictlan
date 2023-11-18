@@ -1,28 +1,28 @@
+using Heroes.Rosa;
 using UnityEngine;
 
-namespace Heroes.Maira
+namespace Heroes
 {
-    public class PlayerManagerMaira : MonoBehaviour
+    public class PlayerManagerRosa : MonoBehaviour
     {
         public PlayerMovement playerMovement;
-        public HeroesCombatMaira heroesCombatScript;
+        public HeroesCombatRosa heroesCombatScript;
         public HeroStats heroStats;
-        private bool isMoving;
+        private bool isMoving = true;
 
         void Start()
         {
-            isMoving = true;
             HealthSystem healthSystem = GetComponent<HealthSystem>();
             healthSystem.Initialize(heroStats.healthAttributes.maxHealth);
             playerMovement = GetComponent<PlayerMovement>();
-            heroesCombatScript = GetComponent<HeroesCombatMaira>();
+            heroesCombatScript = GetComponent<HeroesCombatRosa>();
         }
 
         void Update()
         {
 
             // Check if the player is in combat mode
-            /*if (heroesCombatScript.IsInCombatMode)
+            if (heroesCombatScript.IsInCombatMode)
             {
                 isMoving = false; // Disable movement
             }
@@ -34,12 +34,11 @@ namespace Heroes.Maira
             if (isMoving)
             {
                 playerMovement.HandleMovement();
-            }*/
-            playerMovement.HandleMovement();
-
+            }
+           //Debug.Log("combat mode is: " + heroesCombatScript.IsInCombatMode.ToString());
             heroesCombatScript.HandleAttackStateMachine();
 
-
+        
         }
     }
 }

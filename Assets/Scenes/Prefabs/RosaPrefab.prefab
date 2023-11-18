@@ -441,9 +441,9 @@ GameObject:
   - component: {fileID: 4854483802859209155}
   - component: {fileID: 2507549633815964280}
   - component: {fileID: 833727004565120867}
-  - component: {fileID: 6670802344112374691}
+  - component: {fileID: 4396000859945453253}
   - component: {fileID: 8308728703054467982}
-  - component: {fileID: 2839568571084949383}
+  - component: {fileID: 3409099516543090776}
   - component: {fileID: 2826736688382291076}
   - component: {fileID: 2120526029269013552}
   m_Layer: 0
@@ -521,7 +521,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6670802344112374691
+--- !u!114 &4396000859945453253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -530,13 +530,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4868826238426160607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: befe96910825b1c4f8623e1953d59571, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d3b00e6b939d3e4fa37699663c3248e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 8308728703054467982}
-  heroesCombatScript: {fileID: 2839568571084949383}
+  heroesCombatScript: {fileID: 3409099516543090776}
   heroStats: {fileID: 11400000, guid: a8da2c3016204a14a9ef5bdb2da1433b, type: 2}
-  heroModel: {fileID: 919132149155446097, guid: e886ca47782947b4498b61d730d5cf17, type: 3}
 --- !u!114 &8308728703054467982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,7 +554,7 @@ MonoBehaviour:
   maxVerticalRotation: 5
   minVerticalRotation: -5
   rotationFactorPerFrame: 1
---- !u!114 &2839568571084949383
+--- !u!114 &3409099516543090776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -564,7 +563,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4868826238426160607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94e98b9975b272741a3d858b86e2db7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 322730480dcffef4abb51630558aaacd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   primaryAttack:
@@ -579,14 +578,14 @@ MonoBehaviour:
   ultimateAbility:
   - {fileID: 11400000, guid: 97159ccb196672c47930358b92860371, type: 2}
   combatStateText: {fileID: 8102501434506333892}
-  comboTime: 0
+  comboTime: 0.4
   IsInCombatMode: 0
   primaryAbilityTimerUI: 0
   secondaryAbilityTimerUI: 0
   UltimateAbilityTimerUI: 0
   enemyLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   _heroStats: {fileID: 11400000, guid: a8da2c3016204a14a9ef5bdb2da1433b, type: 2}
   primaryAbilityCooldownImage: {fileID: 7246272566333364039}
   secondaryAbilityCooldownImage: {fileID: 2366862884913141732}
