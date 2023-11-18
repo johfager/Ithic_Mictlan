@@ -27,7 +27,6 @@ public class PhotonSpawnPlayer : MonoBehaviour
 
     void Start() {
         StartCoroutine(InitialSpawn());
-        
     }
 
     private IEnumerator InitialSpawn()

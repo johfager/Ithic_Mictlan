@@ -166,7 +166,6 @@ public class PhotonMatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
                     {
                         case 0:
                             _playersInfo[i].HeroID = amountToChange;
-                            selectScreenManager.DisableButton(_playersInfo[i].HeroID);
                             Debug.Log($"Player [{_playersInfo[i].PlayerName}] has [{_playersInfo[i].HeroID}] as hero ID");
                             break;
                         case 1:

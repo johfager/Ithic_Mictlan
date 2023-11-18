@@ -12,11 +12,14 @@ public class UISelectScreenManager : MonoBehaviour
     [SerializeField] private TMP_Text charcterDescription;
     [SerializeField] private CanvasGroup characterSelectorPanel;
     [SerializeField] private Button readyButton;
+    [SerializeField] private Button startGameButton;
     [SerializeField] private TMP_Text waitingText;
     [SerializeField] private PhotonMatchManager photonMatchManager;
     [SerializeField] private Button[] characterButtons;
+    [SerializeField] private PhotonView photonView;
 
     private int HeroID;
+    private int playersReady;
 
     private bool isCharacterSelected;
 
@@ -33,15 +36,29 @@ public class UISelectScreenManager : MonoBehaviour
     }
 
     void Start() {
+        playersReady = 0;
         selectedCharacter.text = "Selecciona a tu guerrero";
         charcterDescription.text = "...";
         isCharacterSelected = false;
         readyButton.interactable = false;
         waitingText.gameObject.SetActive(false);
+
+        if(PhotonNetwork.IsMasterClient)
+        {
+            startGameButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            startGameButton.gameObject.SetActive(false);
+        }
     }
 
     public void SetCharacterInfo(string name, string desc)
     {
+        if(isCharacterSelected)
+        {
+            return;
+        }
         selectedCharacter.text = name;
         charcterDescription.text = desc;
         readyButton.interactable = true;
@@ -72,10 +89,11 @@ public class UISelectScreenManager : MonoBehaviour
         waitingText.gameObject.SetActive(true);
 
         photonMatchManager.ChangeStatSent(PhotonNetwork.LocalPlayer.ActorNumber, 0, HeroID);
+        photonView.RPC("DisableButton", RpcTarget.All, HeroID);
 
-        SpawnPointManager.instance.SpawnPlayer(HeroID, PhotonNetwork.NickName);
+        // SpawnPointManager.instance.SpawnPlayer(HeroID, PhotonNetwork.NickName);
 
-        HideSelectScreen();
+        // HideSelectScreen();
     }
 
     public void HideSelectScreen()
@@ -85,9 +103,17 @@ public class UISelectScreenManager : MonoBehaviour
         characterSelectorPanel.blocksRaycasts = false;
     }
 
+    [PunRPC]
     public void DisableButton(int ID)
     {
-        Debug.Log("Yeah");
         characterButtons[ID].interactable = false;
+        playersReady++;
+        if(PhotonNetwork.IsMasterClient)
+        {
+            if(playersReady == 4)
+            {
+                startGameButton.interactable = true;
+            }
+        }
     }
 }
