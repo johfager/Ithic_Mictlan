@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 7647967678128615262}
   heroesCombatScript: {fileID: 6197520307193964216}
-  heroStats: {fileID: 0}
+  heroStats: {fileID: 11400000, guid: ea7b503ee59743e4aa91935c30b1541c, type: 2}
 --- !u!114 &7647967678128615262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,11 +212,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 11400000, guid: d316e8b75aa9d934c95e173cf1f1b055, type: 2}
-  playerCamera: {fileID: 0}
+  playerCamera: {fileID: 3068738931634436453}
   mouseSensitivity: 2
   maxVerticalRotation: 90
   minVerticalRotation: -90
   rotationFactorPerFrame: 1
+  photonView: {fileID: 7575291933590026874}
 --- !u!114 &6197520307193964216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,7 +497,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

@@ -39,7 +39,7 @@ public class PhotonSpawnPlayer : MonoBehaviour
              FindObjectOfType<PhotonMatchManager>().gameState != PhotonMatchManager.GameStates.EndGame &&
              player == null)
         {
-            //SpawnPlayer();
+            Debug.Log("NOW >:C");
             photonMatchManager.NewPlayerSent(PhotonNetwork.NickName);
         }
     }

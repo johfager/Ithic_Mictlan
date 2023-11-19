@@ -300,7 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 6648272451009141453}
   heroesCombatScript: {fileID: 2745691554481449136}
-  heroStats: {fileID: 0}
+  heroStats: {fileID: 11400000, guid: d155e5d5e36cee44199bbbead647f23d, type: 2}
 --- !u!114 &6648272451009141453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,11 +314,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 11400000, guid: d316e8b75aa9d934c95e173cf1f1b055, type: 2}
-  playerCamera: {fileID: 0}
+  playerCamera: {fileID: 4659760713753693550}
   mouseSensitivity: 2
   maxVerticalRotation: 90
   minVerticalRotation: -90
   rotationFactorPerFrame: 1
+  photonView: {fileID: 6866771032198169718}
 --- !u!114 &2745691554481449136
 MonoBehaviour:
   m_ObjectHideFlags: 0

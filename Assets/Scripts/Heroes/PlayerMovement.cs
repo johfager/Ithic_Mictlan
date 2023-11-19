@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
     public float rotationFactorPerFrame = 1.0f;
     private Vector2 moveInput;
     private Vector3 localMovementDirection;
+
+    // Photon
+    [SerializeField] private PhotonView photonView;
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -52,8 +56,12 @@ public class PlayerMovement : MonoBehaviour
     {
         //HandleRotation();
         //Movement();
-        HandleMovementInput();
-        HandleMouseLook();
+        if(photonView.IsMine)
+        {
+            HandleMovementInput();
+            HandleMouseLook();
+        }
+        
 
     }
     
