@@ -13,10 +13,13 @@ public class ConsumableItem : Item {
     public GameObject itemPrefab;
 
     public void applyEffect(HealthSystem playerHealth, Transform playerTransform){
-
+        // heal the player by the specified amount
         playerHealth.HealPlayer(healthRestored);
+        // Instantiate the item's prefab for the hover effect
         GameObject prefabTemp = GameObject.Instantiate(itemPrefab, playerTransform.position + Vector3.up * 2.0f, playerTransform.rotation);
+        // Set the prefab's parent to the player's transform
         prefabTemp.transform.parent = playerTransform;
+        // Start the coroutine to get rid of the item
         ItemCoroutines.Instance.CallDestroyHover(prefabTemp);
     }
 
@@ -26,26 +29,16 @@ public class ConsumableItem : Item {
 // Values for each buff are meant to be multiplied by the player's stats. If there is no buff, the value should be 1, not 0
 [System.Serializable]
 public class BuffConsumable : Item{
-    // 1 - health
-    // 2 - defence
-    // 3 - fallSpeed
-    // 4 - movSpeed
-    // 5 - jumpHeight
-    // 6 - dmg
-    // 7 - atkSpeed
-    // 8 - critChance
-
-    public int buffType;
+    // Health attributes
     public float healthBuff;
     public float defenseBuff;
-
+    // Movement attributes
     public float fallSpeed;
     public float movSpeedBuff;
     public float jumpHeightBuff;
-
+    // Combat attributes
     public float dmgBuff;
     public float atkSpeedBuff;
-
     public float critChanceBuff;
 
     // Spirte tied to the item (if applicable)
@@ -57,6 +50,7 @@ public class BuffConsumable : Item{
         
         // buffing health attributes
         heroStats.healthAttributes.maxHealth *= healthBuff;
+        heroStats.combatAttributes.defense *= defenseBuff;
         // buff movement attributes
         heroStats.movementAttributes.movementSpeed *= movSpeedBuff;
         heroStats.movementAttributes.gravitySpeed *= fallSpeed;
@@ -65,7 +59,6 @@ public class BuffConsumable : Item{
         heroStats.combatAttributes.basicAttackDamage *= dmgBuff;
         heroStats.combatAttributes.attackSpeed *= atkSpeedBuff;
         heroStats.combatAttributes.criticalHitChance *= critChanceBuff;
-        heroStats.combatAttributes.defense *= defenseBuff;
 
     }
     
