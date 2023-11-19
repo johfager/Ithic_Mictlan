@@ -13,6 +13,9 @@ public class ItemManager : MonoBehaviour
     public static ItemManager Instance;
     
     public Item[] CommonItemPool;
+    [SerializeField] public GameObject[] CommonItemPrefabs;
+    [SerializeField] public Sprite[] CommonItemSprites;
+
 
     public Item[] RareItemPool;
     public JaguarWarriorItem[] JaguarWarriorItems = new JaguarWarriorItem[]
@@ -72,6 +75,7 @@ public class ItemManager : MonoBehaviour
                 rarity = 1,
                 description = "Recupera 30 de salud",
                 healthRestored = 30.0f,
+                itemPrefab = CommonItemPrefabs[0],
                 
             },
 
@@ -82,65 +86,81 @@ public class ItemManager : MonoBehaviour
                 rarity = 1,
                 description = "Recupera 80 de salud",
                 healthRestored = 30.0f,
+                itemPrefab = CommonItemPrefabs[1],
                 
             },
 
-            new BuffConsumable {
-                id = 301,
-                name = "Makahuitl",
-                rarity = 1,
-                description = "Incrementa el daño base del usuario en 15%", 
+            // new BuffConsumable {
+            
+            //     id = 301,
+            //     name = "Makahuitl",
+            //     rarity = 1,
+            //     description = "Incrementa el daño base del usuario en 15%", 
 
-                healthBuff = 1f,
-                defenseBuff = 1f,
+            //     buffType = 7,
 
-                fallSpeed = 1f,
-                movSpeedBuff = 1f,
-                jumpHeightBuff = 1f,
+            //     healthBuff = 1f,
+            //     defenseBuff = 1f,
 
-                dmgBuff = 1.15f,
-                atkSpeedBuff = 1f,
+            //     fallSpeed = 1f,
+            //     movSpeedBuff = 1f,
+            //     jumpHeightBuff = 1f,
 
-                critChanceBuff = 1f,
-            },
+            //     dmgBuff = 1.15f,
+            //     atkSpeedBuff = 1f,
 
-            new BuffConsumable {
-                id = 302,
-                name = "Escudo de guerrero",
-                rarity = 1,
-                description = "Incrementa la defensa base del usuario en 15%", 
+            //     critChanceBuff = 1f,
 
-                healthBuff = 1f,
-                defenseBuff = 1.15f,
+            //     itemSprite = CommonItemSprites[2],
+                
+            // },
 
-                fallSpeed = 1f,
-                movSpeedBuff = 1f,
-                jumpHeightBuff = 1f,
+            // new BuffConsumable {
+            //     id = 302,
+            //     name = "Escudo de guerrero",
+            //     rarity = 1,
+            //     description = "Incrementa la defensa base del usuario en 15%", 
 
-                dmgBuff = 1f,
-                atkSpeedBuff = 1f,
+            //     buffType = 2,
 
-                critChanceBuff = 1f,
-            }, 
+            //     healthBuff = 1f,
+            //     defenseBuff = 1.15f,
 
-            new BuffConsumable {
-                id = 302,
-                name = "Colgante de obsidiana",
-                rarity = 1,
-                description = "Incrementa la probabilidad de critco del usuario en 15%", 
+            //     fallSpeed = 1f,
+            //     movSpeedBuff = 1f,
+            //     jumpHeightBuff = 1f,
 
-                healthBuff = 1f,
-                defenseBuff = 1f,
+            //     dmgBuff = 1f,
+            //     atkSpeedBuff = 1f,
 
-                fallSpeed = 1f,
-                movSpeedBuff = 1f,
-                jumpHeightBuff = 1f,
+            //     critChanceBuff = 1f,
 
-                dmgBuff = 1f,
-                atkSpeedBuff = 1f,
+            //     itemSprite = CommonItemSprites[3],
+                
+            // }, 
 
-                critChanceBuff = 1.15f,
-            }, 
+            // new BuffConsumable {
+            //     id = 302,
+            //     name = "Colgante de obsidiana",
+            //     rarity = 1,
+            //     description = "Incrementa la probabilidad de critco del usuario en 15%", 
+            //     buffType = 8,
+
+            //     healthBuff = 1f,
+            //     defenseBuff = 1f,
+
+            //     fallSpeed = 1f,
+            //     movSpeedBuff = 1f,
+            //     jumpHeightBuff = 1f,
+
+            //     dmgBuff = 1f,
+            //     atkSpeedBuff = 1f,
+
+            //     critChanceBuff = 1.15f,
+
+            //     itemSprite = CommonItemSprites[4],
+                
+            // }, 
             
 
         };
