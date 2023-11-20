@@ -21,6 +21,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
     CharacterController objectiveController;
     public GameObject CamazotzHand;
     private NavMeshAgent agent;
+    private Rigidbody rb;
     private GameObject[] playerList;
 
     private bool isAttacking;
@@ -47,6 +48,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         healthSystem.Initialize(enemyStats.healthAttributes.maxHealth);
         playerList = GameObject.FindGameObjectsWithTag("Hero");
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         CamazotzAgentSetter();
     }
@@ -187,6 +189,12 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, Quaternion oldHeroRotation, float delay = 1.0f)
     {
+        // Debug.Log("Resetting boolean parameters");
+        // while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        // {
+        //     yield return null;
+        // }
+        // Debug.Log("Animation is complete");
         yield return new WaitForSeconds(delay);
 
         // Reset the boolean parameters after the animation is complete
@@ -202,13 +210,19 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
         agent.isStopped = false;
-        agent.SetDestination(objective.transform.position);
         isInMidAttack = false;
+        agent.SetDestination(objective.transform.position);
     }
 
     private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, float delay = 1.0f)
     {
-        // Assuming your animation duration is 1 second, adjust the time as needed
+        // Debug.Log("Resetting boolean parameters");
+        // while(animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        // {
+        //     yield return null;
+        // }
+        // Debug.Log("Animation is complete");
+
         yield return new WaitForSeconds(delay);
 
         // Reset the boolean parameters after the animation is complete
@@ -233,7 +247,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 agent.stoppingDistance = 5;
                 ChangeState(State.LargeRangeBasicAttackState); // Q5
             }
-            basicAttackCooldown = 3.0f; // Set a 5-second cooldown for basic attack
+            basicAttackCooldown = 3.0f; 
             StartCoroutine(ResetCooldown("BasicAttackCooldown"));
         }
         else
@@ -263,7 +277,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 isInMidAttack = true;
                 DealDamageToTarget(20);
             }
-            StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
+            StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, .5f));
         }
         AttacksSoftReset();
         PhaseChecker(attackIndex);
@@ -280,7 +294,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
             isInMidAttack = true;
             DealDamageToTarget(25);
         }
-        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
+        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, .5f));
         AttacksSoftReset();
         PhaseChecker(attackIndex);
     }
@@ -303,14 +317,14 @@ public class CamazotzBehaviour2 : MonoBehaviour
                     currentAnimationBool = "SoulEaterHit";
                     animator.SetBool(currentAnimationBool, true);
                     isInMidAttack = true;
-                    // HandleSoulEaterHit();
+                    HandleSoulEaterHit();
                 }
                 else
                 {
                     currentAnimationBool = "SoulEaterMiss";
                     animator.SetBool(currentAnimationBool, true);
                     isInMidAttack = true;
-                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, .83f));
                 }
 
                 AttacksSoftReset();
@@ -331,7 +345,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private void HandleSoulEaterHit()
     {
-        Debug.Log("Soul Eater Hit");
         agent.isStopped = true;
         DealDamageToTarget(50);
         objectiveController.enabled = false;
@@ -344,7 +357,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         objective.transform.localPosition = Vector3.zero;
         objective.transform.localRotation = Quaternion.Euler(27.588f, 136.45f, 33.142f);
 
-        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, 3.0f));
+        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, 3.5f));
     }
 
     // Q7
@@ -361,6 +374,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 Quaternion oldHeroRotation;
                 if (attackIndex == 1)
                 {
+                    Debug.Log("Upside Down World Hit");
                     agent.isStopped = true;
                     DealDamageToTarget(50);
                     objectiveController.enabled = false;
@@ -373,14 +387,15 @@ public class CamazotzBehaviour2 : MonoBehaviour
                     objective.transform.SetParent(CamazotzHand.transform);
                     objective.transform.localPosition = Vector3.zero;
                     objective.transform.localRotation = Quaternion.Euler(27.588f, 136.45f, 33.142f);
-                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, 3.0f));
+                    rb.AddForce(transform.up * 1000);
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, 4.1f));
                 }
                 else
                 {
                     currentAnimationBool = "UpsideDownWorldMiss";
                     animator.SetBool(currentAnimationBool, true);
                     isInMidAttack = true;
-                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, .66f));
                 }
                 AttacksSoftReset();
                 PhaseChecker(attackIndex);
@@ -417,12 +432,11 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Infernal Screech");
                     currentAnimationBool = "InfernalScreech";
                     animator.SetBool(currentAnimationBool, true);
                     isInMidAttack = true;
                     DealDamageToTarget(40);
-                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool));
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, 1.6f));
                     ChangeState(State.ChangeOfPlayerToTargetState);
                 }
                 infernalScreechCooldown = 15.0f; // Set a 15-second cooldown for Infernal Screech attack
@@ -442,7 +456,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
     // Q9
     private void HandleChangeOfPlayerToTargetState()
     {
-        Debug.Log("Change of Player to Target");
         playerList = GameObject.FindGameObjectsWithTag("Hero");
         int pick = Random.Range(0, playerList.Length);
         objective = playerList[pick];
@@ -454,7 +467,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
     // Q10
     private void HandleSecondPhaseState()
     {
-        Debug.Log("Second Phase");
         int attackIndex = Random.Range(0, 5);
 
         if (healthSystem.currentHealth <= 0)
@@ -514,7 +526,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
     // Q12
     private void HandlePhaseTransitionState()
     {
-        Debug.Log("Phase Transition");
         if (healthSystem.currentHealth > healthSystem.maxHealth / 2)
         {
             ChangeState(State.FirstPhaseState);
@@ -575,12 +586,10 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            Debug.Log("Change phase");
             healthSystem.TakeDamage(3000);
         }
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            Debug.Log("Death");
             healthSystem.TakeDamage(10000);
         }
     }
