@@ -344,13 +344,14 @@ MonoBehaviour:
   combatStateText: {fileID: 3026352578972948115}
   comboTime: 0.4
   IsInCombatMode: 0
+  photonView: {fileID: 6866771032198169718}
   primaryAbilityTimerUI: 0
   secondaryAbilityTimerUI: 0
   UltimateAbilityTimerUI: 0
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  _heroStats: {fileID: 0}
+  _heroStats: {fileID: 11400000, guid: d155e5d5e36cee44199bbbead647f23d, type: 2}
   primaryAbilityCooldownImage: {fileID: 0}
   secondaryAbilityCooldownImage: {fileID: 0}
   ultimateAbilityCooldownImage: {fileID: 0}

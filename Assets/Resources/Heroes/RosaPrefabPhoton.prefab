@@ -1788,6 +1788,7 @@ MonoBehaviour:
   combatStateText: {fileID: 6773199561470219662}
   comboTime: 0
   IsInCombatMode: 0
+  photonView: {fileID: 1492508151130540352}
   primaryAbilityTimerUI: 0
   secondaryAbilityTimerUI: 0
   UltimateAbilityTimerUI: 0
