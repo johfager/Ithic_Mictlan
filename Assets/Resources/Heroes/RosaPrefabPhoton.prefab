@@ -1761,6 +1761,7 @@ MonoBehaviour:
   minVerticalRotation: -5
   rotationFactorPerFrame: 1
   photonView: {fileID: 1492508151130540352}
+  camera: {fileID: 9216710996824199559}
 --- !u!114 &3548897488700070964
 MonoBehaviour:
   m_ObjectHideFlags: 0

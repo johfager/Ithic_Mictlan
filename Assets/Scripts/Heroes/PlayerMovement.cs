@@ -34,10 +34,12 @@ public class PlayerMovement : MonoBehaviour
 
     // Photon
     [SerializeField] private PhotonView photonView;
+    [SerializeField] private Camera camera;
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        camera.gameObject.SetActive(photonView.IsMine);
         if (playerStats != null)
         {
             Debug.Log("PlayerStats successfully loaded");
@@ -56,94 +58,98 @@ public class PlayerMovement : MonoBehaviour
     {
         //HandleRotation();
         //Movement();
-        if(photonView.IsMine)
-        {
-            HandleMovementInput();
-            HandleMouseLook();
-        }
+
+        HandleMovementInput();
+        HandleMouseLook();
         
 
     }
     
     private void HandleRotation()
     {
-        Vector3 positionToLookAt;
+        if(photonView.IsMine)
+        {
+            Vector3 positionToLookAt;
 
-        positionToLookAt.x = _cameraRelativeMovement.x;
-        //We will never need to rotate around the y-axis.
-        positionToLookAt.y = 0.0f;
-        positionToLookAt.z = _cameraRelativeMovement.z;
+            positionToLookAt.x = _cameraRelativeMovement.x;
+            //We will never need to rotate around the y-axis.
+            positionToLookAt.y = 0.0f;
+            positionToLookAt.z = _cameraRelativeMovement.z;
 
-        Quaternion currentRotation = transform.rotation;
-        Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-        transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
+            Quaternion currentRotation = transform.rotation;
+            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
+        }
     }
     private void HandleMovementInput()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        
-        Vector3 cameraForward = Camera.main.transform.forward;
-        Vector3 cameraRight = Camera.main.transform.right;
-
-        // Use the camera's forward and right vectors to calculate movement direction
-        Vector3 inputDirection = cameraForward * verticalInput + cameraRight * horizontalInput;
-        inputDirection.Normalize();
-
-        // Sprinting toggle
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if(photonView.IsMine)
         {
-            isSprinting = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            isSprinting = false;
-        }
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
 
-        // Gradual sprint acceleration
-        float targetSpeed = isSprinting
-            ? playerStats.movementAttributes.movementSpeed * playerStats.movementAttributes.sprintSpeedMultiplier
-            : playerStats.movementAttributes.movementSpeed;
+            
+            Vector3 cameraForward = Camera.main.transform.forward;
+            Vector3 cameraRight = Camera.main.transform.right;
 
-        // Only update the currentSpeed when there's input
-        if (inputDirection != Vector3.zero)
-        {
-            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed,
-                playerStats.movementAttributes.sprintGradualAcceleration * Time.deltaTime);
-        }
-        else
-        {
-            // If there's no input, set currentSpeed to 0 to stop the character from moving
-            currentSpeed = 0f;
-        }
+            // Use the camera's forward and right vectors to calculate movement direction
+            Vector3 inputDirection = cameraForward * verticalInput + cameraRight * horizontalInput;
+            inputDirection.Normalize();
 
-        // Apply movement speed
-        moveDirection = inputDirection * currentSpeed;
-
-        // Apply gravity
-        ApplyGravity();
-
-        // Jumping
-        if (characterController.isGrounded)
-        {
-            if (Input.GetButtonDown("Jump"))
+            // Sprinting toggle
+            if (Input.GetKeyDown(KeyCode.LeftControl))
             {
-                verticalVelocity = playerStats.movementAttributes.jumpHeight;
+                isSprinting = true;
             }
+            else if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                isSprinting = false;
+            }
+
+            // Gradual sprint acceleration
+            float targetSpeed = isSprinting
+                ? playerStats.movementAttributes.movementSpeed * playerStats.movementAttributes.sprintSpeedMultiplier
+                : playerStats.movementAttributes.movementSpeed;
+
+            // Only update the currentSpeed when there's input
+            if (inputDirection != Vector3.zero)
+            {
+                currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed,
+                    playerStats.movementAttributes.sprintGradualAcceleration * Time.deltaTime);
+            }
+            else
+            {
+                // If there's no input, set currentSpeed to 0 to stop the character from moving
+                currentSpeed = 0f;
+            }
+
+            // Apply movement speed
+            moveDirection = inputDirection * currentSpeed;
+
+            // Apply gravity
+            ApplyGravity();
+
+            // Jumping
+            if (characterController.isGrounded)
+            {
+                if (Input.GetButtonDown("Jump"))
+                {
+                    verticalVelocity = playerStats.movementAttributes.jumpHeight;
+                }
+            }
+
+            // Apply vertical velocity
+            moveDirection.y = verticalVelocity;
+
+            //_cameraRelativeMovement = ConvertToCameraSpace(moveDirection);
+            // Move the character
+            characterController.Move(moveDirection * Time.deltaTime);
+
+            // Update the 'isWalking' and 'isRunning' parameters in the Animator
+            // Set the Animator parameters
+            animator.SetFloat("HorizontalSpeed", horizontalInput);
+            animator.SetFloat("VerticalSpeed", verticalInput);
         }
-
-        // Apply vertical velocity
-        moveDirection.y = verticalVelocity;
-
-        //_cameraRelativeMovement = ConvertToCameraSpace(moveDirection);
-        // Move the character
-        characterController.Move(moveDirection * Time.deltaTime);
-
-        // Update the 'isWalking' and 'isRunning' parameters in the Animator
-        // Set the Animator parameters
-        animator.SetFloat("HorizontalSpeed", horizontalInput);
-        animator.SetFloat("VerticalSpeed", verticalInput);
     }
 
     /*private void HandleMovementInput()
@@ -243,17 +249,21 @@ public class PlayerMovement : MonoBehaviour
     }
     private void HandleMouseLook()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        if(photonView.IsMine)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-        // Rotate the character (Y-axis)
-        transform.Rotate(Vector3.up * mouseX);
+            // Rotate the character (Y-axis)
+            transform.Rotate(Vector3.up * mouseX);
 
-        // Rotate the camera (X-axis)
-        rotX -= mouseY;
-        rotX = Mathf.Clamp(rotX, minVerticalRotation, maxVerticalRotation); // Limit camera rotation to prevent flipping
+            // Rotate the camera (X-axis)
+            rotX -= mouseY;
+            rotX = Mathf.Clamp(rotX, minVerticalRotation, maxVerticalRotation); // Limit camera rotation to prevent flipping
 
-        // Apply camera rotation
-        playerCamera.localRotation = Quaternion.Euler(rotX, 0, 0);
+            // Apply camera rotation
+            playerCamera.localRotation = Quaternion.Euler(rotX, 0, 0);
+        }
+
     }
 }
