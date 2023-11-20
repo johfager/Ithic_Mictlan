@@ -1742,6 +1742,7 @@ MonoBehaviour:
   playerMovement: {fileID: 5580093693509117910}
   heroesCombatScript: {fileID: 3548897488700070964}
   heroStats: {fileID: 11400000, guid: a8da2c3016204a14a9ef5bdb2da1433b, type: 2}
+  photonView: {fileID: 1492508151130540352}
 --- !u!114 &5580093693509117910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5369,7 +5370,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8338565795712609152}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
@@ -5386,7 +5387,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8338565795712609152}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
   m_Name: 
@@ -5448,7 +5449,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8338565795712609152}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b016862bcec63224d9a791b205268472, type: 3}
   m_Name: 

@@ -231,6 +231,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 ConvertToCameraSpace(Vector3 vectorToRotate)
     {
+        if(!photonView.IsMine)
+        {
+            return Vector3.zero;
+        }
         //Get forward and right vectors of camera
         Vector3 cameraForward = Camera.main.transform.forward;
         Vector3 cameraRight = Camera.main.transform.right;
