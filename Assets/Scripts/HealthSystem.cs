@@ -7,14 +7,9 @@ public class HealthSystem : MonoBehaviour
 {
     public float maxHealth = 100f; // Default max health
     public float currentHealth;
-
-    public void Start()
-    {
-        currentHealth = maxHealth;
-    }
-
-    //What is this for?
-    public void Initialize(float health)
+    
+    
+    public void InitializeHealth(float health)
     {
         maxHealth = health;
         currentHealth = maxHealth;

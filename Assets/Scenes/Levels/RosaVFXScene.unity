@@ -123,17 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &134793270 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7246272566333364039, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
-  m_PrefabInstance: {fileID: 2078674390}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &147232439
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,17 +332,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!114 &944000709 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8102501434506333892, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
-  m_PrefabInstance: {fileID: 2078674390}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1546861699
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -667,95 +645,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b2d0db05a3365441ba8205ce1025b89, type: 3}
---- !u!114 &1794776647 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8110238677870623381, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
-  m_PrefabInstance: {fileID: 2078674390}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &1855787129 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4868826238426160607, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
-  m_PrefabInstance: {fileID: 2078674390}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1855787133 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8308728703054467982, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
-  m_PrefabInstance: {fileID: 2078674390}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1855787129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f787dc815103864091159d9b8c1ab76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1855787138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1855787129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d3b00e6b939d3e4fa37699663c3248e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMovement: {fileID: 1855787133}
-  heroesCombatScript: {fileID: 1855787139}
-  heroStats: {fileID: 11400000, guid: a8da2c3016204a14a9ef5bdb2da1433b, type: 2}
---- !u!114 &1855787139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1855787129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 322730480dcffef4abb51630558aaacd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  primaryAttack:
-  - {fileID: 11400000, guid: f26dad8c5a2285244af3473ccbd19dfd, type: 2}
-  - {fileID: 11400000, guid: c50829eaa0006c8498bb1d9e903430e7, type: 2}
-  - {fileID: 11400000, guid: e00b019704ae9c74d8345022584330a4, type: 2}
-  - {fileID: 11400000, guid: cb8b9064e2a0ff7458717f7c50084b23, type: 2}
-  primaryAbility:
-  - {fileID: 11400000, guid: bcfdd3e657aa1c94c851be4ae2082233, type: 2}
-  secondaryAbility:
-  - {fileID: 11400000, guid: d67f2dfd9b723b740b830d72f1c635c1, type: 2}
-  ultimateAbility:
-  - {fileID: 11400000, guid: 97159ccb196672c47930358b92860371, type: 2}
-  combatStateText: {fileID: 944000709}
-  comboTime: 0.4
-  IsInCombatMode: 0
-  primaryAbilityTimerUI: 0
-  secondaryAbilityTimerUI: 0
-  UltimateAbilityTimerUI: 0
-  enemyLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  _heroStats: {fileID: 11400000, guid: a8da2c3016204a14a9ef5bdb2da1433b, type: 2}
-  primaryAbilityCooldownImage: {fileID: 134793270}
-  secondaryAbilityCooldownImage: {fileID: 1892123299}
-  ultimateAbilityCooldownImage: {fileID: 1794776647}
---- !u!114 &1892123299 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2366862884913141732, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
-  m_PrefabInstance: {fileID: 2078674390}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2078674390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -816,10 +705,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6670802344112374691, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
-      propertyPath: heroesCombatScript
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7939221935850225309, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -828,18 +713,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2839568571084949383, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
-    - {fileID: 6670802344112374691, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4868826238426160607, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 1855787139}
-    - targetCorrespondingSourceObject: {fileID: 4868826238426160607, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
-      insertIndex: 5
-      addedObject: {fileID: 1855787138}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

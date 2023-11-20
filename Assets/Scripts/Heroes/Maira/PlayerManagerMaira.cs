@@ -13,7 +13,7 @@ namespace Heroes.Maira
         {
             isMoving = true;
             HealthSystem healthSystem = GetComponent<HealthSystem>();
-            healthSystem.Initialize(heroStats.healthAttributes.maxHealth);
+            healthSystem.InitializeHealth(heroStats.healthAttributes.maxHealth);
             playerMovement = GetComponent<PlayerMovement>();
             heroesCombatScript = GetComponent<HeroesCombatMaira>();
         }

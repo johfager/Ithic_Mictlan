@@ -21,6 +21,7 @@ namespace Heroes.Maira
 
         private float followUpAttackTimer = 0.0f; //Not used
         private float attackDamage;
+        private float attackDamageMultiplier = 1.0f;
         private float attackAoE;
         private string currentAttack;
         
@@ -191,7 +192,7 @@ namespace Heroes.Maira
                     if (basicAttackCooldown <= 0.0f)
                     {
                         currentAttack = "PrimaryAttack";
-                        basicAttackCooldown = 0.1f;
+                        basicAttackCooldown = 0.01f;
                         _currentAttackDirection = transform.forward * 2;
                         StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection));
                     }
@@ -236,8 +237,15 @@ namespace Heroes.Maira
                 {
                     anim.runtimeAnimatorController = attackType[comboCounter].animatorOV;
                     anim.Play(attackAnimationName, 0, 0);
-                    anim.speed = attackSpeed * attackSpeedMultiplier;
-                    attackDamage = attackType[comboCounter].damage;
+                    if (attackAnimationName == "PrimaryAttack")
+                    {
+                        anim.speed = attackSpeed * attackSpeedMultiplier;
+                    }
+                    else
+                    {
+                        anim.speed = attackSpeed;
+                    }
+                    attackDamage = attackType[comboCounter].damage * attackDamageMultiplier;
                     Debug.Log($"Current attack is dealing {attackDamage} damage");
                     attackAoE = attackType[comboCounter].areaOfEffect;
                     HandleAreaOfEffectDamage(attackAoE, direction);
@@ -272,6 +280,30 @@ namespace Heroes.Maira
             HandleAreaOfEffectDamage(primaryAbility[0].areaOfEffect, _currentAttackDirection);
             IsInCombatMode = false;
         }
+
+
+        public void TriggerTauntForSecondaryAbility()
+        {
+            Debug.Log("Triggering Taunt for Maira");
+            IsInCombatMode = true;
+            Collider[] hitColliders = Physics.OverlapSphere( transform.position + _currentAttackDirection,secondaryAbility[0].areaOfEffect);
+            foreach (Collider collider in hitColliders)
+            {
+                if (collider.gameObject.CompareTag("Enemy"))
+                {
+                    // TODO Refactor this to general enemy Script
+                    ChanequeEnemy chanequeEnemy = collider.GetComponent<ChanequeEnemy>();
+
+                    if (chanequeEnemy != null)
+                    {
+                        chanequeEnemy.ChangeTarget(transform);
+                    }
+                }
+            }
+            IsInCombatMode = false;
+        }
+        
+        //We might want a specific function for each ability, but for now this will do. // Jojo
         private void HandleAreaOfEffectDamage(float sphereSize, Vector3 direction)
         {
             if (IsInCombatMode)
@@ -375,8 +407,18 @@ namespace Heroes.Maira
             }
         }
 
-
-
+        public void InsideWrestlingRing()
+        {
+            attackSpeedMultiplier = 2.0f;
+            attackDamageMultiplier = 2.0f;
+            Debug.Log("maira is inside wrestling ring");
+        }
+        public void OutsideWrestlingRing()
+        {
+            attackSpeedMultiplier = 1.0f;
+            attackDamageMultiplier = 1.0f;
+            Debug.Log("Maira has left wrestling ring");
+        }
         void ExitAttack(string attackTagName)
         {
             if (attackTagName != null)

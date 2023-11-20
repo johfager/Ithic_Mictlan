@@ -6,14 +6,28 @@ using UnityEngine;
 
 namespace Heroes.Maira
 {
-
+    
     public class UltimateVFX : MonoBehaviour
     {
         [SerializeField] private GameObject wrestlingRingPrefab;
         [SerializeField] GameObject spawningVFXPrefab;
         [SerializeField] private float duration = 5.0f;
         private GameObject _wrestlingRingObject;
+        [SerializeField] private ParticleSystem leftHandFireVFX;
+        [SerializeField] private ParticleSystem rightHandFireVFX;
 
+        
+        public void PlayFireHandVFX()
+        {
+            leftHandFireVFX.Play();
+            rightHandFireVFX.Play();
+        }
+
+        public void StopFireHandVFX()
+        {
+            leftHandFireVFX.Stop();
+            rightHandFireVFX.Stop();
+        }
         public void TriggerUltimate()
         {
             Quaternion rotation = Quaternion.Euler(-90, 0, 0);
