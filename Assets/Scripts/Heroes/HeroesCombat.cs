@@ -8,7 +8,9 @@ using TMPro;
 using UnityEditor;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
+    
 
+//TODO: Make this script a base class that the player scripts derive from.
 public class HeroesCombat : MonoBehaviour
 {
     public List<HeroAttackObject> primaryAttack;

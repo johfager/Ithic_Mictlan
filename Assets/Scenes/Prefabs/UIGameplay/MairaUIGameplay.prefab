@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 3738258716976878467}
   - component: {fileID: 287782116030945566}
   m_Layer: 5
-  m_Name: MayaUIGameplay
+  m_Name: MairaUIGameplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

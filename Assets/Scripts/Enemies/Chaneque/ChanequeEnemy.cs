@@ -1,3 +1,4 @@
+using Heroes.Maira;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,15 +7,21 @@ public class ChanequeEnemy : EnemyManager
     private NavMeshAgent navMeshAgent;
     private Animator animator;
     private ChanequeState currentState;
+    
+    private HealthSystem _healthSystem;
 
     //TODO: This maybe should be inside Enemystats
     [SerializeField] private float runDistanceThreshold;
 
     //TODO: This is very quick and dirty.
     [SerializeField] private float attackDistanceThreshold;
-
+    
     public EnemyStats enemyStats; // Set this in the Inspector with an EnemyStats asset
     public Transform[] targets; // Set this in the Inspector with an array of target Transforms
+
+    private GameObject _targetObject;
+
+
 
     private enum ChanequeState
     {
@@ -27,6 +34,10 @@ public class ChanequeEnemy : EnemyManager
 
     private void Start()
     {
+        
+        _healthSystem = GetComponent<HealthSystem>();
+        _healthSystem.InitializeHealth(enemyStats.healthAttributes.maxHealth);
+        
         runDistanceThreshold = 40f;
         attackDistanceThreshold = 4f;
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -118,7 +129,6 @@ public class ChanequeEnemy : EnemyManager
                 // Enter the Attack state
                 // Debug.Log("Entering Attack state");
                 animator.SetBool("IsAttacking", true);
-                
                 break;
             // Handle entry logic for other states as needed
         }
@@ -127,6 +137,18 @@ public class ChanequeEnemy : EnemyManager
         currentState = newState;
     }
 
+    private void TriggerAttack()
+    {
+        Collider [] colliders = Physics.OverlapSphere(transform.position, 3f);
+        foreach (var collider in colliders)
+        {
+            if (collider.CompareTag("Hero"))
+            {
+                collider.GetComponent<HealthSystem>().TakeDamage(enemyStats.combatAttributes.basicAttackDamage);
+            }
+        }
+    }
+    
     Transform GetClosestTarget()
     {
         Transform closestTarget = null;
@@ -141,5 +163,11 @@ public class ChanequeEnemy : EnemyManager
             }
         }
         return closestTarget;
+    }
+
+    public void ChangeTarget(Transform position)
+    {
+        // Set the new target
+        targets[0] = position;
     }
 }
