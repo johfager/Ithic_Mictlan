@@ -10,7 +10,8 @@ namespace Heroes.Maira
         [SerializeField] Color outlineColorChange = Color.blue;
         [SerializeField] private float outlineSizeChange = 1f;
         [SerializeField] private float lerpDuration = 1f;
-
+        
+        [SerializeField] private float duration = 5f;
         private Color originalColor;
         private float originalOutlineSize;
 
@@ -69,7 +70,7 @@ namespace Heroes.Maira
                 material.SetFloat(Property2, outlineSizeChange);
             }
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(duration);
 
             // Revert the changes with lerping
             elapsedTime = 0f;
