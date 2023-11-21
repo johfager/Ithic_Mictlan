@@ -37,7 +37,7 @@ public class ChanequeEnemy : EnemyManager
 
         if (targets == null || targets.Length == 0)
         {
-            // Debug.LogError("Targets not assigned!");
+            Debug.LogError("Targets not assigned!");
         }
     }
 
@@ -52,10 +52,10 @@ public class ChanequeEnemy : EnemyManager
             ChangeState(ChanequeState.Attack);
         }
         // Otherwise, check if the enemy is within run range
-        // else if (closestTarget != null && Vector3.Distance(transform.position, closestTarget.position) < runDistanceThreshold)
-        // {
-        //     ChangeState(ChanequeState.Run);
-        // }
+        else if (closestTarget != null && Vector3.Distance(transform.position, closestTarget.position) < runDistanceThreshold)
+        {
+            ChangeState(ChanequeState.Run);
+        }
         // Otherwise, walk to the closest target
         else if (closestTarget != null)
         {
@@ -76,22 +76,22 @@ public class ChanequeEnemy : EnemyManager
         {
             case ChanequeState.Idle:
                 // Exit the Idle state
-                // Debug.Log("Exiting Idle state");
+                Debug.Log("Exiting Idle state");
                 animator.SetBool("IsIdle", true);
                 break;
             case ChanequeState.Walk:
                 // Exit the Walk state
-                // Debug.Log("Exiting Walk state");
+                Debug.Log("Exiting Walk state");
                 animator.SetBool("IsWalking", false);
                 break;
             case ChanequeState.Run:
                 // Exit the Run state
-                // Debug.Log("Exiting Run state");
+                Debug.Log("Exiting Run state");
                 animator.SetBool("IsRunning", false);
                 break;
             case ChanequeState.Attack:
                 // Exit the Attack state
-                // Debug.Log("Exiting Attack state");
+                Debug.Log("Exiting Attack state");
                 animator.SetBool("IsAttacking", false);
                 break;
             // Handle exit logic for other states as needed
@@ -102,21 +102,21 @@ public class ChanequeEnemy : EnemyManager
         {
             case ChanequeState.Idle:
                 // Enter the Idle state
-                // Debug.Log("Entering Idle state");
+                Debug.Log("Entering Idle state");
                 break;
             case ChanequeState.Walk:
                 // Enter the Walk state
-                // Debug.Log("Entering Walk state");
+                Debug.Log("Entering Walk state");
                 animator.SetBool("IsWalking", true);
                 break;
             case ChanequeState.Run:
                 // Enter the Run state
-                // Debug.Log("Entering Run state");
+                Debug.Log("Entering Run state");
                 animator.SetBool("IsRunning", true);
                 break;
             case ChanequeState.Attack:
                 // Enter the Attack state
-                // Debug.Log("Entering Attack state");
+                Debug.Log("Entering Attack state");
                 animator.SetBool("IsAttacking", true);
                 
                 break;

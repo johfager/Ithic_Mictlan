@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 // Regular consumer items, which restore health or mana to the player
@@ -9,18 +10,8 @@ public class ConsumableItem : Item {
     // Inherit parameters from parent class
     public float healthRestored;
 
-    // Model tied to the item (if applicable)
-    public GameObject itemPrefab;
-
-    public void applyEffect(HealthSystem playerHealth, Transform playerTransform){
-        // heal the player by the specified amount
+    public void applyEffect(HealthSystem playerHealth){
         playerHealth.HealPlayer(healthRestored);
-        // Instantiate the item's prefab for the hover effect
-        GameObject prefabTemp = GameObject.Instantiate(itemPrefab, playerTransform.position + Vector3.up * 2.0f, playerTransform.rotation);
-        // Set the prefab's parent to the player's transform
-        prefabTemp.transform.parent = playerTransform;
-        // Start the coroutine to get rid of the item
-        ItemCoroutines.Instance.CallDestroyHover(prefabTemp);
     }
 
 }
@@ -29,28 +20,22 @@ public class ConsumableItem : Item {
 // Values for each buff are meant to be multiplied by the player's stats. If there is no buff, the value should be 1, not 0
 [System.Serializable]
 public class BuffConsumable : Item{
-    // Health attributes
+
     public float healthBuff;
-    public float defenseBuff;
-    // Movement attributes
     public float fallSpeed;
     public float movSpeedBuff;
     public float jumpHeightBuff;
-    // Combat attributes
+
     public float dmgBuff;
     public float atkSpeedBuff;
+    public float defenseBuff;
+
     public float critChanceBuff;
-
-    // Spirte tied to the item (if applicable)
-    public Sprite itemSprite;
-
-    
 
     public void applyEffect(HeroStats heroStats){
         
         // buffing health attributes
         heroStats.healthAttributes.maxHealth *= healthBuff;
-        heroStats.combatAttributes.defense *= defenseBuff;
         // buff movement attributes
         heroStats.movementAttributes.movementSpeed *= movSpeedBuff;
         heroStats.movementAttributes.gravitySpeed *= fallSpeed;
@@ -59,6 +44,7 @@ public class BuffConsumable : Item{
         heroStats.combatAttributes.basicAttackDamage *= dmgBuff;
         heroStats.combatAttributes.attackSpeed *= atkSpeedBuff;
         heroStats.combatAttributes.criticalHitChance *= critChanceBuff;
+        heroStats.combatAttributes.defense *= defenseBuff;
 
     }
     
@@ -105,5 +91,3 @@ public class ActiveItem : Item {
         Debug.Log("Activated spacebar item");
     }
 }
-
-
