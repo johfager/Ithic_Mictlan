@@ -213,6 +213,30 @@ public class HeroesCombat : MonoBehaviour
                         HandleUltimateAbility();
                     }
                 }
+                else if(Input.GetKeyDown(KeyCode.E))
+                {
+                    HandleXoloCatch();
+                }
+            }
+        }
+    }
+
+    private void HandleXoloCatch()
+    {
+        Collider[] xolos = Physics.OverlapSphere(transform.position, 10f);
+
+        if(xolos != null)
+        {
+            foreach (Collider xolo in xolos)
+            {
+                if(xolo.CompareTag("Xolo"))
+                {
+                    if(xolo.transform.GetChild(0).GetComponent<XoloController>() != null)
+                    {
+                        xolo.transform.GetChild(0).GetComponent<XoloController>().CatchXolo();
+                    }
+
+                }
             }
         }
     }
