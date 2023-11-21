@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
 using Heroes;
 using UnityEngine;
 using TMPro;
@@ -19,6 +20,7 @@ public class HeroesCombat : MonoBehaviour
     private float lastComboEnd;
     private int comboCounter;
     private Animator anim;
+    private RuntimeAnimatorController originalAnim;
 
     private float followUpAttackTimer = 0.0f; //Not used
     private float attackDamage;
@@ -79,6 +81,8 @@ public class HeroesCombat : MonoBehaviour
         
         combatStateText.enabled = false; // Hide the debug text
         anim = GetComponent<Animator>();
+        originalAnim = anim.runtimeAnimatorController;
+        
         playerManager = GetComponentInParent<PlayerManager>(); // Get the PlayerManager reference
         
     }
@@ -113,8 +117,6 @@ public class HeroesCombat : MonoBehaviour
                 }
                 else
                 {
-                    //cooldownImage.fillAmount = cooldown / initialCooldownValue; // Update the fill amount
-                    Debug.Log("Current Cooldown is: " + cooldown.ToString("F1") + " seconds");
                     cooldownText.text = cooldown.ToString("F1"); // Display cooldown timer
                 }
             }
@@ -130,7 +132,6 @@ public class HeroesCombat : MonoBehaviour
             primaryAbilityCooldownText.enabled = true;
         }
         primaryAbilityCooldown = _heroStats.abilityAttributes.primaryAbility.cooldown;
-        Debug.Log("This is primaryAbilityCooldown: " + primaryAbilityCooldown.ToString("F1") + " seconds");
         StartCoroutine(StartAttackAnimation(currentAttack, primaryAbility));
     }
 
@@ -169,12 +170,17 @@ public class HeroesCombat : MonoBehaviour
     
     public void HandleAttackStateMachine()
     {
+        if(currentAttack != null)
+        {
+            ExitAttack(currentAttack);
+        }
         if (currentHeroesAttackState == HeroesAttackState.Idle)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 if (basicAttackCooldown <= 0.0f)
                 {
+                    
                     currentAttack = "PrimaryAttack";
                     basicAttackCooldown = 0.1f;
                     StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack));
@@ -209,10 +215,9 @@ public class HeroesCombat : MonoBehaviour
     private IEnumerator StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType)
     {
         IsInCombatMode = true;
-        if (Time.time - lastComboEnd > 0.5f && comboCounter < attackType.Count)
-        {
+        if ((Time.time - lastComboEnd > 0.5f && comboCounter < attackType.Count))
+        {   
             CancelInvoke("EndCombo");
-
             if (Time.time - lastClickedTime >= comboTime)
             {
                 anim.runtimeAnimatorController = attackType[comboCounter].animatorOV;
@@ -229,17 +234,16 @@ public class HeroesCombat : MonoBehaviour
                 }
             }
         }
-        StartCoroutine(ResetCooldown(currentAttack));
         Debug.Log($"Starting cooldown for {currentAttack}.");
-        // Wait for the animation to finish
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-
-        IsInCombatMode = false;
+        StartCoroutine(ResetCooldown(currentAttack));
 
         
+        
+
+        // Wait for the animation to finish
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        IsInCombatMode = false;
         ExitAttack(currentAttack);
-
-
     }
 
     private void OnDrawGizmos()
@@ -356,14 +360,13 @@ private IEnumerator ResetCooldown(string cooldownType)
 
 
 
-    void ExitAttack(string attackTagName)
+void ExitAttack(string attackTagName)
     {
         if (attackTagName != null)
         {
-            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f &&
-                anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName))
+            if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName))
             {
-                Invoke("EndCombo", 1);
+                Invoke("EndCombo", 0.5f);
             }
         }
     }
