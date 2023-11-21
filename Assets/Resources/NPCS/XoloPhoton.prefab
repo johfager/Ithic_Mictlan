@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 8097510808045088848}
   - component: {fileID: 4655200051402125183}
   m_Layer: 0
-  m_Name: Xolo
+  m_Name: XoloPhoton
   m_TagString: Xolo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

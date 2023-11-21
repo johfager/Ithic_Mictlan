@@ -1814,6 +1814,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  uiManager: {fileID: 0}
+  characterType: 0
 --- !u!95 &3378937084806382452
 Animator:
   serializedVersion: 5

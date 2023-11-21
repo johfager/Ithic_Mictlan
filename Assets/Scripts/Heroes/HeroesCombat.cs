@@ -223,7 +223,7 @@ public class HeroesCombat : MonoBehaviour
 
     private void HandleXoloCatch()
     {
-        Collider[] xolos = Physics.OverlapSphere(transform.position, 10f);
+        Collider[] xolos = Physics.OverlapSphere(transform.position, 1.5f);
 
         if(xolos != null)
         {

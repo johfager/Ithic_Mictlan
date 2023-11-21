@@ -17,6 +17,7 @@ public class UISelectScreenManager : MonoBehaviour
     [SerializeField] private PhotonMatchManager photonMatchManager;
     [SerializeField] private Button[] characterButtons;
     [SerializeField] private PhotonView photonView;
+    [SerializeField] private Spawner xoloSpawner;
 
     private int HeroID;
     private int playersReady;
@@ -101,6 +102,9 @@ public class UISelectScreenManager : MonoBehaviour
     [PunRPC]
     public void HideSelectScreen()
     {
+
+        xoloSpawner.SetSpwans(GameObject.Find("Rosa"));
+
         characterSelectorPanel.alpha = 0f;
         characterSelectorPanel.interactable = false;
         characterSelectorPanel.blocksRaycasts = false;
