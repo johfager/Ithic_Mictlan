@@ -14,7 +14,7 @@ public class XoloController : MonoBehaviour
     private float catchRange;
     private bool isRunning;
     private bool wasCatched;
-    private bool canBeGrabbed;
+    //private bool canBeGrabbed;
 
     private void Awake() {
         if(instance == null)
@@ -31,7 +31,7 @@ public class XoloController : MonoBehaviour
         catchRange = catchCollider.radius;
         isRunning = false;
         wasCatched = false;
-        canBeGrabbed = false;
+        //canBeGrabbed = false;
     }
 
     void Update() {
@@ -51,13 +51,13 @@ public class XoloController : MonoBehaviour
         animControl.SetFloat("Speed", speed);
 
         // Catch logic
-        if(canBeGrabbed)
+        /*if(canBeGrabbed)
         {
             if(Input.GetKeyDown(KeyCode.E))
             {
                 StopRun();
             }
-        }
+        }*/
         
     }
 
@@ -65,7 +65,7 @@ public class XoloController : MonoBehaviour
     {
         wasCatched = true;
         isRunning = false;
-        canBeGrabbed = false;
+        //canBeGrabbed = false;
         animControl.SetBool("isRunning", isRunning);
         animControl.SetFloat("Speed", 0);
         animControl.SetBool("hasStopped", wasCatched);
@@ -79,7 +79,12 @@ public class XoloController : MonoBehaviour
         return wasCatched;
     }
 
-    private void OnTriggerEnter(Collider other) {
+    public void CatchXolo()
+    {
+        StopRun();
+    }
+
+    /*private void OnTriggerEnter(Collider other) {
         if(other.tag == "Hero")
         {
             canBeGrabbed = true;
@@ -91,7 +96,7 @@ public class XoloController : MonoBehaviour
         {
             canBeGrabbed = false;
         }
-    }
+    }*/
 
     private IEnumerator DispawnXolo()
     {
