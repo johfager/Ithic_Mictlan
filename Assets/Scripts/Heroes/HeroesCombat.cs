@@ -8,7 +8,9 @@ using TMPro;
 using UnityEditor;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
+    
 
+//TODO: Make this script a base class that the player scripts derive from.
 public class HeroesCombat : MonoBehaviour
 {
     public List<HeroAttackObject> primaryAttack;
@@ -180,6 +182,7 @@ public class HeroesCombat : MonoBehaviour
             {
                 if (basicAttackCooldown <= 0.0f)
                 {
+                    
                     currentAttack = "PrimaryAttack";
                     basicAttackCooldown = 0.1f;
                     StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack));

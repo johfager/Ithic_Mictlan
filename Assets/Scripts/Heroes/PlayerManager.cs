@@ -12,7 +12,7 @@ namespace Heroes
         void Start()
         {
             HealthSystem healthSystem = GetComponent<HealthSystem>();
-            healthSystem.Initialize(heroStats.healthAttributes.maxHealth);
+            healthSystem.InitializeHealth(heroStats.healthAttributes.maxHealth);
             playerMovement = GetComponent<PlayerMovement>();
             heroesCombatScript = GetComponent<HeroesCombat>();
         }
