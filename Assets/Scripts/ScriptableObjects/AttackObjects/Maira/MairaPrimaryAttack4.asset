@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatorOV: {fileID: 22100000, guid: ee16329291aa67e4fbc573e54be100fc, type: 2}
   damage: 2
+  areaOfEffect: 1.5
+  cooldown: 5
+  name: default
+  description: default

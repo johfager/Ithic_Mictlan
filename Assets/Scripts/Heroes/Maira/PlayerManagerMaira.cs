@@ -7,12 +7,13 @@ namespace Heroes.Maira
         public PlayerMovement playerMovement;
         public HeroesCombatMaira heroesCombatScript;
         public HeroStats heroStats;
-        private bool isMoving = true;
+        private bool isMoving;
 
         void Start()
         {
+            isMoving = true;
             HealthSystem healthSystem = GetComponent<HealthSystem>();
-            healthSystem.Initialize(heroStats.healthAttributes.maxHealth);
+            healthSystem.InitializeHealth(heroStats.healthAttributes.maxHealth);
             playerMovement = GetComponent<PlayerMovement>();
             heroesCombatScript = GetComponent<HeroesCombatMaira>();
         }
@@ -21,7 +22,7 @@ namespace Heroes.Maira
         {
 
             // Check if the player is in combat mode
-            if (heroesCombatScript.IsInCombatMode)
+            /*if (heroesCombatScript.IsInCombatMode)
             {
                 isMoving = false; // Disable movement
             }
@@ -33,11 +34,12 @@ namespace Heroes.Maira
             if (isMoving)
             {
                 playerMovement.HandleMovement();
-            }
-           //Debug.Log("combat mode is: " + heroesCombatScript.IsInCombatMode.ToString());
+            }*/
+            playerMovement.HandleMovement();
+
             heroesCombatScript.HandleAttackStateMachine();
 
-        
+
         }
     }
 }

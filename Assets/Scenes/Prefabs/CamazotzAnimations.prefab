@@ -106,12 +106,8 @@ MonoBehaviour:
   enemyStats: {fileID: 11400000, guid: ef9992c6dbbc7be47a0cbd69e3e6db26, type: 2}
   objective: {fileID: 0}
   CamazotzHand: {fileID: 5443439445795460629}
+  isInMidAttack: 0
   animator: {fileID: 0}
-  basicAttackCooldown: 0
-  soulEaterCooldown: 0
-  upsideDownWorldCooldown: 0
-  infernalScreechCooldown: 0
-  soulDevourerCooldown: 0
 --- !u!114 &3984027812136183337
 MonoBehaviour:
   m_ObjectHideFlags: 0

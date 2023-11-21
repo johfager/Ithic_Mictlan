@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: MairaSecondaryAbility
   m_EditorClassIdentifier: 
   animatorOV: {fileID: 22100000, guid: a4097bc0fbf8c354b8726f5118061e8e, type: 2}
-  damage: 5
+  damage: 2
+  areaOfEffect: 4
+  cooldown: 5
+  name: default
+  description: default

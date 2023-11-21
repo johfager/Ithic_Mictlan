@@ -27,7 +27,7 @@ MonoBehaviour:
     healthRegen: 0.1
   combatAttributes:
     basicAttackDamage: 10
-    attackSpeed: 1
+    attackSpeed: 1.1
     criticalHitChance: 1
     defense: 1
   lassoAttributes:
