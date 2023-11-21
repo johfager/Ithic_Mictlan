@@ -9,6 +9,7 @@ TagManager:
   - Grass
   - Enemy
   - Ground
+  - Xolo
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,6 @@ TagManager:
   - Boss
   - Ground
   - Player
-  - 
   - 
   - 
   - 

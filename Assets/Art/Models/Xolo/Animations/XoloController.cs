@@ -69,6 +69,7 @@ public class XoloController : MonoBehaviour
         animControl.SetBool("isRunning", isRunning);
         animControl.SetFloat("Speed", 0);
         animControl.SetBool("hasStopped", wasCatched);
+        GameManager.instance.GetXoloStatus(wasCatched);
         StartCoroutine(DispawnXolo());
         
     }
