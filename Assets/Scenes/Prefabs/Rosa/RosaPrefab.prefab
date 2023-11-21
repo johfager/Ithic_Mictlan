@@ -577,6 +577,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d67f2dfd9b723b740b830d72f1c635c1, type: 2}
   ultimateAbility:
   - {fileID: 11400000, guid: 97159ccb196672c47930358b92860371, type: 2}
+  featherPrefab: {fileID: 2286039511272199904, guid: aa4bd5bd013c033449861b73661e2755, type: 3}
   combatStateText: {fileID: 8102501434506333892}
   comboTime: 0.4
   IsInCombatMode: 0

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RosaSecondaryAbility
   m_EditorClassIdentifier: 
   animatorOV: {fileID: 22100000, guid: 6dd5d6fb2a9003646896e25fcf8742d5, type: 2}
-  damage: 5
-  areaOfEffect: 3
+  damage: 20
+  areaOfEffect: 30
   cooldown: 7
   name: default
   description: default
