@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 7647967678128615262}
   heroesCombatScript: {fileID: 6197520307193964216}
-  heroStats: {fileID: 0}
+  playerStats: {fileID: 11400000, guid: ea7b503ee59743e4aa91935c30b1541c, type: 2}
   heroModel: {fileID: 0}
 --- !u!114 &7647967678128615262
 MonoBehaviour:
@@ -213,8 +213,6 @@ MonoBehaviour:
   playerStats: {fileID: 11400000, guid: d316e8b75aa9d934c95e173cf1f1b055, type: 2}
   playerCamera: {fileID: 0}
   mouseSensitivity: 2
-  maxVerticalRotation: 90
-  minVerticalRotation: -90
   rotationFactorPerFrame: 1
 --- !u!114 &6197520307193964216
 MonoBehaviour:
@@ -242,10 +240,6 @@ MonoBehaviour:
   combatStateText: {fileID: 6474889916172526336}
   comboTime: 0.4
   IsInCombatMode: 0
-  _heroStats: {fileID: 0}
-  primaryAbilityCooldownImage: {fileID: 0}
-  secondaryAbilityCooldownImage: {fileID: 0}
-  ultimateAbilityCooldownImage: {fileID: 0}
 --- !u!114 &3426769998037791045
 MonoBehaviour:
   m_ObjectHideFlags: 0

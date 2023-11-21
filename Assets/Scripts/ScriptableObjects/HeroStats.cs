@@ -9,7 +9,6 @@ using UnityEngine;
 public class CharacterAttributes
 {
     public string characterName = "default";
-    public string description = "very long description";
 }
 
 

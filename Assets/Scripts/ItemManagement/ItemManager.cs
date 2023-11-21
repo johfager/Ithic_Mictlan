@@ -4,31 +4,65 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
-    // Singleton instance controlling the logic and attributes of the items. 
-    // Any new items should be declared here before they become usable
+
+    // Warrior Shield. Defense buff
+    // Cempasuchil flower. Healing item
+    // Obsidian collar. Boosts crit chance
+    // Jade orb. ???
+
     public static ItemManager Instance;
     
-    // Array containing items of the common rarity (1)
     public Item[] CommonItemPool;
-    // Array containing items of the rare rarity (2)
+
     public Item[] RareItemPool;
+    public JaguarWarriorItem[] JaguarWarriorItems = new JaguarWarriorItem[]
+        {
+            new JaguarWarriorItem{
+                id = 401,
+                name = "Tótem de obsidiana",
+                rarity = 2,
+                description = "Al caer, Maira erguira 3 pilares de obsidiana que se volveran muros por 3 segundos",  
+            },
+            
+        };
+    public EagleWarriorItem[] EagleWarriorItems = new EagleWarriorItem[]
+        {
+            new EagleWarriorItem{
+                id = 501,
+                name = "Lanza etérea",
+                rarity = 2,
+                description = "Un orbe misterioso. Su efecto es aleatorio",  
+            },
 
-    // Editor references to Prefabs and Sprites for common items that have them
-    [SerializeField] public GameObject[] CommonItemPrefabs;
-    [SerializeField] public Sprite[] CommonItemSprites;
+        };
+    public ChamanItem[] ChamanItems = new ChamanItem[]
+        {
+            new ChamanItem{
+                id = 601,
+                name = "Báculo universal",
+                rarity = 2,
+                description = "Un orbe misterioso. Su efecto es aleatorio",  
+            },
 
+        };
+    public OwlWitchItem[] OwlWitchItems = new OwlWitchItem[]
+        {
+            new OwlWitchItem{
+                id = 701,
+                name = "Plumas de búho ancestral",
+                rarity = 2,
+                description = "La Belleza del depredador ralentiza el movimiento y reduce la defensa de los enemigos golpeados.",  
+            },
+
+        };
 
     void Awake(){
-        // Checks if the instance exists. Destroys any duplicates
         if (Instance != null && Instance != this) { 
             Destroy(this); 
         } else { 
             Instance = this; 
         } 
 
-        // Setting the attributes for every common item. 
-        // Each item must be set to its own prefab or sprite depending on the case. 
-        // This array only contains items of the common rarity
         CommonItemPool = new Item[]
         {
             new ConsumableItem
@@ -38,7 +72,6 @@ public class ItemManager : MonoBehaviour
                 rarity = 1,
                 description = "Recupera 30 de salud",
                 healthRestored = 30.0f,
-                itemPrefab = CommonItemPrefabs[0],
                 
             },
 
@@ -49,17 +82,14 @@ public class ItemManager : MonoBehaviour
                 rarity = 1,
                 description = "Recupera 80 de salud",
                 healthRestored = 30.0f,
-                itemPrefab = CommonItemPrefabs[1],
                 
             },
 
             new BuffConsumable {
-            
                 id = 301,
                 name = "Makahuitl",
                 rarity = 1,
                 description = "Incrementa el daño base del usuario en 15%", 
-
 
                 healthBuff = 1f,
                 defenseBuff = 1f,
@@ -72,9 +102,6 @@ public class ItemManager : MonoBehaviour
                 atkSpeedBuff = 1f,
 
                 critChanceBuff = 1f,
-
-                itemSprite = CommonItemSprites[0],
-                
             },
 
             new BuffConsumable {
@@ -82,7 +109,6 @@ public class ItemManager : MonoBehaviour
                 name = "Escudo de guerrero",
                 rarity = 1,
                 description = "Incrementa la defensa base del usuario en 15%", 
-
 
                 healthBuff = 1f,
                 defenseBuff = 1.15f,
@@ -95,9 +121,6 @@ public class ItemManager : MonoBehaviour
                 atkSpeedBuff = 1f,
 
                 critChanceBuff = 1f,
-
-                itemSprite = CommonItemSprites[1],
-                
             }, 
 
             new BuffConsumable {
@@ -117,9 +140,6 @@ public class ItemManager : MonoBehaviour
                 atkSpeedBuff = 1f,
 
                 critChanceBuff = 1.15f,
-
-                itemSprite = CommonItemSprites[2],
-                
             }, 
             
 
@@ -137,8 +157,6 @@ public class ItemManager : MonoBehaviour
 
     }
 
-    // Chooses a random common item for the chest logic. 
-    // Returns an item type object
     public Item ChooseRandomCommonItem(){
         int randomIndex = Random.Range(0, CommonItemPool.Length);
         Item item = CommonItemPool[randomIndex];

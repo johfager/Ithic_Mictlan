@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public abstract class Item 
+public abstract class Item
 {
     // internal id of the item 
     public int id;
@@ -20,4 +20,5 @@ public abstract class Item
     // short description of the item and its effect
     public string description;
 
+    
 }

@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
     characterName: Rosa
-    description: "Descripci\xF3n de Rosa"
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1
@@ -28,8 +27,6 @@ MonoBehaviour:
   combatAttributes:
     basicAttackDamage: 10
     attackSpeed: 1
-    criticalHitChance: 1
-    defense: 1
   lassoAttributes:
     lassoCircleDiameter: 10
   abilityAttributes:
