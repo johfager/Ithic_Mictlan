@@ -1900,28 +1900,28 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: VerticalSpeed
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsPrimaryAttack1
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsPrimaryAttack2
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsPrimaryAttack3
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsPrimaryAttack4
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsPrimaryAbility
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsSecondaryAbility
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsUltimateAbility
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Struggle
   m_SynchronizeLayers:
   - SynchronizeType: 0

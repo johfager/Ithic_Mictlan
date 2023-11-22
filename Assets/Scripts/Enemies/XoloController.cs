@@ -113,7 +113,7 @@ public class XoloController : MonoBehaviour
     private IEnumerator DispawnXolo()
     {
         yield return new WaitForSeconds(6f);
-        Destroy(mainBody);
+        PhotonNetwork.Destroy(mainBody);
     }
 
 }
