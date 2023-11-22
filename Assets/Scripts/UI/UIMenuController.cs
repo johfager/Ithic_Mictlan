@@ -11,7 +11,6 @@ public class UIMenuController : MonoBehaviour
 {
     // Canvas Gropus
     [Header("All canvas groups in the main menu")]
-    [SerializeField] private CanvasGroup characterSelectorPanel;
     [SerializeField] private CanvasGroup mainMenuPanel;
     [SerializeField] private CanvasGroup playOptionsPanel;
     [SerializeField] private CanvasGroup configPanel;
@@ -48,10 +47,6 @@ public class UIMenuController : MonoBehaviour
         startGameButton.SetActive(false);
 
         // Esconder todos los canvas groups
-        characterSelectorPanel.alpha = 0f;
-        characterSelectorPanel.interactable = false;
-        characterSelectorPanel.blocksRaycasts = false;
-
         mainMenuPanel.alpha = 0f;
         mainMenuPanel.interactable = false;
         mainMenuPanel.blocksRaycasts = false;
@@ -124,11 +119,7 @@ public class UIMenuController : MonoBehaviour
     public CanvasGroup GetCanvasGroup(string canvasGroup)
     {
         CanvasGroup CGtoSend = new CanvasGroup();
-        if(canvasGroup == "characterSelectorPanel")
-        {
-            CGtoSend = characterSelectorPanel;
-        }
-        else if(canvasGroup == "mainMenuPanel")
+        if(canvasGroup == "mainMenuPanel")
         {
             CGtoSend = mainMenuPanel;
         }

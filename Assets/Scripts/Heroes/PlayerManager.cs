@@ -1,6 +1,7 @@
 using UnityEngine;
-
+using Photon.Pun;
 namespace Heroes
+
 {
     public class PlayerManager : MonoBehaviour
     {
@@ -8,6 +9,7 @@ namespace Heroes
         public HeroesCombat heroesCombatScript;
         public HeroStats heroStats;
         private bool isMoving = true;
+        [SerializeField] private PhotonView photonView;
 
         void Start()
         {
@@ -19,23 +21,25 @@ namespace Heroes
 
         void Update()
         {
+            if(photonView)
+            {
+                // Check if the player is in combat mode
+                if (heroesCombatScript.IsInCombatMode)
+                {
+                    isMoving = false; // Disable movement
+                }
+                else
+                {
+                    isMoving = true; // Enable movement
+                }
 
-            // Check if the player is in combat mode
-            if (heroesCombatScript.IsInCombatMode)
-            {
-                isMoving = false; // Disable movement
+                if (isMoving)
+                {
+                    playerMovement.HandleMovement();
+                }
+            //Debug.Log("combat mode is: " + heroesCombatScript.IsInCombatMode.ToString());
+                heroesCombatScript.HandleAttackStateMachine();
             }
-            else
-            {
-                isMoving = true; // Enable movement
-            }
-
-            if (isMoving)
-            {
-                playerMovement.HandleMovement();
-            }
-           //Debug.Log("combat mode is: " + heroesCombatScript.IsInCombatMode.ToString());
-            heroesCombatScript.HandleAttackStateMachine();
 
         
         }

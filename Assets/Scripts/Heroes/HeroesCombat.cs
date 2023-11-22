@@ -8,9 +8,8 @@ using TMPro;
 using UnityEditor;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
-    
+using Photon.Pun;
 
-//TODO: Make this script a base class that the player scripts derive from.
 public class HeroesCombat : MonoBehaviour
 {
     public List<HeroAttackObject> primaryAttack;
@@ -34,7 +33,9 @@ public class HeroesCombat : MonoBehaviour
 
     private PlayerManager playerManager; //Not used
     public bool IsInCombatMode;
-    
+
+    //Photon variables
+    [SerializeField] private PhotonView photonView;
     
     //For UI
     [SerializeField] private int primaryAbilityTimerUI;
@@ -172,42 +173,69 @@ public class HeroesCombat : MonoBehaviour
     
     public void HandleAttackStateMachine()
     {
-        if(currentAttack != null)
+        if(photonView.IsMine)
         {
-            ExitAttack(currentAttack);
-        }
-        if (currentHeroesAttackState == HeroesAttackState.Idle)
-        {
-            if (Input.GetMouseButtonDown(0))
+            if(currentAttack != null)
             {
-                if (basicAttackCooldown <= 0.0f)
-                {
-                    
-                    currentAttack = "PrimaryAttack";
-                    basicAttackCooldown = 0.1f;
-                    StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack));
-                }
+                ExitAttack(currentAttack);
             }
-            else if (Input.GetMouseButtonDown(1))
+            if (currentHeroesAttackState == HeroesAttackState.Idle)
             {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (basicAttackCooldown <= 0.0f)
+                    {
+                        
+                        currentAttack = "PrimaryAttack";
+                        basicAttackCooldown = 0.1f;
+                        StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack));
+                    }
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
 
-                if (primaryAbilityCooldown <= 0.0f)
+                    if (primaryAbilityCooldown <= 0.0f)
+                    {
+                        HandlePrimaryAbility();
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.LeftShift))
                 {
-                    HandlePrimaryAbility();
+                    if (secondaryAbilityCooldown <= 0.0f)
+                    {
+                        HandleSecondaryAbility();
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    if (ultimateAbilityCooldown <= 0.0f)
+                    {
+                        HandleUltimateAbility();
+                    }
+                }
+                else if(Input.GetKeyDown(KeyCode.E))
+                {
+                    HandleXoloCatch();
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.LeftShift))
+        }
+    }
+
+    private void HandleXoloCatch()
+    {
+        Collider[] xolos = Physics.OverlapSphere(transform.position, 1.5f);
+
+        if(xolos != null)
+        {
+            foreach (Collider xolo in xolos)
             {
-                if (secondaryAbilityCooldown <= 0.0f)
+                if(xolo.CompareTag("Xolo"))
                 {
-                    HandleSecondaryAbility();
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.Q))
-            {
-                if (ultimateAbilityCooldown <= 0.0f)
-                {
-                    HandleUltimateAbility();
+                    if(xolo.transform.GetChild(0).GetComponent<XoloController>() != null)
+                    {
+                        xolo.transform.GetChild(0).GetComponent<XoloController>().CatchXolo();
+                    }
+
                 }
             }
         }
