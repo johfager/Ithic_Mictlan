@@ -67,8 +67,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void HandleRotation()
     {
-        if(photonView.IsMine)
-        {
+
             Vector3 positionToLookAt;
 
             positionToLookAt.x = _cameraRelativeMovement.x;
@@ -79,12 +78,11 @@ public class PlayerMovement : MonoBehaviour
             Quaternion currentRotation = transform.rotation;
             Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
-        }
+
     }
     private void HandleMovementInput()
     {
-        if(photonView.IsMine)
-        {
+ 
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
 
@@ -149,7 +147,6 @@ public class PlayerMovement : MonoBehaviour
             // Set the Animator parameters
             animator.SetFloat("HorizontalSpeed", horizontalInput);
             animator.SetFloat("VerticalSpeed", verticalInput);
-        }
     }
 
     /*private void HandleMovementInput()
@@ -231,10 +228,6 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 ConvertToCameraSpace(Vector3 vectorToRotate)
     {
-        if(!photonView.IsMine)
-        {
-            return Vector3.zero;
-        }
         //Get forward and right vectors of camera
         Vector3 cameraForward = Camera.main.transform.forward;
         Vector3 cameraRight = Camera.main.transform.right;
@@ -253,8 +246,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void HandleMouseLook()
     {
-        if(photonView.IsMine)
-        {
             float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
             float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
@@ -267,7 +258,6 @@ public class PlayerMovement : MonoBehaviour
 
             // Apply camera rotation
             playerCamera.localRotation = Quaternion.Euler(rotX, 0, 0);
-        }
 
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class XoloController : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class XoloController : MonoBehaviour
     private bool isRunning;
     private bool wasCatched;
     //private bool canBeGrabbed;
+
+    [SerializeField] private PhotonView photonView;
 
     private void Awake() {
         if(instance == null)
@@ -35,20 +38,23 @@ public class XoloController : MonoBehaviour
     }
 
     void Update() {
-        speed = agent.speed;
-        // Animation handling 
-        if(speed == 10)
+        if(photonView.IsMine)
         {
-            isRunning = true;
-        }
-        else if(speed == 3.5f)
-        {
-            isRunning = false;
-        }
+            speed = agent.speed;
+            // Animation handling 
+            if(speed == 10)
+            {
+                isRunning = true;
+            }
+            else if(speed == 3.5f)
+            {
+                isRunning = false;
+            }
 
-        // Setting parameters of the animator
-        animControl.SetBool("isRunning", isRunning);
-        animControl.SetFloat("Speed", speed);
+            // Setting parameters of the animator
+            animControl.SetBool("isRunning", isRunning);
+            animControl.SetFloat("Speed", speed);
+        }
 
         // Catch logic
         /*if(canBeGrabbed)
@@ -63,15 +69,17 @@ public class XoloController : MonoBehaviour
 
     public void StopRun()
     {
-        wasCatched = true;
-        isRunning = false;
-        //canBeGrabbed = false;
-        animControl.SetBool("isRunning", isRunning);
-        animControl.SetFloat("Speed", 0);
-        animControl.SetBool("hasStopped", wasCatched);
-        GameManager.instance.GetXoloStatus(wasCatched);
-        StartCoroutine(DispawnXolo());
-        
+        if(photonView.IsMine)
+        {
+            wasCatched = true;
+            isRunning = false;
+            //canBeGrabbed = false;
+            animControl.SetBool("isRunning", isRunning);
+            animControl.SetFloat("Speed", 0);
+            animControl.SetBool("hasStopped", wasCatched);
+            GameManager.instance.GetXoloStatus(wasCatched);
+            StartCoroutine(DispawnXolo());
+        }        
     }
 
     public bool CatchCheck()
@@ -81,7 +89,11 @@ public class XoloController : MonoBehaviour
 
     public void CatchXolo()
     {
-        StopRun();
+        if(photonView.IsMine)
+        {
+            StopRun();
+        }
+        
     }
 
     /*private void OnTriggerEnter(Collider other) {
