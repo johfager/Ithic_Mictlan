@@ -9,9 +9,13 @@ namespace Heroes.Rosa
 
         [SerializeField] private HeroStats rosaStats; // Set the damage amount
 
+        [SerializeField] private GameObject featherPrefab;
         public float maxRange = 5f;
-
+        
         public Vector3 featherDirection = Vector3.forward;
+
+
+        public UIManager rosaUIManager;
         
         private Vector3 startPosition;
         private void OnEnable()
@@ -42,9 +46,11 @@ namespace Heroes.Rosa
             {
                 // Apply damage to enemy
                 other.gameObject.GetComponent<HealthSystem>().TakeDamage(rosaStats.abilityAttributes.primaryAbility.damage);
-
+                rosaUIManager.UpdateMadness(rosaStats.abilityAttributes.primaryAbility.madnessValue);
                 // Destroy the feather game object
+                Destroy(featherPrefab);
                 Destroy(gameObject);
+                
             }
         }
         

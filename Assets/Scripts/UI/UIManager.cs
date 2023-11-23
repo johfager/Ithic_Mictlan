@@ -53,12 +53,21 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    private void HandleMadnessUpdated(float madness)
+    public void UpdateMadness(float madness)
     {
         if (madnessBar != null)
         {
             madnessBar.value += madness;
         }
+    }
+    
+    public float GetMadness()
+    {
+        return madnessBar.value;
+    }
+    public void SetMadness(float madness)
+    {
+        madnessBar.value = madness;
     }
     
     private void OnDestroy()
