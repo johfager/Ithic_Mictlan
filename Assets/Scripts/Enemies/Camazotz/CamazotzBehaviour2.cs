@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Barracuda;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -369,7 +370,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private IEnumerator FlyUp(Quaternion oldHeroRotation, Vector3 oldPosition)
     {
-        Debug.Log("FlyUp");
         float tiempoInicio = Time.time;
         GetComponent<NavMeshAgent>().enabled = false;
         while (Time.time - tiempoInicio < 2.0f)
@@ -517,6 +517,83 @@ public class CamazotzBehaviour2 : MonoBehaviour
         }
     }
 
+    private IEnumerator UltimateAttack()
+    {
+        agent.speed = 0;
+        agent.isStopped = true;
+        float tiempoInicio = Time.time;
+        GetComponent<NavMeshAgent>().enabled = false;
+        currentAnimationBool = "SoulDevourerJump";
+        animator.SetBool(currentAnimationBool, true);
+        while (Time.time - tiempoInicio < 0.5f)
+        {
+            transform.Translate(Vector3.up * Time.deltaTime);
+            yield return null;
+        }
+
+        //Hacemos invisible a Camazotz
+        camazotzBody.SetActive(false);
+        animator.SetBool(currentAnimationBool, false);
+
+        //Esperar antes de volver a hacer visible el objeto
+        yield return new WaitForSeconds(1f);
+
+        GetComponent<NavMeshAgent>().enabled = true;
+
+        //Movimiento lateral 1
+        transform.position = objective.transform.position + new Vector3(-15f, 0f, 0f); // Posición inicial en el lado izquierdo
+        camazotzBody.SetActive(true); // Hacemos visible el objeto
+
+        // Movimiento de lado a lado
+        tiempoInicio = Time.time;
+        // currentAnimationBool = "SoulDevourerFlight";
+        // animator.SetBool(currentAnimationBool, true);
+        while (Time.time - tiempoInicio < 1.0f)
+        {
+            Debug.Log("Camazotz position: " + transform.position); 
+            Debug.Log("Objective position: " + objective.transform.position);
+            transform.Translate(objective.transform.position * Time.deltaTime);
+            yield return null;
+        }
+
+        //Hacer invisible el objeto
+        camazotzBody.SetActive(false);
+
+        //Esperar antes de volver a hacer visible el objeto
+        yield return new WaitForSeconds(1f);
+
+        //Movimiento lateral 2
+        transform.position = objective.transform.position + new Vector3(15f, 0f, 0f); // Posición inicial en el lado derecho
+        camazotzBody.SetActive(true); // Hacemos visible el objeto
+
+        tiempoInicio = Time.time;
+        while (Time.time - tiempoInicio < 1.0f)
+        {
+            transform.Translate(objective.transform.position * Time.deltaTime);
+            yield return null;
+        }
+
+        // Hacemos invisible el objeto
+        camazotzBody.SetActive(false);
+
+        // Esperamos antes de volver a hacer visible el objeto
+        yield return new WaitForSeconds(1f);
+
+        // Movimiento hacia atrás
+        transform.position = objective.transform.position + new Vector3(0f, 0f, 15f); // Posición inicial en el lado derecho
+        camazotzBody.SetActive(true); // Hacemos visible el objeto
+
+        tiempoInicio = Time.time;
+        while (Time.time - tiempoInicio < 1.0f)
+        {
+            transform.Translate(objective.transform.position * Time.deltaTime);
+            yield return null;
+        }
+
+        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, 2f));
+
+    }
+
     // Q11
     private void HandleSoulDevourerAttackState()
     {
@@ -524,15 +601,15 @@ public class CamazotzBehaviour2 : MonoBehaviour
         {
 
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 3)
+            if (playerDistance <= 25)
             {
                 agent.stoppingDistance = 3;
-                int attackIndex = Random.Range(0, 2);
-                if (attackIndex == 1) DealDamageToTarget(75);
+                isInMidAttack = true;
+                StartCoroutine(UltimateAttack());
                 AttacksSoftReset();
-                PhaseChecker(attackIndex);
                 soulDevourerCooldown = 20.0f; // Set a 20-second cooldown for Soul Devourer attack
                 StartCoroutine(ResetCooldown("SoulDevourerCooldown"));
+                ChangeState(State.SecondPhaseState);
             }
             else
             {

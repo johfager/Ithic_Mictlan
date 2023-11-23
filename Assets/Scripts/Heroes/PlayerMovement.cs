@@ -67,7 +67,8 @@ public class PlayerMovement : MonoBehaviour
     
     private void HandleRotation()
     {
-        
+        if(photonView.IsMine)
+        {
             Vector3 positionToLookAt;
 
             positionToLookAt.x = _cameraRelativeMovement.x;
@@ -78,11 +79,12 @@ public class PlayerMovement : MonoBehaviour
             Quaternion currentRotation = transform.rotation;
             Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
-        
+        }
     }
     private void HandleMovementInput()
     {
-        
+        if(photonView.IsMine)
+        {
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
 
@@ -147,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
             // Set the Animator parameters
             animator.SetFloat("HorizontalSpeed", horizontalInput);
             animator.SetFloat("VerticalSpeed", verticalInput);
-        
+        }
     }
 
     /*private void HandleMovementInput()
