@@ -84,6 +84,7 @@ public class UISelectScreenManager : MonoBehaviour
 
     public void StartMatch()
     {
+        xoloSpawner.SetSpwans(GameObject.Find("Rosa"));
         photonView.RPC("HideSelectScreen", RpcTarget.All);
     }
 
@@ -102,9 +103,6 @@ public class UISelectScreenManager : MonoBehaviour
     [PunRPC]
     public void HideSelectScreen()
     {
-
-        xoloSpawner.SetSpwans(GameObject.Find("Rosa"));
-
         characterSelectorPanel.alpha = 0f;
         characterSelectorPanel.interactable = false;
         characterSelectorPanel.blocksRaycasts = false;
