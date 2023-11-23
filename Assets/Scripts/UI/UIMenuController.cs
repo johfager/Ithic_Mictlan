@@ -9,6 +9,9 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class UIMenuController : MonoBehaviour
 {
+    bool canMove = true;
+    float degrees = 0;
+
     // Canvas Gropus
     [Header("All canvas groups in the main menu")]
     [SerializeField] private CanvasGroup mainMenuPanel;
@@ -36,6 +39,7 @@ public class UIMenuController : MonoBehaviour
     // Buttons
     [Header("Buttons")]
     [SerializeField] private GameObject startGameButton;
+    [SerializeField] private GameObject mainMenuButtonsGroup;
 
 
 
@@ -190,5 +194,32 @@ public class UIMenuController : MonoBehaviour
         {
             nickNameInput.text = "";
         }
+    }
+
+    public void ChangeButtonSelection()
+    {
+
+        if (Input.GetKeyUp(KeyCode.UpArrow) && degrees < 90f)
+        {
+            canMove = false;
+            LeanTween.rotateAround(mainMenuButtonsGroup, Vector3.forward, 45, 1f).setOnComplete(() => {canMove = true;});
+            degrees += 45;
+        }
+        else if (Input.GetKeyUp(KeyCode.DownArrow) && degrees > -45f)
+        {
+            canMove = false;
+            LeanTween.rotateAround(mainMenuButtonsGroup, Vector3.forward, -45, 1f).setOnComplete(() => {canMove = true;});
+            degrees -= 45;
+        }
+        
+        Debug.Log(degrees);
+    }
+
+    private void Update() {
+
+        if(canMove == true){
+            ChangeButtonSelection();
+        }
+        
     }
 }
