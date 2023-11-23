@@ -29,6 +29,7 @@ namespace Heroes.Rosa
         private float attackSpeed;
         private float attackSpeedMultiplier = 1.0f;
 
+        private float coolDownMultiplier = 1.0f;
 
         private float _totalMadness;
         private float currentMadness;
@@ -179,9 +180,19 @@ namespace Heroes.Rosa
             }
             ultimateAbilityCooldown = _heroStats.abilityAttributes.ultimateAbility.cooldown;
             StartCoroutine(StartAttackAnimation(currentAttack, ultimateAbility));
-            
+
+            coolDownMultiplier = 0.5f;
+            attackSpeedMultiplier = 1.5f;
             _totalMadness = 0.0f;
-            uiManager.SetMadness(_totalMadness);            
+            uiManager.SetMadness(_totalMadness);
+            StartCoroutine(ReturnToNormal());
+        }
+
+        IEnumerator ReturnToNormal()
+        {
+            yield return new WaitForSeconds(10f);
+            coolDownMultiplier = 1.0f;
+            attackSpeedMultiplier = 1.0f;
         }
 
         private void UpdateCooldowns()
@@ -423,12 +434,12 @@ namespace Heroes.Rosa
                     cooldownTime = basicAttackCooldown;
                     break;
                 case "PrimaryAbility":
-                    cooldownTime = primaryAbilityCooldown;
+                    cooldownTime = primaryAbilityCooldown * coolDownMultiplier;
                     cooldownImage = primaryAbilityCooldownImage;
                     cooldownText = primaryAbilityCooldownText;
                     break;
                 case "SecondaryAbility":
-                    cooldownTime = secondaryAbilityCooldown;
+                    cooldownTime = secondaryAbilityCooldown * coolDownMultiplier;
                     cooldownImage = secondaryAbilityCooldownImage;
                     cooldownText = secondaryAbilityCooldownText;
                     break;
