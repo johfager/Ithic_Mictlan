@@ -29,7 +29,7 @@ public class HeroesCombat : MonoBehaviour
     private string currentAttack;
 
     public TextMeshProUGUI combatStateText;
-    [SerializeField] float comboTime = 0.4f;
+    [SerializeField] float comboTime = 0.2f;
 
     private PlayerManager playerManager; //Not used
     public bool IsInCombatMode;
@@ -135,7 +135,7 @@ public class HeroesCombat : MonoBehaviour
             primaryAbilityCooldownText.enabled = true;
         }
         primaryAbilityCooldown = _heroStats.abilityAttributes.primaryAbility.cooldown;
-        StartCoroutine(StartAttackAnimation(currentAttack, primaryAbility));
+        StartAttackAnimation(currentAttack, primaryAbility);
     }
 
 
@@ -149,7 +149,7 @@ public class HeroesCombat : MonoBehaviour
         }
         secondaryAbilityCooldown = _heroStats.abilityAttributes.secondaryAbility.cooldown;
 
-        StartCoroutine(StartAttackAnimation(currentAttack, secondaryAbility));
+        StartAttackAnimation(currentAttack, secondaryAbility);
     }
 
     private void HandleUltimateAbility()
@@ -161,7 +161,7 @@ public class HeroesCombat : MonoBehaviour
             ultimateAbilityCooldownText.enabled = true;
         }
         ultimateAbilityCooldown = _heroStats.abilityAttributes.ultimateAbility.cooldown;
-        StartCoroutine(StartAttackAnimation(currentAttack, ultimateAbility));
+        StartAttackAnimation(currentAttack, ultimateAbility);
     }
 
     private void UpdateCooldowns()
@@ -187,8 +187,8 @@ public class HeroesCombat : MonoBehaviour
                     {
                         
                         currentAttack = "PrimaryAttack";
-                        basicAttackCooldown = 0.1f;
-                        StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack));
+                        basicAttackCooldown = 0f;
+                        StartAttackAnimation(currentAttack, primaryAttack);
                     }
                 }
                 else if (Input.GetMouseButtonDown(1))
@@ -242,22 +242,41 @@ public class HeroesCombat : MonoBehaviour
     }
 
 
-    private IEnumerator StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType)
+    private void StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType)
     {
+        if (attackType.Count <= comboCounter)
+            {
+                comboCounter = 0;
+                anim.SetInteger("AttackCombo", 0);                
+        }
         IsInCombatMode = true;
-        if ((Time.time - lastComboEnd > 0.5f && comboCounter < attackType.Count))
+        if ((Time.time - lastComboEnd > 0.1f && comboCounter < attackType.Count))
         {   
             CancelInvoke("EndCombo");
             if (Time.time - lastClickedTime >= comboTime)
             {
-                anim.runtimeAnimatorController = attackType[comboCounter].animatorOV;
-                anim.Play(attackAnimationName, 0, 0);
+                if(attackType.Count > 1)
+                {
+                    anim.SetInteger("AttackCombo", comboCounter + 1);
+                } else {
+                    if(attackAnimationName == "PrimaryAbility")
+                    {
+                        anim.SetBool("IsPrimaryAbility", true);
+                    } else if(attackAnimationName == "SecondaryAbility")
+                    {
+                        anim.SetBool("IsSecondaryAbility", true);
+                    } else if(attackAnimationName == "UltimateAbility")
+                    {
+                        anim.SetBool("IsUltimateAbility", true);
+                    }
+                }
+                comboCounter++;
+                lastClickedTime = Time.time;
                 attackDamage = attackType[comboCounter].damage;
                 Debug.Log($"Current attack is dealing {attackDamage} damage");
                 attackAoE = attackType[comboCounter].areaOfEffect;
                 HandleAreaOfEffectDamage();
-                comboCounter++;
-                lastClickedTime = Time.time;
+
                 if (comboCounter >= attackType.Count)
                 {
                     comboCounter = 0;
@@ -267,11 +286,9 @@ public class HeroesCombat : MonoBehaviour
         Debug.Log($"Starting cooldown for {currentAttack}.");
         StartCoroutine(ResetCooldown(currentAttack));
 
-        
-        
 
         // Wait for the animation to finish
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+       // yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         IsInCombatMode = false;
         ExitAttack(currentAttack);
     }
@@ -396,7 +413,7 @@ void ExitAttack(string attackTagName)
         {
             if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName))
             {
-                Invoke("EndCombo", 0.5f);
+                Invoke("EndCombo", 0f);
             }
         }
     }
@@ -404,6 +421,10 @@ void ExitAttack(string attackTagName)
     void EndCombo()
     {
         comboCounter = 0;
+        anim.SetInteger("AttackCombo", 0);
+        anim.SetBool("IsPrimaryAbility", false);
+        anim.SetBool("IsSecondaryAbility", false);
+        anim.SetBool("IsUltimateAbility", false);
         lastComboEnd = Time.time;
     }
 }
