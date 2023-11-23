@@ -1,54 +1,14 @@
 fileFormatVersion: 2
-guid: e886ca47782947b4498b61d730d5cf17
+guid: 895ec9c061041f5498a561bb26321edb
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ID_Blank
-    second: {fileID: 2100000, guid: 02ec7a88b08f2904dbc9e3a7234f6e7e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ID_White
-    second: {fileID: 2100000, guid: 4e8136e89c302224595cd38b5a876a13, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ID_dress
-    second: {fileID: 2100000, guid: 2926df365d735bd42ba42d1855a5aa6e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ID_eyebrows
-    second: {fileID: 2100000, guid: 9bb7b2be9f8a08142935e6589f26db15, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ID_hair
-    second: {fileID: 2100000, guid: 393fcca4b009a394a9773fa32948002d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ID_lashes
-    second: {fileID: 2100000, guid: 8f8dbcac1176ce54296e80556b2c2c67, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ID_lips
-    second: {fileID: 2100000, guid: 99a9faa69831b484693f5084e776bf85, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MAT_Rosa
-    second: {fileID: 2100000, guid: 68779ca959c6cd842b86c4ee124bbb15, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
