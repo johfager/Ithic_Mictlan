@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Barracuda;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,6 +21,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
     [SerializeField] private GameObject objective;
     CharacterController objectiveController;
     public GameObject CamazotzHand;
+    private GameObject camazotzBody;
     private NavMeshAgent agent;
     private Rigidbody rb;
     private GameObject[] playerList;
@@ -50,6 +52,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        camazotzBody = transform.GetChild(0).gameObject;
         CamazotzAgentSetter();
     }
 
@@ -189,6 +192,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, Quaternion oldHeroRotation, float delay = 1.0f)
     {
+        agent.speed = 0;
+        agent.isStopped = true;
         // Debug.Log("Resetting boolean parameters");
         // while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
         // {
@@ -209,13 +214,15 @@ public class CamazotzBehaviour2 : MonoBehaviour
         objective.GetComponent<PlayerMovement>().enabled = true;
 
         yield return new WaitForSeconds(1.0f);
+        agent.speed = enemyStats.movementAttributes.movementSpeed;
         agent.isStopped = false;
         isInMidAttack = false;
-        agent.SetDestination(objective.transform.position);
     }
 
     private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, float delay = 1.0f)
     {
+        agent.speed = 0;
+        agent.isStopped = true;
         // Debug.Log("Resetting boolean parameters");
         // while(animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
         // {
@@ -227,6 +234,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
         // Reset the boolean parameters after the animation is complete
         animator.SetBool(animationBool, false);
+        agent.speed = enemyStats.movementAttributes.movementSpeed;
+        agent.isStopped = false;
         isInMidAttack = false;
     }
 
@@ -242,9 +251,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 agent.stoppingDistance = 3;
                 ChangeState(State.CloseRangeBasicAttackState); // Q4
             }
-            else if (playerDistance <= 5)
+            else if (playerDistance <= 15)
             {
-                agent.stoppingDistance = 5;
+                agent.stoppingDistance = 15;
                 ChangeState(State.LargeRangeBasicAttackState); // Q5
             }
             basicAttackCooldown = 3.0f; 
@@ -345,7 +354,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private void HandleSoulEaterHit()
     {
-        agent.isStopped = true;
         DealDamageToTarget(50);
         objectiveController.enabled = false;
         objective.GetComponent<PlayerMovement>().enabled = false;
@@ -360,6 +368,23 @@ public class CamazotzBehaviour2 : MonoBehaviour
         StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, 3.5f));
     }
 
+    private IEnumerator FlyUp(Quaternion oldHeroRotation, Vector3 oldPosition)
+    {
+        float tiempoInicio = Time.time;
+        GetComponent<NavMeshAgent>().enabled = false;
+        while (Time.time - tiempoInicio < 2.0f)
+        {
+            transform.Translate(Vector3.up * 10 * Time.deltaTime);
+            yield return null;
+        }
+
+        GetComponent<NavMeshAgent>().enabled = true;
+        yield return StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, 2.1f));
+        GetComponent<NavMeshAgent>().enabled = false;
+        transform.position = oldPosition;
+        GetComponent<NavMeshAgent>().enabled = true;
+    }
+
     // Q7
     private void HandleUpsideDownWorldAttackState()
     {
@@ -372,10 +397,10 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 agent.stoppingDistance = 3;
                 int attackIndex = Random.Range(0, 2);
                 Quaternion oldHeroRotation;
+                Vector3 oldCamazotzPosition;
                 if (attackIndex == 1)
                 {
-                    Debug.Log("Upside Down World Hit");
-                    agent.isStopped = true;
+                    oldCamazotzPosition = transform.position;
                     DealDamageToTarget(50);
                     objectiveController.enabled = false;
                     objective.GetComponent<PlayerMovement>().enabled = false;
@@ -387,8 +412,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                     objective.transform.SetParent(CamazotzHand.transform);
                     objective.transform.localPosition = Vector3.zero;
                     objective.transform.localRotation = Quaternion.Euler(27.588f, 136.45f, 33.142f);
-                    rb.AddForce(transform.up * 1000);
-                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, 4.1f));
+                    StartCoroutine(FlyUp(oldHeroRotation, oldCamazotzPosition));
                 }
                 else
                 {
@@ -418,14 +442,11 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         if (!isInMidAttack && infernalScreechCooldown <= 0.0f)
         {
-
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 5)
+            if (playerDistance >= 3 && playerDistance <= 15)
             {
-                agent.stoppingDistance = 5;
+                agent.stoppingDistance = playerDistance;
                 int attackIndex = Random.Range(0, 2);
-                AttacksSoftReset();
-                // PhaseChecker(attackIndex);
                 if (attackIndex == 0)
                 {
                     ChangeState(State.FirstPhaseState);
@@ -439,6 +460,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                     StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, 1.6f));
                     ChangeState(State.ChangeOfPlayerToTargetState);
                 }
+                AttacksSoftReset();
                 infernalScreechCooldown = 15.0f; // Set a 15-second cooldown for Infernal Screech attack
                 StartCoroutine(ResetCooldown("InfernalScreechCooldown"));
             }
@@ -495,6 +517,83 @@ public class CamazotzBehaviour2 : MonoBehaviour
         }
     }
 
+    private IEnumerator UltimateAttack()
+    {
+        agent.speed = 0;
+        agent.isStopped = true;
+        float tiempoInicio = Time.time;
+        GetComponent<NavMeshAgent>().enabled = false;
+        currentAnimationBool = "SoulDevourerJump";
+        animator.SetBool(currentAnimationBool, true);
+        while (Time.time - tiempoInicio < 0.5f)
+        {
+            transform.Translate(Vector3.up * Time.deltaTime);
+            yield return null;
+        }
+
+        //Hacemos invisible a Camazotz
+        camazotzBody.SetActive(false);
+        animator.SetBool(currentAnimationBool, false);
+
+        //Esperar antes de volver a hacer visible el objeto
+        yield return new WaitForSeconds(1f);
+
+        GetComponent<NavMeshAgent>().enabled = true;
+
+        //Movimiento lateral 1
+        transform.position = objective.transform.position + new Vector3(-15f, 0f, 0f); // Posición inicial en el lado izquierdo
+        camazotzBody.SetActive(true); // Hacemos visible el objeto
+
+        // Movimiento de lado a lado
+        tiempoInicio = Time.time;
+        // currentAnimationBool = "SoulDevourerFlight";
+        // animator.SetBool(currentAnimationBool, true);
+        while (Time.time - tiempoInicio < 1.0f)
+        {
+            Debug.Log("Camazotz position: " + transform.position); 
+            Debug.Log("Objective position: " + objective.transform.position);
+            transform.Translate(objective.transform.position * Time.deltaTime);
+            yield return null;
+        }
+
+        //Hacer invisible el objeto
+        camazotzBody.SetActive(false);
+
+        //Esperar antes de volver a hacer visible el objeto
+        yield return new WaitForSeconds(1f);
+
+        //Movimiento lateral 2
+        transform.position = objective.transform.position + new Vector3(15f, 0f, 0f); // Posición inicial en el lado derecho
+        camazotzBody.SetActive(true); // Hacemos visible el objeto
+
+        tiempoInicio = Time.time;
+        while (Time.time - tiempoInicio < 1.0f)
+        {
+            transform.Translate(objective.transform.position * Time.deltaTime);
+            yield return null;
+        }
+
+        // Hacemos invisible el objeto
+        camazotzBody.SetActive(false);
+
+        // Esperamos antes de volver a hacer visible el objeto
+        yield return new WaitForSeconds(1f);
+
+        // Movimiento hacia atrás
+        transform.position = objective.transform.position + new Vector3(0f, 0f, 15f); // Posición inicial en el lado derecho
+        camazotzBody.SetActive(true); // Hacemos visible el objeto
+
+        tiempoInicio = Time.time;
+        while (Time.time - tiempoInicio < 1.0f)
+        {
+            transform.Translate(objective.transform.position * Time.deltaTime);
+            yield return null;
+        }
+
+        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, 2f));
+
+    }
+
     // Q11
     private void HandleSoulDevourerAttackState()
     {
@@ -502,15 +601,15 @@ public class CamazotzBehaviour2 : MonoBehaviour
         {
 
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 3)
+            if (playerDistance <= 25)
             {
                 agent.stoppingDistance = 3;
-                int attackIndex = Random.Range(0, 2);
-                if (attackIndex == 1) DealDamageToTarget(75);
+                isInMidAttack = true;
+                StartCoroutine(UltimateAttack());
                 AttacksSoftReset();
-                PhaseChecker(attackIndex);
                 soulDevourerCooldown = 20.0f; // Set a 20-second cooldown for Soul Devourer attack
                 StartCoroutine(ResetCooldown("SoulDevourerCooldown"));
+                ChangeState(State.SecondPhaseState);
             }
             else
             {
