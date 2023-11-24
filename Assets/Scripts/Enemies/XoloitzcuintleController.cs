@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 using UnityEngine.Animations;
 
 public class XoloitzcuintleController : MonoBehaviour
@@ -18,6 +19,9 @@ public class XoloitzcuintleController : MonoBehaviour
     [SerializeField] private Animator animationController;
 
     private bool wasCatched;
+
+    // PHOTON
+    [SerializeField] private PhotonView photonView;
 
     void Awake() {
         if(instance == null)
@@ -44,39 +48,42 @@ public class XoloitzcuintleController : MonoBehaviour
 
     private void Update()
     {
-        if (wasCatched == false)
+        if(photonView.IsMine)
         {
-            isPlayerDetected = false;
-
-            foreach (Transform player in players)
+            if (wasCatched == false)
             {
-                float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+                isPlayerDetected = false;
 
-                if (distanceToPlayer < detectionRadius)
+                foreach (Transform player in players)
                 {
-                    // Player is within detection radius of at least one player, switch to run away state
-                    isPlayerDetected = true;
-                    RunAway();
-                    animationController.SetBool("isRunning", isPlayerDetected);
-                    animationController.SetFloat("Speed", runAwaySpeed);
-                    break; // Exit the loop as soon as one player is detected
+                    float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+                    if (distanceToPlayer < detectionRadius)
+                    {
+                        // Player is within detection radius of at least one player, switch to run away state
+                        isPlayerDetected = true;
+                        RunAway();
+                        animationController.SetBool("isRunning", isPlayerDetected);
+                        animationController.SetFloat("Speed", runAwaySpeed);
+                        break; // Exit the loop as soon as one player is detected
+                    }
+                }
+
+                if (!isPlayerDetected)
+                {
+                    // No player is within detection radius, switch to wander state
+                    Wander();
+                    animationController.SetBool("isRunning", false);
+                    animationController.SetFloat("Speed", wanderSpeed);
                 }
             }
-
-            if (!isPlayerDetected)
+            else
             {
-                // No player is within detection radius, switch to wander state
-                Wander();
                 animationController.SetBool("isRunning", false);
-                animationController.SetFloat("Speed", wanderSpeed);
-            }
-        }
-        else
-        {
-            animationController.SetBool("isRunning", false);
-            animationController.SetFloat("Speed", 0);
-            animationController.SetBool("hasStopped", wasCatched);
-            DispawnXolo();
+                animationController.SetFloat("Speed", 0);
+                animationController.SetBool("hasStopped", wasCatched);
+                StartCoroutine(DispawnXolo());
+            }   
         }
     }
 
@@ -130,12 +137,15 @@ public class XoloitzcuintleController : MonoBehaviour
 
     public void SetWasCatched(bool state)
     {
-        wasCatched = state;
+        if(photonView.IsMine)
+        {
+            wasCatched = state;
+        }
     }
 
     private IEnumerator DispawnXolo()
     {
         yield return new WaitForSeconds(6f);
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 }
