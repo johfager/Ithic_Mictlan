@@ -24,7 +24,7 @@ namespace Heroes.Rosa
         public void ReplaceModel()
         {
             // Start the VFX coroutine
-            //StartCoroutine(PlayVFX());
+            StartCoroutine(PlayVFX());
 
             // Switch avatar before changing models
             SwitchAvatar(newAvatar);
@@ -73,7 +73,7 @@ namespace Heroes.Rosa
         {
             yield return new WaitForSeconds(delay);
 
-            //StartCoroutine(PlayVFX());
+            StartCoroutine(PlayVFX());
             // Hide the new model and show the old model
             newModel.SetActive(false);
             oldModel.SetActive(true);

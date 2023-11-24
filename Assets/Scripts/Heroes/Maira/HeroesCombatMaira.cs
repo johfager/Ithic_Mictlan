@@ -30,7 +30,7 @@ namespace Heroes.Maira
 
 
         public TextMeshProUGUI combatStateText;
-        [SerializeField] float comboTime = 0.4f;
+        [SerializeField] float comboTime = 0.2f;
 
         private PlayerManager playerManager; //Not used
         public bool IsInCombatMode;
@@ -139,7 +139,7 @@ namespace Heroes.Maira
 
             _currentAttackDirection = -transform.up;
             //We call on this with 0f spheresize to wait with hitbox until Maira lands.
-            StartCoroutine(StartAttackAnimation(currentAttack, primaryAbility, _currentAttackDirection ));
+            StartAttackAnimation(currentAttack, primaryAbility, _currentAttackDirection );
         }
 
 
@@ -154,7 +154,7 @@ namespace Heroes.Maira
             secondaryAbilityCooldown = _heroStats.abilityAttributes.secondaryAbility.cooldown;
 
             _currentAttackDirection = Vector3.zero;
-            StartCoroutine(StartAttackAnimation(currentAttack, secondaryAbility, _currentAttackDirection));
+            StartAttackAnimation(currentAttack, secondaryAbility, _currentAttackDirection);
         }
 
         private void HandleUltimateAbility()
@@ -169,7 +169,7 @@ namespace Heroes.Maira
             ultimateAbilityCooldown = _heroStats.abilityAttributes.ultimateAbility.cooldown;
             
             _currentAttackDirection = Vector3.zero;
-            StartCoroutine(StartAttackAnimation(currentAttack, ultimateAbility, _currentAttackDirection));
+            StartAttackAnimation(currentAttack, ultimateAbility, _currentAttackDirection);
         }
 
         private void UpdateCooldowns()
@@ -194,7 +194,7 @@ namespace Heroes.Maira
                         currentAttack = "PrimaryAttack";
                         basicAttackCooldown = 0.01f;
                         _currentAttackDirection = transform.forward * 2;
-                        StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection));
+                       StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection);
                     }
                 }
                 else if (Input.GetMouseButtonDown(1))
@@ -221,9 +221,30 @@ namespace Heroes.Maira
                 }
             }
         }
+        
+        
+        private void HandleXoloCatch()
+        {
+            Collider[] xolos = Physics.OverlapSphere(transform.position, 1.5f);
+
+            if(xolos != null)
+            {
+                foreach (Collider xolo in xolos)
+                {
+                    if(xolo.CompareTag("Xolo"))
+                    {
+                        if(xolo.transform.GetChild(0).GetComponent<XoloController>() != null)
+                        {
+                            xolo.transform.GetChild(0).GetComponent<XoloController>().CatchXolo();
+                        }
+
+                    }
+                }
+            }
+        }
 
 
-        private IEnumerator StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType,Vector3 direction)
+        private void StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType,Vector3 direction)
         {
             if (attackType.Count <= comboCounter)
             {

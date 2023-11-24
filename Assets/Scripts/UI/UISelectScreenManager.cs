@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Heroes.Rosa;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
@@ -111,10 +112,38 @@ public class UISelectScreenManager : MonoBehaviour
 
         for (int i = 0; i < target.Length; i++)
         {
-            target[i].GetComponent<PlayerMovement>().enabled = true;
-            target[i].GetComponent<Heroes.PlayerManager>().enabled = true;
-            target[i].GetComponent<HeroesCombat>().enabled = true;
-            target[i].GetComponent<HealthSystem>().enabled = true;
+            HeroesCombatRosa combatScript = target[i].GetComponent<HeroesCombatRosa>();
+            PlayerManagerRosaPhoton managerScript = target[i].GetComponent<PlayerManagerRosaPhoton>();
+            
+            // For ROSA
+            if(combatScript != null && managerScript != null)
+            {
+                target[i].GetComponent<PlayerManagerRosaPhoton>().enabled = true;
+                target[i].GetComponent<HeroesCombatRosa>().enabled = true;
+                target[i].GetComponent<PlayerMovement>().enabled = true;
+                target[i].GetComponent<HealthSystem>().enabled = true;
+            } else {
+                target[i].GetComponent<Heroes.PlayerManager>().enabled = true;
+                target[i].GetComponent<HeroesCombat>().enabled = true;
+                target[i].GetComponent<PlayerMovement>().enabled = true;
+                target[i].GetComponent<HealthSystem>().enabled = true;
+            }
+            
+            /*if (HeroID == 3)
+            {
+                target[i].GetComponent<PlayerManagerRosaPhoton>().enabled = true;
+                target[i].GetComponent<HeroesCombatRosa>().enabled = true;
+                target[i].GetComponent<PlayerMovement>().enabled = true;
+                target[i].GetComponent<HealthSystem>().enabled = true;
+            }
+            else
+            {
+                target[i].GetComponent<Heroes.PlayerManager>().enabled = true;
+                target[i].GetComponent<HeroesCombat>().enabled = true;
+                target[i].GetComponent<PlayerMovement>().enabled = true;
+                target[i].GetComponent<HealthSystem>().enabled = true;
+            }*/
+
         }    
 
     }
