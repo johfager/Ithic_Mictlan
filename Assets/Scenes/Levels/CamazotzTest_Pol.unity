@@ -448,6 +448,24 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 93412890b21642d4088e03442152311a, type: 2}
   m_BuildHeightMesh: 0
+--- !u!1 &1979792485 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6454154051156726909, guid: c250e611cbf3954448e384fe6f2ad283, type: 3}
+  m_PrefabInstance: {fileID: 1693667386191752389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1979792493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979792485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18f0c550762df546a56b196d4ea0130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleVFXPrefab: {fileID: 7610109784793849018, guid: d91c79efbf4bf814e909799629c1a012, type: 3}
 --- !u!1 &2107324186 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 83110762534385572, guid: c250e611cbf3954448e384fe6f2ad283, type: 3}
@@ -520,7 +538,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6454154051156726909, guid: c250e611cbf3954448e384fe6f2ad283, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 1979792493}
   m_SourcePrefab: {fileID: 100100000, guid: c250e611cbf3954448e384fe6f2ad283, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

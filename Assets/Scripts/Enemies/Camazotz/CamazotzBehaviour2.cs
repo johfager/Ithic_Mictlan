@@ -190,6 +190,22 @@ public class CamazotzBehaviour2 : MonoBehaviour
         }
     }
 
+    private void HandleAreaOfEffectDamage(float damage)
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 3f);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.gameObject.CompareTag("Hero"))
+            {
+                HealthSystem targetHealth = collider.gameObject.GetComponent<HealthSystem>();
+                if (targetHealth != null)
+                {
+                    targetHealth.TakeDamage(damage);
+                }
+            }
+        }
+    }
+
     private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, Quaternion oldHeroRotation, float delay = 1.0f)
     {
         agent.speed = 0;
@@ -259,7 +275,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 agent.stoppingDistance = 15;
                 ChangeState(State.LargeRangeBasicAttackState); // Q5
             }
-            basicAttackCooldown = 3.0f; 
+            basicAttackCooldown = 3.0f;
             StartCoroutine(ResetCooldown("BasicAttackCooldown"));
         }
         else
@@ -524,13 +540,15 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         agent.speed = 0;
         agent.isStopped = true;
-        float tiempoInicio = Time.time;
         GetComponent<NavMeshAgent>().enabled = false;
         currentAnimationBool = "SoulDevourerJump";
         animator.SetBool(currentAnimationBool, true);
-        while (Time.time - tiempoInicio < 0.5f)
+        yield return new WaitForSeconds(.6f);
+        float tiempoInicio = Time.time;
+        while (Time.time - tiempoInicio < 1.0f)
         {
-            transform.Translate(Vector3.up * Time.deltaTime);
+            // transform.Translate(Vector3.up * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up * 10, 20 * Time.deltaTime);
             yield return null;
         }
 
@@ -547,15 +565,18 @@ public class CamazotzBehaviour2 : MonoBehaviour
         transform.position = objective.transform.position + new Vector3(-15f, 0f, 0f); // Posición inicial en el lado izquierdo
         camazotzBody.SetActive(true); // Hacemos visible el objeto
 
+        // Adjust this value to control how much past the objective the game object should go
+        float offset = 12.0f;
+        // Calculate a new destination position
+        Vector3 targetPosition = objective.transform.position + (objective.transform.position - transform.position).normalized * offset;
+
         // Movimiento de lado a lado
         tiempoInicio = Time.time;
-        // currentAnimationBool = "SoulDevourerFlight";
-        // animator.SetBool(currentAnimationBool, true);
-        while (Time.time - tiempoInicio < 1.0f)
+        transform.LookAt(objective.transform.position);
+        while (Time.time - tiempoInicio < 1.5f)
         {
-            Debug.Log("Camazotz position: " + transform.position); 
-            Debug.Log("Objective position: " + objective.transform.position);
-            transform.Translate(objective.transform.position * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, 20 * Time.deltaTime);
+            HandleAreaOfEffectDamage(2);
             yield return null;
         }
 
@@ -569,10 +590,17 @@ public class CamazotzBehaviour2 : MonoBehaviour
         transform.position = objective.transform.position + new Vector3(15f, 0f, 0f); // Posición inicial en el lado derecho
         camazotzBody.SetActive(true); // Hacemos visible el objeto
 
+        // Adjust this value to control how much past the objective the game object should go
+        offset = 12.0f;
+        // Calculate a new destination position
+        targetPosition = objective.transform.position + (objective.transform.position - transform.position).normalized * offset;
+
         tiempoInicio = Time.time;
-        while (Time.time - tiempoInicio < 1.0f)
+        transform.LookAt(objective.transform.position);
+        while (Time.time - tiempoInicio < 1.5f)
         {
-            transform.Translate(objective.transform.position * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, 20 * Time.deltaTime);
+            HandleAreaOfEffectDamage(2);
             yield return null;
         }
 
@@ -586,10 +614,17 @@ public class CamazotzBehaviour2 : MonoBehaviour
         transform.position = objective.transform.position + new Vector3(0f, 0f, 15f); // Posición inicial en el lado derecho
         camazotzBody.SetActive(true); // Hacemos visible el objeto
 
+        // Adjust this value to control how much past the objective the game object should go
+        offset = 12.0f;
+        // Calculate a new destination position
+        targetPosition = objective.transform.position + (objective.transform.position - transform.position).normalized * offset;
+
         tiempoInicio = Time.time;
-        while (Time.time - tiempoInicio < 1.0f)
+        transform.LookAt(objective.transform.position);
+        while (Time.time - tiempoInicio < 1.5f)
         {
-            transform.Translate(objective.transform.position * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, 20 * Time.deltaTime);
+            HandleAreaOfEffectDamage(2);
             yield return null;
         }
 
