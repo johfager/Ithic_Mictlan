@@ -208,12 +208,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119603280}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: -5.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1018071868}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &508711968
 GameObject:
@@ -853,7 +853,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4bb72068e997e804c88b7ed60f243b3a, type: 2}
+  - {fileID: 2100000, guid: b00e78ff62f10419ca564049a5f4c440, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -895,7 +895,8 @@ Transform:
   m_LocalPosition: {x: -6.143491, y: 0.75, z: 40.094498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 119603283}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1018071869
@@ -939,6 +940,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  uiManager: {fileID: 0}
+  characterType: 0
 --- !u!114 &1018071871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -953,6 +956,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heroStats: {fileID: 11400000, guid: d316e8b75aa9d934c95e173cf1f1b055, type: 2}
   playerHealth: {fileID: 1018071870}
+  inventoryUICanvas: {fileID: 1298634513}
+  inventoryCard: {fileID: 974498857}
+  ItemSprite: {fileID: 1114796998}
+  ItemNameText: {fileID: 1101553122}
+  ItemDescriptionText: {fileID: 937868384}
+  ItemGetText: {fileID: 772485587}
 --- !u!1 &1069998695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1683,14 +1692,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CommonItemPrefabs:
-  - {fileID: 3279588025641606047, guid: fcd9ef4164b2a429caaa6f89c1cde6a2, type: 3}
-  - {fileID: 3279588025641606047, guid: fcd9ef4164b2a429caaa6f89c1cde6a2, type: 3}
-  - {fileID: 3279588025641606047, guid: fcd9ef4164b2a429caaa6f89c1cde6a2, type: 3}
-  - {fileID: 3279588025641606047, guid: fcd9ef4164b2a429caaa6f89c1cde6a2, type: 3}
-  - {fileID: 3279588025641606047, guid: fcd9ef4164b2a429caaa6f89c1cde6a2, type: 3}
+  - {fileID: 919132149155446097, guid: f1d1352070b0246aba852249504aa796, type: 3}
+  - {fileID: 919132149155446097, guid: 7e8b37d873e5f4721a52902a0f535467, type: 3}
   CommonItemSprites:
-  - {fileID: 21300000, guid: 727db8ad60db0433cad7b9a1ca3f8aec, type: 3}
-  - {fileID: 21300000, guid: 727db8ad60db0433cad7b9a1ca3f8aec, type: 3}
   - {fileID: 21300000, guid: 727db8ad60db0433cad7b9a1ca3f8aec, type: 3}
   - {fileID: 21300000, guid: 727db8ad60db0433cad7b9a1ca3f8aec, type: 3}
   - {fileID: 21300000, guid: 727db8ad60db0433cad7b9a1ca3f8aec, type: 3}
@@ -1815,7 +1819,6 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 119603283}
   - {fileID: 508711970}
   - {fileID: 636701579}
   - {fileID: 1136986888}
