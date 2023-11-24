@@ -371,6 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainBody: {fileID: 197114}
+  photonView: {fileID: 8097510808045088848}
 --- !u!54 &321212719032811628
 Rigidbody:
   m_ObjectHideFlags: 0

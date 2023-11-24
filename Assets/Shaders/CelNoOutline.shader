@@ -1,4 +1,4 @@
-﻿Shader "FlexibleCelShader/Cel No Outline"
+﻿Shader "CelShader/Cel No Outline"
 {
 	Properties
 	{
@@ -174,5 +174,5 @@
 		UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
 	}
 
-	CustomEditor "CelCustomEditor"
+	CustomEditor "Editor.CelCustomEditor"
 }

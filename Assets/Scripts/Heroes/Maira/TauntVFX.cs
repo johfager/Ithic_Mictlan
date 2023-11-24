@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Heroes.Maira
@@ -19,9 +20,10 @@ namespace Heroes.Maira
         private static readonly int Property2 = Shader.PropertyToID("_OutlineSize");
 
         private bool isQuitting = false;
-
+        [SerializeField] private PhotonView _photonView;
+        
         // Start is called before the first frame update
-        void Start()
+        void OnEnable()
         {
             if (materials != null && materials.Count > 0)
             {
@@ -41,7 +43,10 @@ namespace Heroes.Maira
 
         public void RunTauntEffect()
         {
-            StartCoroutine(DoTauntEffect());
+            if (_photonView.IsMine)
+            {
+                StartCoroutine(DoTauntEffect());
+            }
         }
 
         IEnumerator DoTauntEffect()

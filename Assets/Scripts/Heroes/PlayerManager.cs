@@ -21,7 +21,7 @@ namespace Heroes
 
         void Update()
         {
-            if(photonView)
+            if(photonView.IsMine)
             {
                 // Check if the player is in combat mode
                 if (heroesCombatScript.IsInCombatMode)

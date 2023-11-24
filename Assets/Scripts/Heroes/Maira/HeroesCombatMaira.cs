@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,7 +31,7 @@ namespace Heroes.Maira
 
 
         public TextMeshProUGUI combatStateText;
-        [SerializeField] float comboTime = 0.4f;
+        [SerializeField] float comboTime = 0.2f;
 
         private PlayerManager playerManager; //Not used
         public bool IsInCombatMode;
@@ -44,6 +45,9 @@ namespace Heroes.Maira
 
         [SerializeField] HeroStats _heroStats;
     
+        [SerializeField] private PhotonView _photonView;
+
+        
         private float basicAttackCooldown = 0.0f;
         private float primaryAbilityCooldown = 0.0f;
         private float secondaryAbilityCooldown = 0.0f;
@@ -139,7 +143,7 @@ namespace Heroes.Maira
 
             _currentAttackDirection = -transform.up;
             //We call on this with 0f spheresize to wait with hitbox until Maira lands.
-            StartCoroutine(StartAttackAnimation(currentAttack, primaryAbility, _currentAttackDirection ));
+            StartAttackAnimation(currentAttack, primaryAbility, _currentAttackDirection );
         }
 
 
@@ -154,7 +158,7 @@ namespace Heroes.Maira
             secondaryAbilityCooldown = _heroStats.abilityAttributes.secondaryAbility.cooldown;
 
             _currentAttackDirection = Vector3.zero;
-            StartCoroutine(StartAttackAnimation(currentAttack, secondaryAbility, _currentAttackDirection));
+            StartAttackAnimation(currentAttack, secondaryAbility, _currentAttackDirection);
         }
 
         private void HandleUltimateAbility()
@@ -169,7 +173,7 @@ namespace Heroes.Maira
             ultimateAbilityCooldown = _heroStats.abilityAttributes.ultimateAbility.cooldown;
             
             _currentAttackDirection = Vector3.zero;
-            StartCoroutine(StartAttackAnimation(currentAttack, ultimateAbility, _currentAttackDirection));
+            StartAttackAnimation(currentAttack, ultimateAbility, _currentAttackDirection);
         }
 
         private void UpdateCooldowns()
@@ -181,10 +185,10 @@ namespace Heroes.Maira
     
         public void HandleAttackStateMachine()
         {
-            /*if(currentAttack != null)
+            if(currentAttack != null)
             {
                 ExitAttack(currentAttack);
-            }*/
+            }
             if (currentHeroesAttackState == HeroesAttackState.Idle)
             {
                 if (Input.GetMouseButtonDown(0))
@@ -192,9 +196,9 @@ namespace Heroes.Maira
                     if (basicAttackCooldown <= 0.0f)
                     {
                         currentAttack = "PrimaryAttack";
-                        basicAttackCooldown = 0.01f;
+                        basicAttackCooldown = 0f;
                         _currentAttackDirection = transform.forward * 2;
-                        StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection));
+                       StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection);
                     }
                 }
                 else if (Input.GetMouseButtonDown(1))
@@ -219,32 +223,76 @@ namespace Heroes.Maira
                         HandleUltimateAbility();
                     }
                 }
+                else if(Input.GetKeyDown(KeyCode.E))
+                {
+                    HandleXoloCatch();
+                }
+            }
+        }
+        
+        
+        private void HandleXoloCatch()
+        {
+            Collider[] xolos = Physics.OverlapSphere(transform.position, 1.5f);
+
+            if(xolos != null)
+            {
+                foreach (Collider xolo in xolos)
+                {
+                    if(xolo.CompareTag("Xolo"))
+                    {
+                        if(xolo.transform.GetChild(0).GetComponent<XoloController>() != null)
+                        {
+                            xolo.transform.GetChild(0).GetComponent<XoloController>().CatchXolo();
+                        }
+
+                    }
+                }
             }
         }
 
 
-        private IEnumerator StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType,Vector3 direction)
+        private void StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType,Vector3 direction)
         {
             if (attackType.Count <= comboCounter)
             {
                 comboCounter = 0;
+                anim.SetInteger("AttackCombo", 0);                
+
             }
             IsInCombatMode = true;
-            if ((Time.time - lastComboEnd > 0.5f))
+            if ((Time.time - lastComboEnd > 0.1f  && comboCounter < attackType.Count))
             {   
                 CancelInvoke("EndCombo");
                 if (Time.time - lastClickedTime >= comboTime)
                 {
-                    anim.runtimeAnimatorController = attackType[comboCounter].animatorOV;
-                    anim.Play(attackAnimationName, 0, 0);
-                    if (attackAnimationName == "PrimaryAttack")
+                    if(attackType.Count > 1)
+                    {
+                        anim.SetInteger("AttackCombo", comboCounter + 1);
+                    }
+                    else
+                    {
+                        if (attackAnimationName == "PrimaryAbility")
+                        {
+                            anim.SetBool("IsPrimaryAbility", true);
+                        }
+                        else if (attackAnimationName == "SecondaryAbility")
+                        {
+                            anim.SetBool("IsSecondaryAbility", true);
+                        }
+                        else if (attackAnimationName == "UltimateAbility")
+                        {
+                            anim.SetBool("IsUltimateAbility", true);
+                        }
+                    }
+                    /*if (attackAnimationName == "PrimaryAttack")
                     {
                         anim.speed = attackSpeed * attackSpeedMultiplier;
                     }
                     else
                     {
                         anim.speed = attackSpeed;
-                    }
+                    }*/
                     attackDamage = attackType[comboCounter].damage * attackDamageMultiplier;
                     Debug.Log($"Current attack is dealing {attackDamage} damage");
                     attackAoE = attackType[comboCounter].areaOfEffect;
@@ -260,10 +308,8 @@ namespace Heroes.Maira
             Debug.Log($"Starting cooldown for {currentAttack}.");
             StartCoroutine(ResetCooldown(currentAttack));
 
-            // Wait for the animation to finish
-            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-            ExitAttack(currentAttack);
             IsInCombatMode = false;
+            ExitAttack(currentAttack);
         }
 
         private void OnDrawGizmos()
@@ -275,32 +321,40 @@ namespace Heroes.Maira
         
         public void TriggerAreaOfEffectDamageForPrimaryAbility()
         {
-            Debug.Log("Inside TriggerAreaOfEffectDamageForPrimaryAbility");
-            IsInCombatMode = true;
-            HandleAreaOfEffectDamage(primaryAbility[0].areaOfEffect, _currentAttackDirection);
-            IsInCombatMode = false;
+            if (_photonView.IsMine)
+            {
+                Debug.Log("Inside TriggerAreaOfEffectDamageForPrimaryAbility");
+                IsInCombatMode = true;
+                HandleAreaOfEffectDamage(primaryAbility[0].areaOfEffect, _currentAttackDirection);
+                IsInCombatMode = false;
+            }
         }
 
 
         public void TriggerTauntForSecondaryAbility()
         {
-            Debug.Log("Triggering Taunt for Maira");
-            IsInCombatMode = true;
-            Collider[] hitColliders = Physics.OverlapSphere( transform.position + _currentAttackDirection,secondaryAbility[0].areaOfEffect);
-            foreach (Collider collider in hitColliders)
+            if (_photonView.IsMine)
             {
-                if (collider.gameObject.CompareTag("Enemy"))
+                Debug.Log("Triggering Taunt for Maira");
+                IsInCombatMode = true;
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position + _currentAttackDirection,
+                    secondaryAbility[0].areaOfEffect);
+                foreach (Collider collider in hitColliders)
                 {
-                    // TODO Refactor this to general enemy Script
-                    ChanequeEnemy chanequeEnemy = collider.GetComponent<ChanequeEnemy>();
-
-                    if (chanequeEnemy != null)
+                    if (collider.gameObject.CompareTag("Enemy"))
                     {
-                        chanequeEnemy.ChangeTarget(transform);
+                        // TODO Refactor this to general enemy Script
+                        ChanequeEnemy chanequeEnemy = collider.GetComponent<ChanequeEnemy>();
+
+                        if (chanequeEnemy != null)
+                        {
+                            chanequeEnemy.ChangeTarget(transform);
+                        }
                     }
                 }
+
+                IsInCombatMode = false;
             }
-            IsInCombatMode = false;
         }
         
         //We might want a specific function for each ability, but for now this will do. // Jojo
@@ -425,7 +479,8 @@ namespace Heroes.Maira
             {
                 if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName))
                 {
-                    Invoke("EndCombo", 0.5f);
+                    Debug.Log("Exiting attack for " + attackTagName);
+                    Invoke("EndCombo", 0f);
                 }
             }
         }
@@ -433,6 +488,10 @@ namespace Heroes.Maira
         void EndCombo()
         {
             comboCounter = 0;
+            anim.SetInteger("AttackCombo", 0);
+            anim.SetBool("IsPrimaryAbility", false);
+            anim.SetBool("IsSecondaryAbility", false);
+            anim.SetBool("IsUltimateAbility", false);
             lastComboEnd = Time.time;
         }
     }
