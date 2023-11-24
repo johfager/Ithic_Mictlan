@@ -26,10 +26,10 @@ public class Spawner : MonoBehaviour {
     /// method that instantiates the gameobjet in a certain position and adds the BehaviorExcutor component to follow the player
     /// </summary>
 	void Start() {
-        /*foreach (Transform xoloSpawn in xoloPositions)
+        foreach (Transform xoloSpawn in xoloPositions)
         {
-            GameObject instance = Instantiate(prefab,xoloSpawn.position,Quaternion.identity) as GameObject;
-            BehaviorExecutor behaviorExecutor = instance.GetComponent<BehaviorExecutor>();
+            GameObject instance = Instantiate(prefab, new Vector3(xoloSpawn.position.x, 1.42f, xoloSpawn.position.z),Quaternion.identity) as GameObject;
+            //BehaviorExecutor behaviorExecutor = instance.GetComponent<BehaviorExecutor>();
 
 
             //Codigo comentado para comprobaciones de editor y runtime
@@ -39,12 +39,12 @@ public class Spawner : MonoBehaviour {
             //else
             //    text.text = "RUNTIME";
 
-            if (behaviorExecutor != null)
+            /*if (behaviorExecutor != null)
             {
                 behaviorExecutor.SetBehaviorParam("wanderArea", wanderArea);
                 behaviorExecutor.SetBehaviorParam("player", player);
-            }
-        }*/
+            }*/
+        }
 	}
 
     public void SetSpwans(GameObject playerToRun)
