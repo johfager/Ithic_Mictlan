@@ -33,6 +33,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     [SerializeField] private Animator animator;
     private string currentAnimationBool;
+    UltSpeedVFX ultSpeedVFX;
 
     //Cooldowns for the attacks
     private float basicAttackCooldown = 0.0f;
@@ -53,6 +54,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         camazotzBody = transform.GetChild(0).gameObject;
+        ultSpeedVFX = GetComponent<UltSpeedVFX>();
         CamazotzAgentSetter();
     }
 
@@ -564,6 +566,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         transform.LookAt(objective.transform.position);
         while (Time.time - tiempoInicio < 1.5f)
         {
+            ultSpeedVFX.PlayUltSpeedVFX();
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, 20 * Time.deltaTime);
             HandleAreaOfEffectDamage(2);
             yield return null;
@@ -588,6 +591,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         transform.LookAt(objective.transform.position);
         while (Time.time - tiempoInicio < 1.5f)
         {
+            ultSpeedVFX.PlayUltSpeedVFX();
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, 20 * Time.deltaTime);
             HandleAreaOfEffectDamage(2);
             yield return null;
@@ -612,6 +616,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         transform.LookAt(objective.transform.position);
         while (Time.time - tiempoInicio < 1.5f)
         {
+            ultSpeedVFX.PlayUltSpeedVFX();
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, 20 * Time.deltaTime);
             HandleAreaOfEffectDamage(2);
             yield return null;
