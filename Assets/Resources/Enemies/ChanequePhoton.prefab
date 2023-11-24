@@ -437,7 +437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4730c0eba268f2f4c8ac122f71297975, type: 3}
       propertyPath: m_Name
-      value: Chaneque
+      value: ChanequePhoton
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4730c0eba268f2f4c8ac122f71297975, type: 3}
       propertyPath: m_Layer
@@ -689,7 +689,7 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 0
   ObservedComponents:
   - {fileID: 6197991346782989660}
   - {fileID: 516940460833581398}
@@ -729,22 +729,22 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsWalking
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsIdle
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsAttacking
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsDead
   - Type: 1
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Speed
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsRunning
   m_SynchronizeLayers:
   - SynchronizeType: 0

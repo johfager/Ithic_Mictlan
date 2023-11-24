@@ -1,28 +1,10 @@
 using Heroes.Maira;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class ChanequeEnemy : EnemyManager
+public class ChanequeEnemy : MonoBehaviourPun
 {
-    private NavMeshAgent navMeshAgent;
-    private Animator animator;
-    private ChanequeState currentState;
-    
-    private HealthSystem _healthSystem;
-
-    //TODO: This maybe should be inside Enemystats
-    [SerializeField] private float runDistanceThreshold;
-
-    //TODO: This is very quick and dirty.
-    [SerializeField] private float attackDistanceThreshold;
-    
-    public EnemyStats enemyStats; // Set this in the Inspector with an EnemyStats asset
-    public Transform[] targets; // Set this in the Inspector with an array of target Transforms
-
-    private GameObject _targetObject;
-
-
-
     private enum ChanequeState
     {
         Idle,
@@ -31,52 +13,64 @@ public class ChanequeEnemy : EnemyManager
         Attack
         // Add more states as needed (e.g., Attack)
     }
+    private NavMeshAgent navMeshAgent;
+    private Animator animator;
+    private ChanequeState currentState;
+
+    private HealthSystem _healthSystem;
+
+    [SerializeField] private float runDistanceThreshold;
+    [SerializeField] private float attackDistanceThreshold;
+
+    public EnemyStats enemyStats;
+    public Transform[] targets;
 
     private void Start()
     {
         
+        ///TODO: Get list of players in scene from gamemanager here.
+        /// 
         _healthSystem = GetComponent<HealthSystem>();
         _healthSystem.InitializeHealth(enemyStats.healthAttributes.maxHealth);
-        
+
         runDistanceThreshold = 40f;
         attackDistanceThreshold = 4f;
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        // Initialize the AI state to start with (e.g., Idle)
         ChangeState(ChanequeState.Idle);
 
         if (targets == null || targets.Length == 0)
         {
-            // Debug.LogError("Targets not assigned!");
+            Debug.LogError("Targets not assigned!");
         }
+
+        // Call RPC to initialize the enemy state on all clients
+        //photonView.RPC("InitializeEnemyState", RpcTarget.AllBuffered, enemyStats.healthAttributes.maxHealth);
     }
 
     private void Update()
     {
-        // Your AI logic to determine when to switch states
-        Transform closestTarget = GetClosestTarget();
+        // Check if this is the local player's enemy
+        if (photonView.IsMine)
+        {
+            // Your AI logic to determine when to switch states
+            Transform closestTarget = GetClosestTarget();
 
-        // Check if the enemy is within attack range
-        if (closestTarget != null && Vector3.Distance(transform.position, closestTarget.position) < attackDistanceThreshold)
-        {
-            ChangeState(ChanequeState.Attack);
-        }
-        // Otherwise, check if the enemy is within run range
-        // else if (closestTarget != null && Vector3.Distance(transform.position, closestTarget.position) < runDistanceThreshold)
-        // {
-        //     ChangeState(ChanequeState.Run);
-        // }
-        // Otherwise, walk to the closest target
-        else if (closestTarget != null)
-        {
-            navMeshAgent.SetDestination(closestTarget.position);
-            ChangeState(ChanequeState.Walk);
-        }
-        // Otherwise, idle
-        else
-        {
-            ChangeState(ChanequeState.Idle);
+            if (closestTarget != null && Vector3.Distance(transform.position, closestTarget.position) < attackDistanceThreshold)
+            {
+                // Call RPC to sync the attack action across the network
+                photonView.RPC("TriggerAttack", RpcTarget.AllBuffered);
+            }
+            else if (closestTarget != null)
+            {
+                navMeshAgent.SetDestination(closestTarget.position);
+                ChangeState(ChanequeState.Walk);
+            }
+            else
+            {
+                ChangeState(ChanequeState.Idle);
+            }
         }
     }
 

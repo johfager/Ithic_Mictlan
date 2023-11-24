@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -32,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the colliding object is the player
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Hero"))
         {
             playerInsideTrigger = true;
         }
@@ -41,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         // Check if the colliding object is the player
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Hero"))
         {
             playerInsideTrigger = false;
         }
@@ -65,7 +66,11 @@ public class EnemySpawner : MonoBehaviour
             // Instantiate a random enemy from the array at the calculated position
             int randomEnemyIndex = Random.Range(0, enemigos.Length);
             GameObject enemyPrefab = enemigos[randomEnemyIndex];
-            Instantiate(enemyPrefab, transform.position + randomPosition, Quaternion.identity);
+            string enemyPath = "Enemies/" + enemyPrefab.name;
+            GameObject instance = PhotonNetwork.Instantiate(enemyPath, transform.position + randomPosition,Quaternion.identity) as GameObject;
+            
+            //Instantiate(enemyPrefab, transform.position + randomPosition, Quaternion.identity);
+            
         }
         active = false;
     }

@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] int xolosInScene;
     [SerializeField] private Spawner xoloSpawner;
 
+    [SerializeField] private Spawner chanequeSpawner;
+
     void Awake() {
         if(instance == null)
         {

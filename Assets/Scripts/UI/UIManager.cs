@@ -5,74 +5,80 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum CharacterType 
+namespace UI
 {
-    Hero,
-    Enemy,
-    Boss
-}
-//TODO: Handle Cooldowns inside this script as well?
-public class UIManager : MonoBehaviour
-{
-    public Slider healthBar; // Reference to the health bar slider
-    
-    public Slider madnessBar; // Reference to the madness bar slider for Rosa
-    public event Action<float, CharacterType> OnHealthUpdated;
+    //TODO: Handle Cooldowns inside this script as well?
 
-    private void Start()
+    public enum CharacterType
     {
-        // Subscribe to the OnHealthUpdated event
-        OnHealthUpdated += HandleHealthUpdated;
-    }
-    
-    public void SetMaxHealth(float maxHealth)
-    {
-        healthBar.maxValue = maxHealth;
-        healthBar.value = maxHealth;
-    }
-    public void UpdateHealth(float health, CharacterType characterType)
-    {
-        // Invoke the OnHealthUpdated event
-        OnHealthUpdated?.Invoke(health, characterType);
-        
+        Hero,
+        Enemy,
+        Boss
     }
 
-    private void HandleHealthUpdated(float health, CharacterType characterType)
+    public class UIManager : MonoBehaviour
     {
-        // Perform different actions depending on character type
-        if(characterType == CharacterType.Hero)
+        public Slider healthBar; // Reference to the health bar slider
+        public Slider madnessBar; // Reference to the madness bar slider for Rosa
+
+        // Delegate for updating health UI
+        public delegate void UpdateHealthUI(float health, float maxHealth, CharacterType characterType);
+        public static event UpdateHealthUI OnUpdateHealthUI;
+
+        private void Start()
         {
-            // Update the health bar slider value
-            healthBar.value = health; 
-            // Player-specific UI update code
-        } 
-        else if(characterType == CharacterType.Enemy) 
-        {
-            Debug.Log("Enemy has taken damage, TODO: Update UI in UIManager");
-            // Enemy-specific UI update code
+            // Subscribe to the OnUpdateHealthUI event
+            OnUpdateHealthUI += HandleHealthUpdated;
         }
-    }
-    
-    public void UpdateMadness(float madness)
-    {
-        if (madnessBar != null)
+
+        public void SetMaxHealth(float maxHealth)
         {
-            madnessBar.value += madness;
+            healthBar.maxValue = maxHealth;
+            healthBar.value = maxHealth;
         }
-    }
-    
-    public float GetMadness()
-    {
-        return madnessBar.value;
-    }
-    public void SetMadness(float madness)
-    {
-        madnessBar.value = madness;
-    }
-    
-    private void OnDestroy()
-    {
-        // Unsubscribe from the OnHealthUpdated event
-        OnHealthUpdated -= HandleHealthUpdated;
+
+        public void UpdateHealth(float health, CharacterType characterType)
+        {
+            // Invoke the OnUpdateHealthUI event
+            OnUpdateHealthUI?.Invoke(health, healthBar.maxValue, characterType);
+        }
+
+        private void HandleHealthUpdated(float health, float maxHealth, CharacterType characterType)
+        {
+            // Perform different actions depending on character type
+            if (characterType == CharacterType.Hero || characterType == CharacterType.Enemy)
+            {
+                // Update the health bar slider value
+                healthBar.value = health;
+            }
+            else if (characterType == CharacterType.Boss)
+            {
+                // Handle boss-specific UI updates if needed
+            }
+        }
+
+        public void UpdateMadness(float madness)
+        {
+            if (madnessBar != null)
+            {
+                madnessBar.value += madness;
+            }
+        }
+
+        public float GetMadness()
+        {
+            return madnessBar.value;
+        }
+
+        public void SetMadness(float madness)
+        {
+            madnessBar.value = madness;
+        }
+
+        private void OnDestroy()
+        {
+            // Unsubscribe from the OnUpdateHealthUI event
+            OnUpdateHealthUI -= HandleHealthUpdated;
+        }
     }
 }

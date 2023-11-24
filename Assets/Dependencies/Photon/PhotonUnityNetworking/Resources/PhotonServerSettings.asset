@@ -39,6 +39,7 @@ MonoBehaviour:
   - RPC_Combat
   - DisableButton
   - HideSelectScreen
+  - SyncHealth
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
