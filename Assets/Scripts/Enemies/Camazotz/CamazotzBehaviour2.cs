@@ -210,12 +210,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         agent.speed = 0;
         agent.isStopped = true;
-        // Debug.Log("Resetting boolean parameters");
-        // while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-        // {
-        //     yield return null;
-        // }
-        // Debug.Log("Animation is complete");
+
         yield return new WaitForSeconds(delay);
 
         // Reset the boolean parameters after the animation is complete
@@ -242,12 +237,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         agent.speed = 0;
         agent.isStopped = true;
-        // Debug.Log("Resetting boolean parameters");
-        // while(animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-        // {
-        //     yield return null;
-        // }
-        // Debug.Log("Animation is complete");
 
         yield return new WaitForSeconds(delay);
 
@@ -393,7 +382,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         GetComponent<NavMeshAgent>().enabled = false;
         while (Time.time - tiempoInicio < 2.0f)
         {
-            transform.Translate(Vector3.up * 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up * 10, 20 * Time.deltaTime);
             yield return null;
         }
 
@@ -744,13 +733,13 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 cooldownTime = 10.0f;
                 break;
             case "UpsideDownWorldCooldown":
-                cooldownTime = 12.0f;
-                break;
-            case "InfernalScreechCooldown":
                 cooldownTime = 15.0f;
                 break;
+            case "InfernalScreechCooldown":
+                cooldownTime = 10.0f;
+                break;
             case "SoulDevourerCooldown":
-                cooldownTime = 20.0f;
+                cooldownTime = 25.0f;
                 break;
         }
 

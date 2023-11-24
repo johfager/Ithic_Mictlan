@@ -5,14 +5,7 @@ using UnityEngine.VFX;
 
 public class JumpingAirVFX : MonoBehaviour
 {
-
-
     [SerializeField] private GameObject particleVFXPrefab;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     void PlayJumpingAirVFX()
     {
@@ -28,10 +21,5 @@ public class JumpingAirVFX : MonoBehaviour
             particleSystem.Play();
         }
         Destroy(landingVFX, particleSystem.main.duration);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
