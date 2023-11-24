@@ -18,3 +18,4 @@ MonoBehaviour:
   cooldown: 7
   name: default
   description: default
+  madnessValue: 20

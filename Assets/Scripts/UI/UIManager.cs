@@ -15,6 +15,8 @@ public enum CharacterType
 public class UIManager : MonoBehaviour
 {
     public Slider healthBar; // Reference to the health bar slider
+    
+    public Slider madnessBar; // Reference to the madness bar slider for Rosa
     public event Action<float, CharacterType> OnHealthUpdated;
 
     private void Start()
@@ -50,7 +52,24 @@ public class UIManager : MonoBehaviour
             // Enemy-specific UI update code
         }
     }
-
+    
+    public void UpdateMadness(float madness)
+    {
+        if (madnessBar != null)
+        {
+            madnessBar.value += madness;
+        }
+    }
+    
+    public float GetMadness()
+    {
+        return madnessBar.value;
+    }
+    public void SetMadness(float madness)
+    {
+        madnessBar.value = madness;
+    }
+    
     private void OnDestroy()
     {
         // Unsubscribe from the OnHealthUpdated event

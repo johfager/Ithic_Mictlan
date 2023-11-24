@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Heroes.Maira;
+using Heroes.Rosa;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
@@ -108,13 +110,57 @@ public class UISelectScreenManager : MonoBehaviour
         characterSelectorPanel.blocksRaycasts = false;
 
         GameObject[] target = GameObject.FindGameObjectsWithTag("Hero");
-
+        //TODO: make this better.
         for (int i = 0; i < target.Length; i++)
         {
-            target[i].GetComponent<PlayerMovement>().enabled = true;
-            target[i].GetComponent<Heroes.PlayerManager>().enabled = true;
-            target[i].GetComponent<HeroesCombat>().enabled = true;
-            target[i].GetComponent<HealthSystem>().enabled = true;
+            HeroesCombatRosa combatScriptRosa = target[i].GetComponent<HeroesCombatRosa>();
+            PlayerManagerRosaPhoton managerScriptRosa = target[i].GetComponent<PlayerManagerRosaPhoton>();
+            
+            HeroesCombatMaira combatScriptMaira = target[i].GetComponent<HeroesCombatMaira>();
+            PlayerManagerMairaPhoton managerScriptMaira = target[i].GetComponent<PlayerManagerMairaPhoton>();
+            
+            // For ROSA
+            if(combatScriptRosa != null && managerScriptRosa != null)
+            {
+                target[i].GetComponent<PlayerManagerRosaPhoton>().enabled = true;
+                target[i].GetComponent<HeroesCombatRosa>().enabled = true;
+                target[i].GetComponent<PlayerMovement>().enabled = true;
+                target[i].GetComponent<HealthSystem>().enabled = true;
+            } 
+            else if(combatScriptMaira != null && managerScriptMaira != null) 
+            {
+                target[i].GetComponent<PlayerManagerMairaPhoton>().enabled = true;
+                target[i].GetComponent<HeroesCombatMaira>().enabled = true;
+                target[i].GetComponent<PlayerMovement>().enabled = true;
+                target[i].GetComponent<HealthSystem>().enabled = true;
+
+            }
+            else {
+                target[i].GetComponent<Heroes.PlayerManager>().enabled = true;
+                target[i].GetComponent<HeroesCombat>().enabled = true;
+                target[i].GetComponent<PlayerMovement>().enabled = true;
+                target[i].GetComponent<HealthSystem>().enabled = true;
+            }
+
+            /*if (photonView.IsMine)
+            {
+                target[i].GetComponentInChildren<Canvas>().enabled = true;
+            }*/
+            /*if (HeroID == 3)
+            {
+                target[i].GetComponent<PlayerManagerRosaPhoton>().enabled = true;
+                target[i].GetComponent<HeroesCombatRosa>().enabled = true;
+                target[i].GetComponent<PlayerMovement>().enabled = true;
+                target[i].GetComponent<HealthSystem>().enabled = true;
+            }
+            else
+            {
+                target[i].GetComponent<Heroes.PlayerManager>().enabled = true;
+                target[i].GetComponent<HeroesCombat>().enabled = true;
+                target[i].GetComponent<PlayerMovement>().enabled = true;
+                target[i].GetComponent<HealthSystem>().enabled = true;
+            }*/
+
         }    
 
     }

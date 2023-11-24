@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Heroes.Rosa
         private int comboCounter;
         private Animator anim;
         private RuntimeAnimatorController originalAnim;
+        [SerializeField] private UIManager uiManager;
 
         private float followUpAttackTimer = 0.0f; //Not used
         private float attackDamage;
@@ -28,6 +30,10 @@ namespace Heroes.Rosa
         private float attackSpeed;
         private float attackSpeedMultiplier = 1.0f;
 
+        private float coolDownMultiplier = 1.0f;
+
+        private float _totalMadness;
+        private float currentMadness;
         
         //Rosa Primary Ability
         [SerializeField] Feather featherPrefab;
@@ -36,7 +42,7 @@ namespace Heroes.Rosa
         public float spreadAngle = 45f; // angle of spread in degrees
 
         public TextMeshProUGUI combatStateText;
-        [SerializeField] float comboTime = 0.4f;
+        [SerializeField] float comboTime = 0.2f;
 
         private PlayerManager playerManager; //Not used
         public bool IsInCombatMode;
@@ -51,6 +57,8 @@ namespace Heroes.Rosa
 
 
         [SerializeField] HeroStats _heroStats;
+        
+        [SerializeField] private PhotonView _photonView;
     
         private float basicAttackCooldown = 0.0f;
         private float primaryAbilityCooldown = 0.0f;
@@ -84,8 +92,11 @@ namespace Heroes.Rosa
             InitializeCooldownUI(primaryAbilityCooldownImage, ref primaryAbilityCooldownText);
             InitializeCooldownUI(secondaryAbilityCooldownImage, ref secondaryAbilityCooldownText);
             InitializeCooldownUI(ultimateAbilityCooldownImage, ref ultimateAbilityCooldownText);
-
-
+            //Setting ultimate to not usable as madness is below 100 when game starts
+            if (_totalMadness <= 100f)
+            {
+                ultimateAbilityCooldownImage.enabled = true;
+            }
             attackSpeed = _heroStats.combatAttributes.attackSpeed;
             
             combatStateText.enabled = false; // Hide the debug text
@@ -135,13 +146,14 @@ namespace Heroes.Rosa
         private void HandlePrimaryAbility()
         {
             currentAttack = "PrimaryAbility";
+            currentMadness = _heroStats.abilityAttributes.primaryAbility.madnessValue;
             if (primaryAbilityCooldownImage != null && primaryAbilityCooldownText != null)
             {
                 primaryAbilityCooldownImage.enabled = true;
                 primaryAbilityCooldownText.enabled = true;
             }
             primaryAbilityCooldown = _heroStats.abilityAttributes.primaryAbility.cooldown;
-            StartCoroutine(StartAttackAnimationForPrimaryAbility(currentAttack, primaryAbility));
+            StartAttackAnimation(currentAttack, primaryAbility);
         }
 
 
@@ -149,6 +161,7 @@ namespace Heroes.Rosa
         private void HandleSecondaryAbility()
         {
             currentAttack = "SecondaryAbility";
+            currentMadness = _heroStats.abilityAttributes.secondaryAbility.madnessValue;
             if (secondaryAbilityCooldownImage != null && secondaryAbilityCooldownText != null)
             {
                 secondaryAbilityCooldownImage.enabled = true;
@@ -156,19 +169,33 @@ namespace Heroes.Rosa
             }
             secondaryAbilityCooldown = _heroStats.abilityAttributes.secondaryAbility.cooldown;
             TeleportToClosestEnemy(secondaryAbility[0].areaOfEffect);
-            StartCoroutine(StartAttackAnimation(currentAttack, secondaryAbility));
+            StartAttackAnimation(currentAttack, secondaryAbility);
         }
 
         private void HandleUltimateAbility()
         {
             currentAttack = "UltimateAbility";
-            if (ultimateAbilityCooldownImage != null && ultimateAbilityCooldownText != null)
+            currentMadness = _heroStats.abilityAttributes.ultimateAbility.madnessValue;
+            if (ultimateAbilityCooldownImage != null && ultimateAbilityCooldownText != null && _totalMadness >= 100.0f)
             {
                 ultimateAbilityCooldownImage.enabled = true;
                 ultimateAbilityCooldownText.enabled = true;
             }
             ultimateAbilityCooldown = _heroStats.abilityAttributes.ultimateAbility.cooldown;
-            StartCoroutine(StartAttackAnimation(currentAttack, ultimateAbility));
+            StartAttackAnimation(currentAttack, ultimateAbility);
+
+            coolDownMultiplier = 0.5f;
+            attackSpeedMultiplier = 1.5f;
+            _totalMadness = 0.0f;
+            uiManager.SetMadness(_totalMadness);
+            StartCoroutine(ReturnToNormal());
+        }
+
+        IEnumerator ReturnToNormal()
+        {
+            yield return new WaitForSeconds(10f);
+            coolDownMultiplier = 1.0f;
+            attackSpeedMultiplier = 1.0f;
         }
 
         private void UpdateCooldowns()
@@ -180,6 +207,24 @@ namespace Heroes.Rosa
     
         public void HandleAttackStateMachine()
         {
+            if (uiManager != null)
+            {
+                _totalMadness = uiManager.GetMadness();
+            }
+
+            if (_totalMadness >= 99f)
+            {
+                if (ultimateAbilityCooldownImage != null && ultimateAbilityCooldownText != null)
+                {
+                    ultimateAbilityCooldownImage.enabled = false;
+                }
+            }
+            else
+            {
+                ultimateAbilityCooldownImage.enabled = true;;
+            }
+            
+            
             if(currentAttack != null)
             {
                 ExitAttack(currentAttack);
@@ -191,8 +236,8 @@ namespace Heroes.Rosa
                     if (basicAttackCooldown <= 0.0f)
                     {
                         currentAttack = "PrimaryAttack";
-                        basicAttackCooldown = 0.1f;
-                        StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack));
+                        basicAttackCooldown = 0f; 
+                        StartAttackAnimation(currentAttack, primaryAttack);
                     }
                 }
                 else if (Input.GetMouseButtonDown(1))
@@ -212,32 +257,87 @@ namespace Heroes.Rosa
                 }
                 else if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    if (ultimateAbilityCooldown <= 0.0f)
+                    if (uiManager.GetMadness() >= 100.0f)
                     {
-                        HandleUltimateAbility();
+                        if (ultimateAbilityCooldown <= 0.0f)
+                        {
+                            HandleUltimateAbility();
+                        }
+                    }
+                }
+                else if(Input.GetKeyDown(KeyCode.E))
+                {
+                    HandleXoloCatch();
+                }
+            }
+        }
+        
+        private void HandleXoloCatch()
+        {
+            Collider[] xolos = Physics.OverlapSphere(transform.position, 1.5f);
+
+            if(xolos != null)
+            {
+                foreach (Collider xolo in xolos)
+                {
+                    if(xolo.CompareTag("Xolo"))
+                    {
+                        if(xolo.transform.GetChild(0).GetComponent<XoloController>() != null)
+                        {
+                            xolo.transform.GetChild(0).GetComponent<XoloController>().CatchXolo();
+                        }
+
                     }
                 }
             }
         }
 
-
-        private IEnumerator StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType)
+        private void StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType)
         {
+            
+            if (attackType.Count <= comboCounter)
+            {
+                comboCounter = 0;
+                anim.SetInteger("AttackCombo", 0);                
+            }
             IsInCombatMode = true;
-            if ((Time.time - lastComboEnd > 0.5f && comboCounter < attackType.Count))
+            
+            if ((Time.time - lastComboEnd > 0.1f && comboCounter < attackType.Count))
             {   
                 CancelInvoke("EndCombo");
                 if (Time.time - lastClickedTime >= comboTime)
                 {
-                    anim.runtimeAnimatorController = attackType[comboCounter].animatorOV;
-                    anim.speed = attackSpeed * attackSpeedMultiplier;
-                    anim.Play(attackAnimationName, 0, 0);
+                    if(attackType.Count > 1)
+                    {
+                        anim.SetInteger("AttackCombo", comboCounter + 1);
+                    }
+                    else
+                    {
+                        if (attackAnimationName == "PrimaryAbility")
+                        {
+                            anim.SetBool("IsPrimaryAbility", true);
+                        }
+                        else if (attackAnimationName == "SecondaryAbility")
+                        {
+                            anim.SetBool("IsSecondaryAbility", true);
+                        }
+                        else if (attackAnimationName == "UltimateAbility")
+                        {
+                            anim.SetBool("IsUltimateAbility", true);
+                        }
+                    }
+
+                    currentMadness = attackType[comboCounter].madnessValue;
+                    //TODO add attackspeed to new controller
+                    //anim.speed = attackSpeed * attackSpeedMultiplier;
+                    //Todo fix bug for finding damage.
                     attackDamage = attackType[comboCounter].damage;
                     Debug.Log($"Current attack is dealing {attackDamage} damage");
                     attackAoE = attackType[comboCounter].areaOfEffect;
                     HandleAreaOfEffectDamage();
                     comboCounter++;
                     lastClickedTime = Time.time;
+                    
                     if (comboCounter >= attackType.Count)
                     {
                         comboCounter = 0;
@@ -248,12 +348,13 @@ namespace Heroes.Rosa
             StartCoroutine(ResetCooldown(currentAttack));
             
             // Wait for the animation to finish
-            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
             IsInCombatMode = false;
             ExitAttack(currentAttack);
         }
         
-        private IEnumerator StartAttackAnimationForPrimaryAbility(string attackAnimationName, List<HeroAttackObject> attackType)
+        
+        //TODO: fix hitbox for primary ability
+        /*private void StartAttackAnimationForPrimaryAbility(string attackAnimationName, List<HeroAttackObject> attackType)
         {
             IsInCombatMode = true;
             anim.runtimeAnimatorController = attackType[comboCounter].animatorOV;
@@ -269,62 +370,80 @@ namespace Heroes.Rosa
             yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
             IsInCombatMode = false;
             ExitAttack(currentAttack);
-        }
+        }*/
         
         
         private void SpawnFeathersForPrimaryAbility()
         {
-            //Feather newFeather = Instantiate(featherPrefab, transform.position, Quaternion.identity).GetComponent<Feather>();
-            for (int i = 0; i < numberOfFeathers; i++)
+            if (_photonView.IsMine)
             {
-                // Calculate rotation offset for this feather
-                float offsetAngle = spreadAngle * ((float)i / (numberOfFeathers - 1) - 0.5f);
-                Quaternion rotation = Quaternion.Euler(new Vector3(0, offsetAngle, 0)) * transform.rotation;
-                
-                // Instantiate a feather object at Rosa's position
-                Feather feather = Instantiate(featherPrefab, transform.position , Quaternion.identity);
+                //Feather newFeather = Instantiate(featherPrefab, transform.position, Quaternion.identity).GetComponent<Feather>();
+                for (int i = 0; i < numberOfFeathers; i++)
+                {
+                    // Calculate rotation offset for this feather
+                    float offsetAngle = spreadAngle * ((float)i / (numberOfFeathers - 1) - 0.5f);
+                    Quaternion rotation = Quaternion.Euler(new Vector3(0, offsetAngle, 0)) * transform.rotation;
 
-                // Get direction from rotation
-                Vector3 direction = rotation * Vector3.forward;
-                feather.featherDirection = direction * 30f;
+
+                    // Instantiate a feather object at Rosa's position
+                    string featherPath = "Objects/" + featherPrefab.name;
+                    GameObject featherObject =
+                        PhotonNetwork.Instantiate(featherPath, transform.position, transform.rotation);
+                    Feather feather = featherObject.GetComponent<Feather>();
+                    feather.rosaUIManager = uiManager;
+                    feather.transform.rotation = rotation * Quaternion.Euler(90f, 0f, 0f);
+
+                    // Get direction from rotation
+                    Vector3 direction = rotation * Vector3.forward;
+                    feather.featherDirection = direction * 30f;
+                }
             }
         }
         private void TeleportToClosestEnemy(float abilityRange)
         {
-            Vector3 center = transform.position + transform.forward * abilityRange;
-            Collider[] hitColliders = Physics.OverlapSphere(center, abilityRange, enemyLayerMask);
-            float closestDistanceSqr = abilityRange * abilityRange;
-            Collider closestEnemy = null;
-            Debug.Log(hitColliders.Length);
-            foreach (var hitCollider in hitColliders)
+            if (_photonView.IsMine)
             {
-            float distanceSqrToEnemy = (hitCollider.transform.position - transform.position).sqrMagnitude;
-                if (distanceSqrToEnemy < closestDistanceSqr)
-
+                Vector3 center = transform.position + transform.forward * abilityRange;
+                Collider[] hitColliders = Physics.OverlapSphere(center, abilityRange, enemyLayerMask);
+                float closestDistanceSqr = abilityRange * abilityRange;
+                Collider closestEnemy = null;
+                Debug.Log(hitColliders.Length);
+                foreach (var hitCollider in hitColliders)
                 {
-                    closestDistanceSqr = distanceSqrToEnemy;
-                    closestEnemy = hitCollider;
+                    float distanceSqrToEnemy = (hitCollider.transform.position - transform.position).sqrMagnitude;
+                    if (distanceSqrToEnemy < closestDistanceSqr)
+
+                    {
+                        closestDistanceSqr = distanceSqrToEnemy;
+                        closestEnemy = hitCollider;
+                    }
+                }
+
+                if (closestEnemy != null)
+                {
+                    Debug.Log("Rosa teleported to closest enemy");
+                    CharacterController controller = GetComponent<CharacterController>();
+                    //controller.transform.position = closestEnemy.transform.position + Vector3.right * 2;
+                    Vector3 directionToEnemy = (closestEnemy.transform.position - transform.position).normalized;
+
+                    // Get the exact distance to the enemy, subtracting the radius of the CharacterController
+                    float radius = controller.radius;
+                    float distanceToEnemy = Mathf.Sqrt(closestDistanceSqr) - radius;
+
+                    // Include an offset to prevent the character from ending up inside another enemy
+                    Vector3 offset = directionToEnemy * (closestEnemy.bounds.extents.magnitude + radius);
+
+                    // Move to the enemy
+                    controller.Move(directionToEnemy * distanceToEnemy + offset + Vector3.up);
+                }
+                else
+                {
+                    Debug.Log("Couldnt find an enemy to teleport too");
                 }
             }
-            if (closestEnemy != null)
-            {
-                Debug.Log("Rosa teleported to closest enemy");
-                CharacterController controller = GetComponent<CharacterController>();
-                //controller.transform.position = closestEnemy.transform.position + Vector3.right * 2;
-                Vector3 directionToEnemy = (closestEnemy.transform.position - transform.position).normalized;
-        
-                // Get the exact distance to the enemy, subtracting the radius of the CharacterController
-                float distanceToEnemy = Mathf.Sqrt(closestDistanceSqr) - controller.radius;
-
-                // Move to the enemy
-                controller.Move(directionToEnemy * distanceToEnemy + Vector3.up*2);
-            }
-            else
-            {
-                Debug.Log("Couldnt find an enemy to teleport too");
-            }
-
         }
+        
+        
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
@@ -351,6 +470,8 @@ namespace Heroes.Rosa
                         BossHealthSystem bossHealthSystem = collider.GetComponent<BossHealthSystem>();
                         if (healthSystem != null)
                         {
+                            uiManager.UpdateMadness(currentMadness);
+                            _totalMadness += currentMadness;
                             // Apply damage from the current attack
                             healthSystem.TakeDamage(attackDamage);
                         }
@@ -376,12 +497,12 @@ namespace Heroes.Rosa
                     cooldownTime = basicAttackCooldown;
                     break;
                 case "PrimaryAbility":
-                    cooldownTime = primaryAbilityCooldown;
+                    cooldownTime = primaryAbilityCooldown * coolDownMultiplier;
                     cooldownImage = primaryAbilityCooldownImage;
                     cooldownText = primaryAbilityCooldownText;
                     break;
                 case "SecondaryAbility":
-                    cooldownTime = secondaryAbilityCooldown;
+                    cooldownTime = secondaryAbilityCooldown * coolDownMultiplier;
                     cooldownImage = secondaryAbilityCooldownImage;
                     cooldownText = secondaryAbilityCooldownText;
                     break;
@@ -447,7 +568,7 @@ namespace Heroes.Rosa
             {
                 if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName))
                 {
-                    Invoke("EndCombo", 0.5f);
+                    Invoke("EndCombo", 0f);
                 }
             }
         }
@@ -455,6 +576,10 @@ namespace Heroes.Rosa
         void EndCombo()
         {
             comboCounter = 0;
+            anim.SetInteger("AttackCombo", 0);
+            anim.SetBool("IsPrimaryAbility", false);
+            anim.SetBool("IsSecondaryAbility", false);
+            anim.SetBool("IsUltimateAbility", false);
             lastComboEnd = Time.time;
         }
     }

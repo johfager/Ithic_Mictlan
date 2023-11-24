@@ -21,7 +21,7 @@ namespace Heroes
         void Update()
         {
 
-            // Check if the player is in combat mode
+            /*// Check if the player is in combat mode
             if (heroesCombatScript.IsInCombatMode)
             {
                 isMoving = false; // Disable movement
@@ -34,9 +34,11 @@ namespace Heroes
             if (isMoving)
             {
                 playerMovement.HandleMovement();
-            }
+            }*/
            //Debug.Log("combat mode is: " + heroesCombatScript.IsInCombatMode.ToString());
-            heroesCombatScript.HandleAttackStateMachine();
+           playerMovement.HandleMovement();
+
+           heroesCombatScript.HandleAttackStateMachine();
 
         
         }
