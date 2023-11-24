@@ -135,11 +135,12 @@ public class XoloitzcuintleController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 
-    public void SetWasCatched(bool state)
+    public void SetWasCatched()
     {
         if(photonView.IsMine)
         {
-            wasCatched = state;
+            Debug.Log("unu");
+            wasCatched = true;
         }
     }
 

@@ -235,7 +235,7 @@ public class HeroesCombat : MonoBehaviour
                     if(xolo.transform.GetComponent<XoloitzcuintleController>() != null)
                     {
                         Debug.Log("GOT U >:C");
-                        xolo.transform.GetComponent<XoloitzcuintleController>().SetWasCatched(true);
+                        xolo.transform.GetComponent<XoloitzcuintleController>().SetWasCatched();
                     }
 
                 }
