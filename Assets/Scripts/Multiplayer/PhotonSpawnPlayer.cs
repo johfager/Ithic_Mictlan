@@ -48,7 +48,7 @@ public class PhotonSpawnPlayer : MonoBehaviour
     {
         if(ID == 0)
         {
-            playerPrefabPath = "Heroes/" + rosaPrefab.name;
+            playerPrefabPath = "Heroes/" + mairaPrefab.name;
             
             player = PhotonNetwork.Instantiate(playerPrefabPath, spawnPos.position, Quaternion.Euler(spawnPos.rotation.x, spawnPos.rotation.y, spawnPos.rotation.z));
             player.name = "Maira";

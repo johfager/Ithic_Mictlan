@@ -40,6 +40,7 @@ public class UIMenuController : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private GameObject startGameButton;
     [SerializeField] private GameObject mainMenuButtonsGroup;
+    [SerializeField] private GameObject playOptionsButtonsGroup;
 
 
 
@@ -166,6 +167,16 @@ public class UIMenuController : MonoBehaviour
         return CGtoSend;
     }
 
+     public bool GetCanvasGroupAlpha(CanvasGroup canvasGroup)
+     {
+        if(canvasGroup.alpha > 0)
+        {
+            return true;
+        }else{
+            return false;
+        }
+     }
+
     public void GoSelectorScreen()
     {
         HideCanvasGroup(GetCanvasGroup("joinedRoomPanel"));
@@ -196,30 +207,53 @@ public class UIMenuController : MonoBehaviour
         }
     }
 
-    public void ChangeButtonSelection()
+    public void ChangeButtonSelectionMainMenu()
     {
 
         if (Input.GetKeyUp(KeyCode.UpArrow) && degrees < 90f)
         {
             canMove = false;
-            LeanTween.rotateAround(mainMenuButtonsGroup, Vector3.forward, 45, 1f).setOnComplete(() => {canMove = true;});
+            LeanTween.rotateAround(mainMenuButtonsGroup, Vector3.forward, 45, .5f).setOnComplete(() => {canMove = true;});
             degrees += 45;
         }
         else if (Input.GetKeyUp(KeyCode.DownArrow) && degrees > -45f)
         {
             canMove = false;
-            LeanTween.rotateAround(mainMenuButtonsGroup, Vector3.forward, -45, 1f).setOnComplete(() => {canMove = true;});
+            LeanTween.rotateAround(mainMenuButtonsGroup, Vector3.forward, -45, .5f).setOnComplete(() => {canMove = true;});
             degrees -= 45;
         }
         
-        Debug.Log(degrees);
+    }
+       public void ChangeButtonSelectionPlayOptions()
+    {
+
+        if (Input.GetKeyUp(KeyCode.UpArrow) && degrees < 45f)
+        {
+            canMove = false;
+            LeanTween.rotateAround(playOptionsButtonsGroup, Vector3.forward, 45, .5f).setOnComplete(() => {canMove = true;});
+            degrees += 45;
+        }
+        else if (Input.GetKeyUp(KeyCode.DownArrow) && degrees > -45f)
+        {
+            canMove = false;
+            LeanTween.rotateAround(playOptionsButtonsGroup, Vector3.forward, -45, .5f).setOnComplete(() => {canMove = true;});
+            degrees -= 45;
+        }
+        
     }
 
     private void Update() {
 
-        if(canMove == true){
-            ChangeButtonSelection();
+        if(canMove == true && GetCanvasGroupAlpha(mainMenuPanel)){
+            Debug.Log("estoy en main menu");
+            ChangeButtonSelectionMainMenu();
         }
+
+        if(canMove == true && GetCanvasGroupAlpha(playOptionsPanel)){
+            Debug.Log("estoy en play options");
+            ChangeButtonSelectionPlayOptions();
+        }
+        
         
     }
 }
