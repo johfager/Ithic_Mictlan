@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 83110762534385572}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.2, y: -8.6, z: 24.5}
+  m_LocalPosition: {x: -0.4, y: 24, z: 24.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43,11 +43,12 @@ GameObject:
   - component: {fileID: 7266092183228744460}
   - component: {fileID: 7535663597989983417}
   - component: {fileID: 3984027812136183337}
+  - component: {fileID: 6798663249709585761}
   - component: {fileID: 2128934228560243794}
   - component: {fileID: 6686777175312730103}
   - component: {fileID: 2506840619801775783}
   m_Layer: 8
-  m_Name: CamazotzAnimations
+  m_Name: CamazotzFinal
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,7 +106,7 @@ MonoBehaviour:
   currentState: 0
   enemyStats: {fileID: 11400000, guid: ef9992c6dbbc7be47a0cbd69e3e6db26, type: 2}
   objective: {fileID: 0}
-  CamazotzHand: {fileID: 0}
+  CamazotzHand: {fileID: 83110762534385572}
   isInMidAttack: 0
   animator: {fileID: 0}
 --- !u!114 &3984027812136183337
@@ -122,6 +123,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+--- !u!114 &6798663249709585761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6454154051156726909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18f0c550762df546a56b196d4ea0130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleVFXPrefab: {fileID: 7610109784793849018, guid: d91c79efbf4bf814e909799629c1a012, type: 3}
 --- !u!54 &2128934228560243794
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -180,20 +194,14 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6454154051156726909}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 8f4d63e6d6bc10b4d92c1ab6aa5bcb35, type: 3}
+  m_Avatar: {fileID: 9000000, guid: f21203cf57f663448b8e081b048dac07, type: 3}
   m_Controller: {fileID: 9100000, guid: 46279d9dac92cfd47ab3e83982516a22, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'Bip01 L Forearm.19'\n\tTransform 'Bip01 L Finger0.21'\n\tTransform
-    'Bip01 L UpperArm.18'\n\tTransform 'Bip01 L Clavicle.17'\n\tTransform 'Bip01
-    L Hand.20'\n\tTransform 'Bip01 L Forearm.19'\n\tTransform 'Bip01 L HorseLink.45'\n\tTransform
-    'Bone05(mirrored).28'\n\tTransform 'Bip01 L Finger0.21'\n\tTransform 'Bip01 R
-    Finger01.35'\n\tand more ...\n\tFrom animation clip 'Armature|Throw'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
