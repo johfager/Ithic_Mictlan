@@ -205,11 +205,14 @@ public class CamazotzBehaviour2 : MonoBehaviour
         // Reset the boolean parameters after the animation is complete
         animator.SetBool(animationBool, false);
         objective.GetComponent<Animator>().SetBool("Struggle", false);
+        animator.SetBool("Throw", true);
+
+        yield return new WaitForSeconds(1.16f);
         objective.transform.SetParent(null);
         objective.transform.position = transform.position + transform.forward * 15;
         objective.transform.rotation = oldHeroRotation;
+        animator.SetBool("Throw", false);
 
-        yield return new WaitForSeconds(1.0f);
         objectiveController.enabled = true;
         objective.GetComponent<PlayerMovement>().enabled = true;
 
