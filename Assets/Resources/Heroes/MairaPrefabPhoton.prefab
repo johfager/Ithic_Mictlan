@@ -488,7 +488,7 @@ GameObject:
   - component: {fileID: 5445909505737426818}
   - component: {fileID: 8682099195130468127}
   - component: {fileID: 542451080192117134}
-  - component: {fileID: 1095639750941180118}
+  - component: {fileID: -5882827125258179847}
   - component: {fileID: 2534308856849189679}
   - component: {fileID: 891576384189073214}
   - component: {fileID: 5530222888806650600}
@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 2312336859269258251}
   - component: {fileID: 7664329469092323816}
   m_Layer: 0
-  m_Name: Maira
+  m_Name: MairaPrefabPhoton
   m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -595,21 +595,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1095639750941180118
+--- !u!114 &-5882827125258179847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8133008710918818007}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab256667d2407454c9d5d812d9629ccd, type: 3}
+  m_Script: {fileID: 11500000, guid: d2f8880aa53a439eb466eb192e69503b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 2534308856849189679}
   heroesCombatScript: {fileID: 891576384189073214}
   heroStats: {fileID: 11400000, guid: 9c605feeaf61b714bbe95cc92dfe8ad7, type: 2}
+  photonView: {fileID: 7059473713104472160}
 --- !u!114 &2534308856849189679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,7 +618,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8133008710918818007}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f787dc815103864091159d9b8c1ab76, type: 3}
   m_Name: 
@@ -637,7 +638,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8133008710918818007}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 135228265a78f954bab87cb39da52af2, type: 3}
   m_Name: 
@@ -660,7 +661,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _heroStats: {fileID: 11400000, guid: 9c605feeaf61b714bbe95cc92dfe8ad7, type: 2}
-  _photonView: {fileID: 0}
+  _photonView: {fileID: 7059473713104472160}
   primaryAbilityCooldownImage: {fileID: 8839188557154993909}
   secondaryAbilityCooldownImage: {fileID: 4538569493648197206}
   ultimateAbilityCooldownImage: {fileID: 7974096699461348135}
@@ -717,6 +718,7 @@ MonoBehaviour:
   outlineSizeChange: 40
   lerpDuration: 1
   duration: 5
+  _photonView: {fileID: 7059473713104472160}
 --- !u!114 &6115848762604520390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,11 +731,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eca9522004803f4d918d7d1d8300a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wrestlingRingPrefab: {fileID: 4103312645100775649, guid: 4c5281fabc5b63d44a7b86860586fd9b, type: 3}
+  wrestlingRingPrefab: {fileID: 4103312645100775649, guid: eafd69b7a04497744a19dbdd53a5900a, type: 3}
   spawningVFXPrefab: {fileID: 3047881726803682454, guid: c5ab7f63e991f7842986c104ec4d0979, type: 3}
   duration: 10
   leftHandFireVFX: {fileID: 8194913246889443990}
   rightHandFireVFX: {fileID: 3582436859684791664}
+  _photonView: {fileID: 7059473713104472160}
 --- !u!114 &7059473713104472160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -789,10 +792,10 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: IsUltimateAbility
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Struggle
   - Type: 3
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: AttackCombo
   m_SynchronizeLayers:
   - SynchronizeType: 0
@@ -996,24 +999,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: MairaUIGameplay
       objectReference: {fileID: 0}
+    - target: {fileID: 1188578820958234546, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392691710474453048, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392691710474453048, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392691710474453048, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1657459187809498227, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1657459187809498227, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2575605834969645401, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2575605834969645401, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249190626527838392, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
-      propertyPath: m_Value
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7606316302438864381, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
@@ -1095,6 +1110,18 @@ PrefabInstance:
     - target: {fileID: 7606316302438864381, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8594764548605522454, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8594764548605522454, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8594764548605522454, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

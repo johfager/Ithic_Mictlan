@@ -31,12 +31,12 @@ namespace Heroes.Rosa
         void Update()
         {
             Launch(featherDirection);
-                float distanceTravelled = Vector3.Distance(startPosition, transform.position);
+            float distanceTravelled = Vector3.Distance(startPosition, transform.position);
 
-                if (distanceTravelled > maxRange)
-                {
-                    PhotonNetwork.Destroy(gameObject);
-                }
+            if (distanceTravelled > maxRange)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
             
         }
 
