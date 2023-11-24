@@ -8,18 +8,16 @@ public class UltSpeedVFX : MonoBehaviour
 
     public void PlayUltSpeedVFX()
     {
-        Quaternion rotation = Quaternion.Euler(0, 0, 0);
-
-        GameObject landingVFX = Instantiate(particleVFXPrefab, particleVFXPrefab.transform.position, particleVFXPrefab.transform.rotation);
+        GameObject ultSpeedVFX = Instantiate(particleVFXPrefab, particleVFXPrefab.transform.position, particleVFXPrefab.transform.rotation);
 
         // Set the VFX to play
-        ParticleSystem particleSystem = landingVFX.GetComponent<ParticleSystem>();
+        ParticleSystem particleSystem = ultSpeedVFX.GetComponent<ParticleSystem>();
         Debug.Log("particleSystem: " + particleSystem);
         if (particleSystem != null)
         {
 
             particleSystem.Play();
         }
-        Destroy(landingVFX, particleSystem.main.duration);
+        Destroy(ultSpeedVFX, particleSystem.main.duration);
     }
 }
