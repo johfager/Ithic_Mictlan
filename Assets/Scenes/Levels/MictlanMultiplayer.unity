@@ -744,8 +744,6 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: e0eda3511b7d8a14198be07ea8b900b5, type: 2}
   m_BuildHeightMesh: 0
-<<<<<<< Updated upstream
-=======
 --- !u!1 &1198023745
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,7 +821,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
->>>>>>> Stashed changes
 --- !u!1 &1589006209
 GameObject:
   m_ObjectHideFlags: 0

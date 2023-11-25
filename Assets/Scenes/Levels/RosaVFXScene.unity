@@ -342,7 +342,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -152003179385270480, guid: f88520e0b07b19c489f92117edd82042, type: 3}
       propertyPath: sceneViewId
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4854483802859209155, guid: f88520e0b07b19c489f92117edd82042, type: 3}
       propertyPath: m_LocalPosition.x
@@ -388,10 +388,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RosaPrefabTest
       objectReference: {fileID: 0}
-    - target: {fileID: 6525553985399379172, guid: f88520e0b07b19c489f92117edd82042, type: 3}
-      propertyPath: transformationVFXPrefab
-      value: 
-      objectReference: {fileID: 1754467369956327564, guid: ec5eedc9ec434184eb62a2ffa38af8d3, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
