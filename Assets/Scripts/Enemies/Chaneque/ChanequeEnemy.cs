@@ -1,5 +1,7 @@
 using Heroes.Maira;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.AI;
 using Photon.Pun;
 
@@ -9,7 +11,6 @@ public class ChanequeEnemy : MonoBehaviourPun
     {
         Idle,
         Walk,
-        Run,
         Attack
         // Add more states as needed (e.g., Attack)
     }
@@ -23,12 +24,21 @@ public class ChanequeEnemy : MonoBehaviourPun
     [SerializeField] private float attackDistanceThreshold;
 
     public EnemyStats enemyStats;
-    public Transform[] targets;
+    private List<GameObject> targets;
+    private GameObject closestTarget;
+
+    private bool isAttacking = false;
 
     private void Start()
     {
-        
+        targets = new List<GameObject>();
         ///TODO: Get list of players in scene from gamemanager here.
+        GameObject[] tempTargets = GameObject.FindGameObjectsWithTag("Hero");
+        Debug.Log("Found " + tempTargets.Length + " targets" + tempTargets[0].name);
+        for(int i = 0; i < tempTargets.Length; i++)
+        {
+            targets.Add(tempTargets[i]);
+        }
         /// 
         _healthSystem = GetComponent<HealthSystem>();
         _healthSystem.InitializeHealth(enemyStats.healthAttributes.maxHealth);
@@ -40,7 +50,7 @@ public class ChanequeEnemy : MonoBehaviourPun
 
         ChangeState(ChanequeState.Idle);
 
-        if (targets == null || targets.Length == 0)
+        if (targets == null || targets.Count == 0)
         {
             Debug.LogError("Targets not assigned!");
         }
@@ -55,16 +65,20 @@ public class ChanequeEnemy : MonoBehaviourPun
         if (photonView.IsMine)
         {
             // Your AI logic to determine when to switch states
-            Transform closestTarget = GetClosestTarget();
+            closestTarget = GetClosestTarget();
 
-            if (closestTarget != null && Vector3.Distance(transform.position, closestTarget.position) < attackDistanceThreshold)
+            if (closestTarget != null && Vector3.Distance(transform.position, closestTarget.transform.position) < attackDistanceThreshold)
             {
-                // Call RPC to sync the attack action across the network
-                photonView.RPC("TriggerAttack", RpcTarget.AllBuffered);
+                if(!isAttacking)
+                {
+                    // Call RPC to sync the attack action across the network
+                    ChangeState(ChanequeState.Attack);
+                    StartCoroutine(TriggerAttack());
+                }          
             }
             else if (closestTarget != null)
             {
-                navMeshAgent.SetDestination(closestTarget.position);
+                navMeshAgent.SetDestination(closestTarget.transform.position);
                 ChangeState(ChanequeState.Walk);
             }
             else
@@ -76,53 +90,28 @@ public class ChanequeEnemy : MonoBehaviourPun
 
     private void ChangeState(ChanequeState newState)
     {
-        // Handle state exit logic
-        switch (currentState)
-        {
-            case ChanequeState.Idle:
-                // Exit the Idle state
-                // Debug.Log("Exiting Idle state");
-                animator.SetBool("IsIdle", true);
-                break;
-            case ChanequeState.Walk:
-                // Exit the Walk state
-                // Debug.Log("Exiting Walk state");
-                animator.SetBool("IsWalking", false);
-                break;
-            case ChanequeState.Run:
-                // Exit the Run state
-                // Debug.Log("Exiting Run state");
-                animator.SetBool("IsRunning", false);
-                break;
-            case ChanequeState.Attack:
-                // Exit the Attack state
-                // Debug.Log("Exiting Attack state");
-                animator.SetBool("IsAttacking", false);
-                break;
-            // Handle exit logic for other states as needed
-        }
-
         // Handle state entry logic
         switch (newState)
         {
             case ChanequeState.Idle:
                 // Enter the Idle state
                 // Debug.Log("Entering Idle state");
+                animator.SetBool("IsIdle", true);
+                animator.SetBool("IsWalking", false);
+                animator.SetBool("IsAttacking", false);
                 break;
             case ChanequeState.Walk:
                 // Enter the Walk state
                 // Debug.Log("Entering Walk state");
+                animator.SetBool("IsIdle", false);
                 animator.SetBool("IsWalking", true);
-                break;
-            case ChanequeState.Run:
-                // Enter the Run state
-                // Debug.Log("Entering Run state");
-                animator.SetBool("IsRunning", true);
+                animator.SetBool("IsAttacking", false);
                 break;
             case ChanequeState.Attack:
                 // Enter the Attack state
                 // Debug.Log("Entering Attack state");
-                animator.SetBool("IsAttacking", true);
+                animator.SetBool("IsIdle", false);
+                animator.SetBool("IsWalking", false);
                 break;
             // Handle entry logic for other states as needed
         }
@@ -131,25 +120,23 @@ public class ChanequeEnemy : MonoBehaviourPun
         currentState = newState;
     }
 
-    private void TriggerAttack()
+    private IEnumerator TriggerAttack()
     {
-        Collider [] colliders = Physics.OverlapSphere(transform.position, 3f);
-        foreach (var collider in colliders)
-        {
-            if (collider.CompareTag("Hero"))
-            {
-                collider.GetComponent<HealthSystem>().TakeDamage(enemyStats.combatAttributes.basicAttackDamage);
-            }
-        }
+        animator.SetBool("IsAttacking", true);
+        isAttacking = true;
+        closestTarget.GetComponent<HealthSystem>().TakeDamage(enemyStats.combatAttributes.basicAttackDamage);
+        yield return new WaitForSeconds(2f);
+        isAttacking = false;
+        animator.SetBool("IsAttacking", false);
     }
     
-    Transform GetClosestTarget()
+    GameObject GetClosestTarget()
     {
-        Transform closestTarget = null;
+        GameObject newTarget = null;
         float closestDistance = Mathf.Infinity; // TODO: Change this to a very large number
-        foreach (Transform target in targets)
+        foreach (GameObject target in targets)
         {
-            float distanceToTarget = Vector3.Distance(transform.position, target.position);
+            float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
             if (distanceToTarget < closestDistance)
             {
                 closestDistance = distanceToTarget;
@@ -159,9 +146,10 @@ public class ChanequeEnemy : MonoBehaviourPun
         return closestTarget;
     }
 
+    //TODO: Implement taunt for maira (bool istaunted)
     public void ChangeTarget(Transform position)
     {
-        // Set the new target
-        targets[0] = position;
+        // // Set the new target
+        // targets[0] = position;
     }
 }

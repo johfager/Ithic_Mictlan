@@ -655,7 +655,6 @@ MonoBehaviour:
   runDistanceThreshold: 10
   attackDistanceThreshold: 0
   enemyStats: {fileID: 11400000, guid: 9ba729268f4095b43824d43b94648dfb, type: 2}
-  targets: []
 --- !u!114 &6197991346782989660
 MonoBehaviour:
   m_ObjectHideFlags: 0
