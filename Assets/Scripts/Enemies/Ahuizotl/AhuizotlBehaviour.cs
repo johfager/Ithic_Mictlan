@@ -90,7 +90,6 @@ public class AhuizotlBehaviour : MonoBehaviour
         {
             animator.SetBool("canAttack", AhuizotlAttack.instance.GetAttackState());
         }
-        
     }
 
     void ScanForTarget()

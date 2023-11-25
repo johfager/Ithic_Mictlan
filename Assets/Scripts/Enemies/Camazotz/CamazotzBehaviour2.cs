@@ -33,8 +33,12 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     [SerializeField] private Animator animator;
     private string currentAnimationBool;
+    UltSpeedVFX ultSpeedVFX;
+    SoulEaterVFX soulEaterVFX;
 
-    //Cooldowns for the attacks
+    //Cooldowns and ranges for the attacks
+    private float shortRange = 8.0f;
+    private float largeRange = 20f;
     private float basicAttackCooldown = 0.0f;
     private float soulEaterCooldown = 0.0f;
     private float upsideDownWorldCooldown = 0.0f;
@@ -53,6 +57,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         camazotzBody = transform.GetChild(0).gameObject;
+        ultSpeedVFX = GetComponent<UltSpeedVFX>();
+        soulEaterVFX = GetComponent<SoulEaterVFX>();
         CamazotzAgentSetter();
     }
 
@@ -206,10 +212,14 @@ public class CamazotzBehaviour2 : MonoBehaviour
         }
     }
 
-    private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, Quaternion oldHeroRotation, float delay = 1.0f)
+    private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, Quaternion oldHeroRotation, string vfx, float delay = 1.0f)
     {
-        agent.speed = 0;
         agent.isStopped = true;
+
+        if (vfx == "SoulEaterVFX")
+        {
+            soulEaterVFX.PlaySoulEaterVFX();
+        }
 
         yield return new WaitForSeconds(delay);
 
@@ -235,7 +245,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, float delay = 1.0f)
     {
-        agent.speed = 0;
         agent.isStopped = true;
 
         yield return new WaitForSeconds(delay);
@@ -254,14 +263,16 @@ public class CamazotzBehaviour2 : MonoBehaviour
         {
 
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 3)
+            if (playerDistance <= shortRange)
             {
-                agent.stoppingDistance = 3;
+                agent.speed = 0;
+                agent.stoppingDistance = 8;
                 ChangeState(State.CloseRangeBasicAttackState); // Q4
             }
-            else if (playerDistance <= 15)
+            else if (playerDistance <= largeRange)
             {
-                agent.stoppingDistance = 15;
+                agent.speed = 0;
+                agent.stoppingDistance = 20;
                 ChangeState(State.LargeRangeBasicAttackState); // Q5
             }
             basicAttackCooldown = 3.0f;
@@ -324,9 +335,10 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
 
-            if (playerDistance <= 3)
+            if (playerDistance <= shortRange)
             {
-                agent.stoppingDistance = 3;
+                agent.speed = 0;
+                agent.stoppingDistance = 8;
                 int attackIndex = Random.Range(0, 2);
 
                 if (attackIndex == 1)
@@ -372,22 +384,24 @@ public class CamazotzBehaviour2 : MonoBehaviour
         objective.transform.SetParent(CamazotzHand.transform);
         objective.transform.localPosition = Vector3.zero;
         objective.transform.localRotation = Quaternion.Euler(27.588f, 136.45f, 33.142f);
-
-        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, 3.5f));
+        
+        string vfx = "SoulEaterVFX";
+        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, vfx,3.5f));
     }
 
     private IEnumerator FlyUp(Quaternion oldHeroRotation, Vector3 oldPosition)
     {
+        yield return new WaitForSeconds(1.0f);
         float tiempoInicio = Time.time;
         GetComponent<NavMeshAgent>().enabled = false;
-        while (Time.time - tiempoInicio < 2.0f)
+        while (Time.time - tiempoInicio < 1.0f)
         {
             transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up * 10, 20 * Time.deltaTime);
             yield return null;
         }
 
         GetComponent<NavMeshAgent>().enabled = true;
-        yield return StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, 2.1f));
+        yield return StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, "None", 0.1f));
         GetComponent<NavMeshAgent>().enabled = false;
         transform.position = oldPosition;
         GetComponent<NavMeshAgent>().enabled = true;
@@ -400,9 +414,10 @@ public class CamazotzBehaviour2 : MonoBehaviour
         {
 
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance <= 3)
+            if (playerDistance <= shortRange)
             {
-                agent.stoppingDistance = 3;
+                agent.speed = 0;
+                agent.stoppingDistance = 8;
                 int attackIndex = Random.Range(0, 2);
                 Quaternion oldHeroRotation;
                 Vector3 oldCamazotzPosition;
@@ -451,8 +466,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
         if (!isInMidAttack && infernalScreechCooldown <= 0.0f)
         {
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
-            if (playerDistance >= 3 && playerDistance <= 15)
+            if (playerDistance >= shortRange && playerDistance <= largeRange)
             {
+                agent.speed = 0;
                 agent.stoppingDistance = playerDistance;
                 int attackIndex = Random.Range(0, 2);
                 if (attackIndex == 0)
@@ -527,7 +543,6 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private IEnumerator UltimateAttack()
     {
-        agent.speed = 0;
         agent.isStopped = true;
         GetComponent<NavMeshAgent>().enabled = false;
         currentAnimationBool = "SoulDevourerJump";
@@ -564,6 +579,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         transform.LookAt(objective.transform.position);
         while (Time.time - tiempoInicio < 1.5f)
         {
+            ultSpeedVFX.PlayUltSpeedVFX();
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, 20 * Time.deltaTime);
             HandleAreaOfEffectDamage(2);
             yield return null;
@@ -588,6 +604,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         transform.LookAt(objective.transform.position);
         while (Time.time - tiempoInicio < 1.5f)
         {
+            ultSpeedVFX.PlayUltSpeedVFX();
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, 20 * Time.deltaTime);
             HandleAreaOfEffectDamage(2);
             yield return null;
@@ -612,6 +629,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         transform.LookAt(objective.transform.position);
         while (Time.time - tiempoInicio < 1.5f)
         {
+            ultSpeedVFX.PlayUltSpeedVFX();
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, 20 * Time.deltaTime);
             HandleAreaOfEffectDamage(2);
             yield return null;
@@ -630,7 +648,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
             playerDistance = Vector3.Distance(transform.position, objective.transform.position);
             if (playerDistance <= 25)
             {
-                agent.stoppingDistance = 3;
+                agent.speed = 0;
+                agent.stoppingDistance = playerDistance;
                 isInMidAttack = true;
                 StartCoroutine(UltimateAttack());
                 AttacksSoftReset();
@@ -685,7 +704,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
     private IEnumerator ResetAttack()
     {
-        agent.stoppingDistance = 3;
+        agent.speed = enemyStats.movementAttributes.movementSpeed;
+        agent.stoppingDistance = shortRange;
         yield return new WaitForSeconds(2.0f);
     }
 
