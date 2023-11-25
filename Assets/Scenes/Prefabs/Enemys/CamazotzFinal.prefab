@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 6798663249709585761}
   - component: {fileID: 4696394806923623502}
   - component: {fileID: 2385587860341586961}
+  - component: {fileID: 4828513356480863144}
   - component: {fileID: 2128934228560243794}
   - component: {fileID: 6686777175312730103}
   - component: {fileID: 2506840619801775783}
@@ -164,6 +165,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleVFXPrefab: {fileID: 7982332938871063959}
+--- !u!114 &4828513356480863144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6454154051156726909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108a97603f3f9b54fb52dc144b7f4985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  airBulletVFX: {fileID: 6228423913423018070, guid: f5e29b210d7980c4fb90e97611a92896, type: 3}
+  projectileSpeed: 10
 --- !u!54 &2128934228560243794
 Rigidbody:
   m_ObjectHideFlags: 0
