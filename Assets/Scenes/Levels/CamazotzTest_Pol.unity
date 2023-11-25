@@ -561,6 +561,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 6228423913423018070, guid: f5e29b210d7980c4fb90e97611a92896, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074980659347451896, guid: f5e29b210d7980c4fb90e97611a92896, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
