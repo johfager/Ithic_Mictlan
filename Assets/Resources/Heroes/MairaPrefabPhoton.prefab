@@ -694,6 +694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   landingVFXPrefab: {fileID: 7610109784793849018, guid: d91c79efbf4bf814e909799629c1a012, type: 3}
+  _photonView: {fileID: 7059473713104472160}
 --- !u!114 &7506028873804807037
 MonoBehaviour:
   m_ObjectHideFlags: 0

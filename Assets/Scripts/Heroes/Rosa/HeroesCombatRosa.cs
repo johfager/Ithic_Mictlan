@@ -169,7 +169,7 @@ namespace Heroes.Rosa
                 secondaryAbilityCooldownText.enabled = true;
             }
             secondaryAbilityCooldown = _heroStats.abilityAttributes.secondaryAbility.cooldown;
-            TeleportToClosestEnemy(secondaryAbility[0].areaOfEffect);
+            TeleportToClosestEnemy(secondaryAbility[0].areaOfEffect*20f);
             StartAttackAnimation(currentAttack, secondaryAbility);
         }
 
@@ -388,8 +388,13 @@ namespace Heroes.Rosa
 
                     // Instantiate a feather object at Rosa's position
                     string featherPath = "Objects/" + featherPrefab.name;
-                    GameObject featherObject =
-                        PhotonNetwork.Instantiate(featherPath, transform.position, transform.rotation);
+                    
+                    GameObject featherObject = PhotonNetwork.Instantiate(featherPath, transform.position, transform.rotation);
+                    if (featherObject == null)
+                    {
+                        featherObject = PhotonNetwork.Instantiate("Assets/Resources/Objects/Feather.prefab", transform.position, transform.rotation);
+                    }
+                    
                     Feather feather = featherObject.GetComponent<Feather>();
                     feather.rosaUIManager = uiManager;
                     feather.transform.rotation = rotation * Quaternion.Euler(90f, 0f, 0f);
