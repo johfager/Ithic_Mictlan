@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Heroes.Rosa
@@ -13,6 +14,8 @@ namespace Heroes.Rosa
         private Avatar oldAvatar;
         private Animator animator;
         [SerializeField] GameObject transformationVFXPrefab;
+        [SerializeField] private PhotonView _photonView;
+
 
         private void Start()
         {
@@ -24,22 +27,28 @@ namespace Heroes.Rosa
         // This method is called by the first animation event
         public void StartTransformation()
         {
-            // Start the VFX coroutine
-            StartCoroutine(PlayVFX());
+            if (_photonView.IsMine)
+            {
+                // Start the VFX coroutine
+                StartCoroutine(PlayVFX());
+            }
         }
 
         // This method is called by the second animation event
         public void CompleteTransformation()
         {
-            // Switch avatar before changing models
-            SwitchAvatar(newAvatar);
+            if (_photonView.IsMine)
+            {
+                // Switch avatar before changing models
+                SwitchAvatar(newAvatar);
 
-            // Hide the old model and show the new model
-            oldModel.SetActive(false);
-            newModel.SetActive(true);
+                // Hide the old model and show the new model
+                oldModel.SetActive(false);
+                newModel.SetActive(true);
 
-            // Delay before reverting to the old model
-            StartCoroutine(RevertAfterDelay());
+                // Delay before reverting to the old model
+                StartCoroutine(RevertAfterDelay());
+            }
         }
 
         IEnumerator PlayVFX()
