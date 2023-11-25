@@ -28,8 +28,8 @@ public class Spawner : MonoBehaviour {
 	void Start() {
         /*foreach (Transform xoloSpawn in xoloPositions)
         {
-            GameObject instance = Instantiate(prefab,xoloSpawn.position,Quaternion.identity) as GameObject;
-            BehaviorExecutor behaviorExecutor = instance.GetComponent<BehaviorExecutor>();
+            GameObject instance = Instantiate(prefab, xoloSpawn.position,Quaternion.identity) as GameObject;
+            //BehaviorExecutor behaviorExecutor = instance.GetComponent<BehaviorExecutor>();
 
 
             //Codigo comentado para comprobaciones de editor y runtime
@@ -39,7 +39,7 @@ public class Spawner : MonoBehaviour {
             //else
             //    text.text = "RUNTIME";
 
-            if (behaviorExecutor != null)
+            /*if (behaviorExecutor != null)
             {
                 behaviorExecutor.SetBehaviorParam("wanderArea", wanderArea);
                 behaviorExecutor.SetBehaviorParam("player", player);
@@ -56,21 +56,6 @@ public class Spawner : MonoBehaviour {
         foreach (Transform xoloSpawn in xoloPositions)
         {
             GameObject instance = PhotonNetwork.Instantiate(xoloPath,xoloSpawn.position,Quaternion.identity) as GameObject;
-            BehaviorExecutor behaviorExecutor = instance.GetComponent<BehaviorExecutor>();
-
-
-            //Codigo comentado para comprobaciones de editor y runtime
-
-            //if (BBUnity.Managers.BBManager.Instance.IsEditor)
-            //    text.text = "EDITOR";
-            //else
-            //    text.text = "RUNTIME";
-
-            if (behaviorExecutor != null)
-            {
-                behaviorExecutor.SetBehaviorParam("wanderArea", wanderArea);
-                behaviorExecutor.SetBehaviorParam("player", player);
-            }
         }
     }
 }

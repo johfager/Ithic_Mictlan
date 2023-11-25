@@ -275,7 +275,7 @@ namespace Heroes.Rosa
         
         private void HandleXoloCatch()
         {
-            Collider[] xolos = Physics.OverlapSphere(transform.position, 1.5f);
+            Collider[] xolos = Physics.OverlapSphere(transform.position, 2f);
 
             if(xolos != null)
             {
@@ -283,9 +283,9 @@ namespace Heroes.Rosa
                 {
                     if(xolo.CompareTag("Xolo"))
                     {
-                        if(xolo.transform.GetChild(0).GetComponent<XoloController>() != null)
+                        if(xolo.transform.GetComponent<XoloitzcuintleController>() != null)
                         {
-                            xolo.transform.GetChild(0).GetComponent<XoloController>().CatchXolo();
+                            xolo.transform.GetComponent<XoloitzcuintleController>().SetWasCatched();
                         }
 
                     }
