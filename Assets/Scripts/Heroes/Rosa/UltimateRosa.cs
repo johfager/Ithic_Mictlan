@@ -8,7 +8,7 @@ namespace Heroes.Rosa
     {
         public GameObject newModel;
         public GameObject oldModel;
-        private Avatar newAvatar; 
+        private Avatar newAvatar;
         public float delay = 10f; // delay in seconds
         private Avatar oldAvatar;
         private Animator animator;
@@ -21,11 +21,16 @@ namespace Heroes.Rosa
             oldAvatar = oldModel.GetComponent<Animator>().avatar;
         }
 
-        public void ReplaceModel()
+        // This method is called by the first animation event
+        public void StartTransformation()
         {
             // Start the VFX coroutine
             StartCoroutine(PlayVFX());
+        }
 
+        // This method is called by the second animation event
+        public void CompleteTransformation()
+        {
             // Switch avatar before changing models
             SwitchAvatar(newAvatar);
 
@@ -39,24 +44,29 @@ namespace Heroes.Rosa
 
         IEnumerator PlayVFX()
         {
-
             // Instantiate the VFX prefab
             GameObject transformationVFX = Instantiate(transformationVFXPrefab, transform.position, Quaternion.identity);
 
-            // Set the VFX to play
+            // Parent the VFX to the character
+            transformationVFX.transform.parent = transform;
+
             ParticleSystem particleSystem = transformationVFX.GetComponent<ParticleSystem>();
+
+            // Set the VFX to play
             if (particleSystem != null)
             {
                 particleSystem.Play();
             }
-            yield return new WaitForSeconds(0.5f);
+
             // Wait for the VFX duration before destroying it
             yield return new WaitForSeconds(particleSystem.main.duration);
+
+            // Unparent the VFX before destroying it
+            transformationVFX.transform.parent = null;
 
             // Destroy the VFX after it finishes playing
             Destroy(transformationVFX);
         }
-
         void SwitchAvatar(Avatar avatar)
         {
             if (animator != null && avatar != null)
@@ -72,8 +82,8 @@ namespace Heroes.Rosa
         IEnumerator RevertAfterDelay()
         {
             yield return new WaitForSeconds(delay);
-
             StartCoroutine(PlayVFX());
+            yield return new WaitForSeconds(delay * 0.1f);
             // Hide the new model and show the old model
             newModel.SetActive(false);
             oldModel.SetActive(true);
