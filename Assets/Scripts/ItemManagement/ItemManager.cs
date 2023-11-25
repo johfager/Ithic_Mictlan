@@ -53,74 +53,74 @@ public class ItemManager : MonoBehaviour
                 
             },
 
-            // new BuffConsumable {
+            new BuffConsumable {
             
-            //     id = 301,
-            //     name = "Makahuitl",
-            //     rarity = 1,
-            //     description = "Incrementa el daño base del usuario en 15%", 
+                id = 301,
+                name = "Makahuitl",
+                rarity = 1,
+                description = "Incrementa el daño base del usuario en 15%", 
 
 
-            //     healthBuff = 1f,
-            //     defenseBuff = 1f,
+                healthBuff = 1f,
+                defenseBuff = 1f,
 
-            //     fallSpeed = 1f,
-            //     movSpeedBuff = 1f,
-            //     jumpHeightBuff = 1f,
+                fallSpeed = 1f,
+                movSpeedBuff = 1f,
+                jumpHeightBuff = 1f,
 
-            //     dmgBuff = 1.15f,
-            //     atkSpeedBuff = 1f,
+                dmgBuff = 1.15f,
+                atkSpeedBuff = 1f,
 
-            //     critChanceBuff = 1f,
+                critChanceBuff = 1f,
 
-            //     itemSprite = CommonItemSprites[0],
+                itemSprite = CommonItemSprites[0],
                 
-            // },
+            },
 
-            // new BuffConsumable {
-            //     id = 302,
-            //     name = "Escudo de guerrero",
-            //     rarity = 1,
-            //     description = "Incrementa la defensa base del usuario en 15%", 
+            new BuffConsumable {
+                id = 302,
+                name = "Escudo de guerrero",
+                rarity = 1,
+                description = "Incrementa la defensa base del usuario en 15%", 
 
 
-            //     healthBuff = 1f,
-            //     defenseBuff = 1.15f,
+                healthBuff = 1f,
+                defenseBuff = 1.15f,
 
-            //     fallSpeed = 1f,
-            //     movSpeedBuff = 1f,
-            //     jumpHeightBuff = 1f,
+                fallSpeed = 1f,
+                movSpeedBuff = 1f,
+                jumpHeightBuff = 1f,
 
-            //     dmgBuff = 1f,
-            //     atkSpeedBuff = 1f,
+                dmgBuff = 1f,
+                atkSpeedBuff = 1f,
 
-            //     critChanceBuff = 1f,
+                critChanceBuff = 1f,
 
-            //     itemSprite = CommonItemSprites[1],
+                itemSprite = CommonItemSprites[1],
                 
-            // }, 
+            }, 
 
-            // new BuffConsumable {
-            //     id = 302,
-            //     name = "Colgante de obsidiana",
-            //     rarity = 1,
-            //     description = "Incrementa la probabilidad de critco del usuario en 15%", 
+            new BuffConsumable {
+                id = 302,
+                name = "Colgante de obsidiana",
+                rarity = 1,
+                description = "Incrementa la probabilidad de critco del usuario en 15%", 
 
-            //     healthBuff = 1f,
-            //     defenseBuff = 1f,
+                healthBuff = 1f,
+                defenseBuff = 1f,
 
-            //     fallSpeed = 1f,
-            //     movSpeedBuff = 1f,
-            //     jumpHeightBuff = 1f,
+                fallSpeed = 1f,
+                movSpeedBuff = 1f,
+                jumpHeightBuff = 1f,
 
-            //     dmgBuff = 1f,
-            //     atkSpeedBuff = 1f,
+                dmgBuff = 1f,
+                atkSpeedBuff = 1f,
 
-            //     critChanceBuff = 1.15f,
+                critChanceBuff = 1.15f,
 
-            //     itemSprite = CommonItemSprites[2],
+                itemSprite = CommonItemSprites[2],
                 
-            // }, 
+            }, 
             
 
         };
