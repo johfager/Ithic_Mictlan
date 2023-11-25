@@ -215,13 +215,17 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, Quaternion oldHeroRotation, string vfx, float delay = 1.0f)
     {
         agent.isStopped = true;
+        
+        float preDelay = 1f;
+
+        yield return new WaitForSeconds(preDelay);
 
         if (vfx == "SoulEaterVFX")
         {
             soulEaterVFX.PlaySoulEaterVFX();
         }
 
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(delay - preDelay);
 
         // Reset the boolean parameters after the animation is complete
         animator.SetBool(animationBool, false);
@@ -386,7 +390,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         objective.transform.localRotation = Quaternion.Euler(27.588f, 136.45f, 33.142f);
         
         string vfx = "SoulEaterVFX";
-        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, vfx,3.5f));
+        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, vfx, 3.5f));
     }
 
     private IEnumerator FlyUp(Quaternion oldHeroRotation, Vector3 oldPosition)
