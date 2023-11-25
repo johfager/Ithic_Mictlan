@@ -103,7 +103,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654248290703599251}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654248290703599251}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
   m_Name: 
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654248290703599251}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b016862bcec63224d9a791b205268472, type: 3}
   m_Name: 
@@ -671,7 +671,8 @@ MonoBehaviour:
   newModel: {fileID: 547834242385734641}
   oldModel: {fileID: 2069929783146735771}
   delay: 5
-  transformationVFXPrefab: {fileID: 0}
+  transformationVFXPrefab: {fileID: 1754467369956327564, guid: ec5eedc9ec434184eb62a2ffa38af8d3, type: 3}
+  _photonView: {fileID: -152003179385270480}
 --- !u!114 &-152003179385270480
 MonoBehaviour:
   m_ObjectHideFlags: 0

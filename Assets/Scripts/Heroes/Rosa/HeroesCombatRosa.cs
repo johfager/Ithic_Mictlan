@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using TMPro;
+using UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -168,7 +169,7 @@ namespace Heroes.Rosa
                 secondaryAbilityCooldownText.enabled = true;
             }
             secondaryAbilityCooldown = _heroStats.abilityAttributes.secondaryAbility.cooldown;
-            TeleportToClosestEnemy(secondaryAbility[0].areaOfEffect);
+            TeleportToClosestEnemy(secondaryAbility[0].areaOfEffect*20f);
             StartAttackAnimation(currentAttack, secondaryAbility);
         }
 
@@ -274,7 +275,7 @@ namespace Heroes.Rosa
         
         private void HandleXoloCatch()
         {
-            Collider[] xolos = Physics.OverlapSphere(transform.position, 1.5f);
+            Collider[] xolos = Physics.OverlapSphere(transform.position, 2f);
 
             if(xolos != null)
             {
@@ -282,9 +283,9 @@ namespace Heroes.Rosa
                 {
                     if(xolo.CompareTag("Xolo"))
                     {
-                        if(xolo.transform.GetChild(0).GetComponent<XoloController>() != null)
+                        if(xolo.transform.GetComponent<XoloitzcuintleController>() != null)
                         {
-                            xolo.transform.GetChild(0).GetComponent<XoloController>().CatchXolo();
+                            xolo.transform.GetComponent<XoloitzcuintleController>().SetWasCatched();
                         }
 
                     }
@@ -387,8 +388,13 @@ namespace Heroes.Rosa
 
                     // Instantiate a feather object at Rosa's position
                     string featherPath = "Objects/" + featherPrefab.name;
-                    GameObject featherObject =
-                        PhotonNetwork.Instantiate(featherPath, transform.position, transform.rotation);
+                    
+                    GameObject featherObject = PhotonNetwork.Instantiate(featherPath, transform.position, transform.rotation);
+                    if (featherObject == null)
+                    {
+                        featherObject = PhotonNetwork.Instantiate("Assets/Resources/Objects/Feather.prefab", transform.position, transform.rotation);
+                    }
+                    
                     Feather feather = featherObject.GetComponent<Feather>();
                     feather.rosaUIManager = uiManager;
                     feather.transform.rotation = rotation * Quaternion.Euler(90f, 0f, 0f);
