@@ -1,18 +1,26 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Heroes;
 using UnityEngine;
+using Photon.Pun;
+using UI;
 
-public class HealthSystem : MonoBehaviour
+public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
 {
     public float maxHealth = 100f; // Default max health
-    public float currentHealth;
-    
+    [SerializeField] public float currentHealth;
+
     public UIManager uiManager;
-    
-    public CharacterType characterType; 
-    
+    public CharacterType characterType;
+
+    //TODO: make this a new script or give it to chanequeenemy.
+    // Object pooling variables
+    private static Queue<GameObject> enemyPool = new Queue<GameObject>();
+    private const int PoolSize = 10;
+
+    private void Start()
+    {
+        InitializeHealth(maxHealth);
+    }
+
     public void InitializeHealth(float health)
     {
         maxHealth = health;
@@ -23,36 +31,122 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    public void HealPlayer(float damage){
+    public void HealPlayer(float damage)
+    {
         currentHealth += damage;
-        if (currentHealth > maxHealth){
+        if (currentHealth > maxHealth)
+        {
             currentHealth = maxHealth;
-            Debug.Log("Player's health was maxed out");
+            Debug.Log("Health was maxed out");
         }
+
+        UpdateHealthUI();
+
+        // Sync health across the network
+        photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);
     }
 
     public void TakeDamage(float damage)
-    {   
-        Debug.Log($"{this.name} took {damage} damage");
+    {
+        Debug.Log($"{gameObject.name} took {damage} damage");
         currentHealth -= damage;
-        if (uiManager != null)
-        {
-            uiManager.UpdateHealth(currentHealth, characterType); // Pass the character type
-        }
+        UpdateHealthUI();
+
+        // Sync health across the network
+        photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);
 
         if (currentHealth <= 0)
         {
-            Die();
+            HandleDeath();
         }
     }
 
-    //Should signal to play death animation probably
-    private void Die()
+    private void UpdateHealthUI()
     {
-        if (this.CompareTag("Enemy"))
+        if (uiManager != null)
         {
-            Destroy(this.gameObject);
+            uiManager.UpdateHealth(currentHealth, characterType);
         }
-        Debug.Log("You died!");
+    }
+
+    private void HandleDeath()
+    {
+        if (photonView.IsMine)
+        {
+            // If enemy, return it to the pool instead of destroying it
+            if (characterType == CharacterType.Enemy)
+            {
+                ReturnToPool();
+            }
+            else
+            {
+                // Handle player death logic here
+                Debug.Log("You died!");
+            }
+        }
+    }
+
+    private void ReturnToPool()
+    {
+        // Return the enemy GameObject to the pool
+        enemyPool.Enqueue(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        // If the GameObject is activated, reset its health to the maximum
+        InitializeHealth(maxHealth);
+    }
+
+    private void OnDisable()
+    {
+        // If the GameObject is deactivated, return it to the pool
+        if (characterType == CharacterType.Enemy)
+        {
+            enemyPool.Enqueue(gameObject);
+        }
+    }
+
+    private static GameObject GetFromPool(Vector3 position, Quaternion rotation)
+    {
+        // Try to get an enemy GameObject from the pool, or instantiate a new one if the pool is empty
+        if (enemyPool.Count > 0)
+        {
+            GameObject enemy = enemyPool.Dequeue();
+            enemy.transform.position = position;
+            enemy.transform.rotation = rotation;
+            enemy.SetActive(true);
+            return enemy;
+        }
+        else
+        {
+            // Instantiate a new enemy GameObject if the pool is empty
+            ///TODO: add to call of this function the path of enemy to spawn
+            return PhotonNetwork.Instantiate("YourEnemyPrefabName", position, rotation);
+        }
+    }
+
+    [PunRPC]
+    private void SyncHealth(float newHealth)
+    {
+        currentHealth = newHealth;
+        UpdateHealthUI();
+    }
+
+    // IPunObservable implementation for custom synchronization (optional).
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // If the object is owned by the current client, send its health value to others.
+            stream.SendNext(currentHealth);
+        }
+        else
+        {
+            // If the object is owned by another client, receive and set its health value.
+            currentHealth = (float)stream.ReceiveNext();
+            UpdateHealthUI();
+        }
     }
 }
