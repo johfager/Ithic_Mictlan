@@ -35,6 +35,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private string currentAnimationBool;
     UltSpeedVFX ultSpeedVFX;
     SoulEaterVFX soulEaterVFX;
+    AirBulletVFX airBulletVFX;
 
     //Cooldowns and ranges for the attacks
     private float shortRange = 8.0f;
@@ -59,6 +60,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         camazotzBody = transform.GetChild(0).gameObject;
         ultSpeedVFX = GetComponent<UltSpeedVFX>();
         soulEaterVFX = GetComponent<SoulEaterVFX>();
+        airBulletVFX = GetComponent<AirBulletVFX>();
         CamazotzAgentSetter();
     }
 
@@ -216,12 +218,16 @@ public class CamazotzBehaviour2 : MonoBehaviour
     {
         agent.isStopped = true;
 
+        float preDelay = 1f;
+
+        yield return new WaitForSeconds(preDelay);
+
         if (vfx == "SoulEaterVFX")
         {
             soulEaterVFX.PlaySoulEaterVFX();
         }
 
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(delay - preDelay);
 
         // Reset the boolean parameters after the animation is complete
         animator.SetBool(animationBool, false);
@@ -243,11 +249,24 @@ public class CamazotzBehaviour2 : MonoBehaviour
         isInMidAttack = false;
     }
 
-    private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, float delay = 1.0f)
+    private IEnumerator ResetBooleanParametersAfterDelay(string animationBool, string vfx, float delay = 1.0f)
     {
         agent.isStopped = true;
 
-        yield return new WaitForSeconds(delay);
+        float preDelay = .2f;
+
+        yield return new WaitForSeconds(preDelay);
+
+        if (vfx == "LargeBasic")
+        {
+            airBulletVFX.LaunchAirBullet(transform.position, objective.transform.position, new Vector3(1f, 1f, 1f), 25);
+        }
+        else if (vfx == "InfernalScreech")
+        {
+            airBulletVFX.LaunchAirBullet(transform.position, objective.transform.position, new Vector3(3f, 3f, 3f), 40);
+        }
+
+        yield return new WaitForSeconds(delay - preDelay);
 
         // Reset the boolean parameters after the animation is complete
         animator.SetBool(animationBool, false);
@@ -305,7 +324,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                 isInMidAttack = true;
                 DealDamageToTarget(20);
             }
-            StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, .5f));
+            StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, "None", .5f));
         }
         AttacksSoftReset();
         PhaseChecker(attackIndex);
@@ -320,9 +339,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
             currentAnimationBool = "LongRange";
             animator.SetBool(currentAnimationBool, true);
             isInMidAttack = true;
-            DealDamageToTarget(25);
+            airBulletVFX.LaunchAirBullet(transform.position, objective.transform.position, new Vector3(1f, 1f, 1f), 25);
         }
-        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, .5f));
+        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, "LargeBasic", .5f));
         AttacksSoftReset();
         PhaseChecker(attackIndex);
     }
@@ -353,7 +372,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                     currentAnimationBool = "SoulEaterMiss";
                     animator.SetBool(currentAnimationBool, true);
                     isInMidAttack = true;
-                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, .83f));
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, "None", .83f));
                 }
 
                 AttacksSoftReset();
@@ -384,9 +403,9 @@ public class CamazotzBehaviour2 : MonoBehaviour
         objective.transform.SetParent(CamazotzHand.transform);
         objective.transform.localPosition = Vector3.zero;
         objective.transform.localRotation = Quaternion.Euler(27.588f, 136.45f, 33.142f);
-        
+
         string vfx = "SoulEaterVFX";
-        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, vfx,3.5f));
+        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, oldHeroRotation, vfx, 3.5f));
     }
 
     private IEnumerator FlyUp(Quaternion oldHeroRotation, Vector3 oldPosition)
@@ -442,7 +461,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                     currentAnimationBool = "UpsideDownWorldMiss";
                     animator.SetBool(currentAnimationBool, true);
                     isInMidAttack = true;
-                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, .66f));
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, "None", .66f));
                 }
                 AttacksSoftReset();
                 PhaseChecker(attackIndex);
@@ -480,8 +499,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
                     currentAnimationBool = "InfernalScreech";
                     animator.SetBool(currentAnimationBool, true);
                     isInMidAttack = true;
-                    DealDamageToTarget(40);
-                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, 1.6f));
+                    StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, "InfernalScreech", 1.6f));
                     ChangeState(State.ChangeOfPlayerToTargetState);
                 }
                 AttacksSoftReset();
@@ -635,7 +653,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, 2f));
+        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, "None", 2f));
 
     }
 

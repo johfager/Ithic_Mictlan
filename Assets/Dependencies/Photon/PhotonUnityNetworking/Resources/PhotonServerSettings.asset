@@ -40,6 +40,8 @@ MonoBehaviour:
   - DisableButton
   - HideSelectScreen
   - Catch
+  - SyncHealth
+  - TriggerAttack
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

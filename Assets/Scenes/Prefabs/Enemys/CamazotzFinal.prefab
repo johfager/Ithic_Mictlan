@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 6798663249709585761}
   - component: {fileID: 4696394806923623502}
   - component: {fileID: 2385587860341586961}
+  - component: {fileID: 4828513356480863144}
   - component: {fileID: 2128934228560243794}
   - component: {fileID: 6686777175312730103}
   - component: {fileID: 2506840619801775783}
@@ -164,6 +165,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleVFXPrefab: {fileID: 7982332938871063959}
+--- !u!114 &4828513356480863144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6454154051156726909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108a97603f3f9b54fb52dc144b7f4985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  airBulletVFX: {fileID: 6228423913423018070, guid: f5e29b210d7980c4fb90e97611a92896, type: 3}
+  projectileSpeed: 10
 --- !u!54 &2128934228560243794
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -264,35 +279,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 800627126628075512, guid: 0c8f6a33774a9eb4185c3e3f3a628a8c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 800627126628075512, guid: 0c8f6a33774a9eb4185c3e3f3a628a8c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.7363412
       objectReference: {fileID: 0}
     - target: {fileID: 800627126628075512, guid: 0c8f6a33774a9eb4185c3e3f3a628a8c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.7071068
+      value: 0.090862766
       objectReference: {fileID: 0}
     - target: {fileID: 800627126628075512, guid: 0c8f6a33774a9eb4185c3e3f3a628a8c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.6695759
       objectReference: {fileID: 0}
     - target: {fileID: 800627126628075512, guid: 0c8f6a33774a9eb4185c3e3f3a628a8c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.034840122
       objectReference: {fileID: 0}
     - target: {fileID: 800627126628075512, guid: 0c8f6a33774a9eb4185c3e3f3a628a8c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 90
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 800627126628075512, guid: 0c8f6a33774a9eb4185c3e3f3a628a8c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -85
       objectReference: {fileID: 0}
     - target: {fileID: 800627126628075512, guid: 0c8f6a33774a9eb4185c3e3f3a628a8c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 1361219766269544909, guid: 0c8f6a33774a9eb4185c3e3f3a628a8c, type: 3}
       propertyPath: m_LocalScale.x
@@ -316,7 +331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1829133168833246140, guid: 0c8f6a33774a9eb4185c3e3f3a628a8c, type: 3}
       propertyPath: lengthInSec
-      value: 3.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1829133168833246140, guid: 0c8f6a33774a9eb4185c3e3f3a628a8c, type: 3}
       propertyPath: playOnAwake

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Photon.Pun;
+using UI;
 using UnityEngine;
 
 namespace Heroes.Rosa
@@ -53,7 +54,6 @@ namespace Heroes.Rosa
                 other.gameObject.GetComponent<HealthSystem>().TakeDamage(rosaStats.abilityAttributes.primaryAbility.damage);
                 rosaUIManager.UpdateMadness(rosaStats.abilityAttributes.primaryAbility.madnessValue);
                 // Destroy the feather game object
-                PhotonNetwork.Destroy(featherPrefab);
                 PhotonNetwork.Destroy(gameObject);
             }
         }
