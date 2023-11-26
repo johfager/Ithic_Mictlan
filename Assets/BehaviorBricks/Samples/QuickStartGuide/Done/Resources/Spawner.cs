@@ -47,15 +47,13 @@ public class Spawner : MonoBehaviour {
         }*/
 	}
 
-    public void SetSpwans(GameObject playerToRun)
+    public void SetSpawns()
     {
-        player = playerToRun;
-
         xoloPath = "NPCS/" + prefab.name;
 
         foreach (Transform xoloSpawn in xoloPositions)
         {
-            GameObject instance = PhotonNetwork.Instantiate(xoloPath,xoloSpawn.position,Quaternion.identity) as GameObject;
+            GameObject instance = PhotonNetwork.Instantiate(xoloPath,xoloSpawn.position,Quaternion.identity);
         }
     }
 }
