@@ -90,10 +90,11 @@ public class SpiritBond : MonoBehaviour
 
     void BubbleSort(Transform[] playerPos, Vector3 front, Vector3 center){
         Transform temp;
+        int i, j;
         bool swapped;
-        for (int i = 0; i < playerPos.Length; i++){
+        for (i = 0; i < playerPos.Length - 1; i++){
             swapped = false;
-            for (int j = 0; j < playerPos.Length; j++){
+            for (j = 0; j < playerPos.Length - i - 1; j++){
                 if (GetAngle(center, front, playerPos[j].position) > GetAngle(center, front, playerPos[j + 1].position)){
                     temp = playerPos[j];
                     playerPos[j] = playerPos[j + 1];
@@ -107,12 +108,14 @@ public class SpiritBond : MonoBehaviour
     }
 
     float GetAngle(Vector3 center, Vector3 front, Vector3 angle){
-        float calculatedAngle = Vector3.SignedAngle(angle - center, front, center);
+        Vector3 directionToAngle = angle - center;
+        Vector3 directionToFront = front - center;
 
-        float FinalAngle = (calculatedAngle > 0) ? calculatedAngle : calculatedAngle + 360;
-    
-        return FinalAngle;
-        
+        float calculatedAngle = Vector3.Angle(directionToFront, directionToAngle);
+
+        float finalAngle = (Vector3.Cross(directionToFront, directionToAngle).y < 0) ? 360 - calculatedAngle : calculatedAngle;
+
+        return finalAngle;
     }
 
     void CalculatePlayerOrder(){
@@ -122,8 +125,9 @@ public class SpiritBond : MonoBehaviour
         Vector3 front = centroid + new Vector3(0, 0, 20);
         Debug.DrawRay(centroid, front, new Color(255, 0, 0, 255));
         
-
+        
         BubbleSort(PlayerPositionsDelta, front, centroid);
+        
 
     }
 
