@@ -66,6 +66,7 @@ namespace Heroes.Maira
         {
             yield return new WaitForSeconds(duration);
             yield return StartCoroutine(ScaleDownAndDestroy(_wrestlingRingObject, 0.6f));
+            StopFireHandVFX();
         }
 
 

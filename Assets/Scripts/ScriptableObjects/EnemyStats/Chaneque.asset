@@ -21,7 +21,7 @@ MonoBehaviour:
     movementSpeed: 10
     gravity: 5
   healthAttributes:
-    maxHealth: 200
+    maxHealth: 30
     healthRegen: 0.1
   combatAttributes:
     basicAttackDamage: 10
