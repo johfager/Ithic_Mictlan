@@ -31,9 +31,6 @@ public class SpiritBond : MonoBehaviour
 
     
 
-
-
-
     // Initializes player positions as an array of 4 elements, each containing the Transform of its respective player; TotalDistance as 0.0f
     void Start(){
         playerPositions = new Transform[4] 
@@ -47,8 +44,6 @@ public class SpiritBond : MonoBehaviour
         TotalDistance = 0.0f;
 
         PlayerPositionsDelta = playerPositions;
-
-        
         
     }
 
