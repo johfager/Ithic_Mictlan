@@ -23,6 +23,7 @@ public class ItemCoroutines : MonoBehaviour
 
     // Wait for 2.5 seconds, then destroy the provided prefab
     public IEnumerator DestroyHoverItemPrefab(GameObject spawnedItem){
+        
         yield return new WaitForSeconds(2.5f);
         GameObject.Destroy(spawnedItem);
     }
