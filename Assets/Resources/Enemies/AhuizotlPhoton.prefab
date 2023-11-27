@@ -108,8 +108,11 @@ GameObject:
   - component: {fileID: 3796484148160728866}
   - component: {fileID: 815772358282166814}
   - component: {fileID: 544684485356770126}
+  - component: {fileID: 6161007986518403341}
+  - component: {fileID: 9140555687093773866}
+  - component: {fileID: 1913540112163026390}
   m_Layer: 0
-  m_Name: Ahuizotl
+  m_Name: AhuizotlPhoton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,6 +186,7 @@ MonoBehaviour:
     m_Bits: 512
   circleRadius: 5
   circleSpeed: 1
+  photonView: {fileID: 6161007986518403341}
 --- !u!95 &815772358282166814
 Animator:
   serializedVersion: 5
@@ -220,6 +224,77 @@ MonoBehaviour:
   currentHealth: 25
   uiManager: {fileID: 0}
   characterType: 1
+--- !u!114 &6161007986518403341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5163296058186915139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 0
+  ObservedComponents:
+  - {fileID: 544684485356770126}
+  - {fileID: 9140555687093773866}
+  - {fileID: 1913540112163026390}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &9140555687093773866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5163296058186915139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: targetWasFound
+  - Type: 4
+    SynchronizeType: 2
+    Name: canAttack
+  - Type: 4
+    SynchronizeType: 2
+    Name: canBite
+  - Type: 4
+    SynchronizeType: 2
+    Name: isDead
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
+--- !u!114 &1913540112163026390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5163296058186915139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1001 &4187189760718803256
 PrefabInstance:
   m_ObjectHideFlags: 0
