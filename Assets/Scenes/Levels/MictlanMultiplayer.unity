@@ -1189,6 +1189,7 @@ GameObject:
   - component: {fileID: 1462754496}
   - component: {fileID: 1462754495}
   - component: {fileID: 1462754494}
+  - component: {fileID: 1462754499}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1215,6 +1216,7 @@ MonoBehaviour:
   radioTrigger: 4
   active: 1
   playerInsideTrigger: 0
+  photonview: {fileID: 1462754499}
 --- !u!135 &1462754495
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1301,6 +1303,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1462754499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462754493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &1549018094
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1381,6 +1405,7 @@ GameObject:
   - component: {fileID: 1568309339}
   - component: {fileID: 1568309338}
   - component: {fileID: 1568309337}
+  - component: {fileID: 1568309342}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -1408,6 +1433,7 @@ MonoBehaviour:
   radioTrigger: 4
   active: 1
   playerInsideTrigger: 0
+  photonview: {fileID: 1568309342}
 --- !u!135 &1568309338
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1494,6 +1520,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1568309342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568309336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 4
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1589006209
 GameObject:
   m_ObjectHideFlags: 0
@@ -2134,6 +2182,7 @@ GameObject:
   - component: {fileID: 2125309983}
   - component: {fileID: 2125309982}
   - component: {fileID: 2125309981}
+  - component: {fileID: 2125309986}
   m_Layer: 0
   m_Name: CamazotzSpawn
   m_TagString: Untagged
@@ -2160,6 +2209,7 @@ MonoBehaviour:
   radioTrigger: 4
   active: 1
   playerInsideTrigger: 0
+  photonview: {fileID: 2125309986}
 --- !u!135 &2125309982
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2246,6 +2296,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2125309986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125309980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2135179799
 GameObject:
   m_ObjectHideFlags: 0
