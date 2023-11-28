@@ -760,6 +760,7 @@ MonoBehaviour:
     m_Bits: 512
   circleRadius: 5
   circleSpeed: 1
+  photonView: {fileID: 0}
 --- !u!195 &1231345961
 NavMeshAgent:
   m_ObjectHideFlags: 0
