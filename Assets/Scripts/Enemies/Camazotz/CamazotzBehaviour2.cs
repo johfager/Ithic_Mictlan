@@ -45,6 +45,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private float upsideDownWorldCooldown = 0.0f;
     private float infernalScreechCooldown = 0.0f;
     private float soulDevourerCooldown = 0.0f;
+    // DEATH STUFFF
+    [SerializeField] private PhotonMatchManager photonMatchManager;
 
     void Start()
     {
@@ -62,6 +64,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         soulEaterVFX = GetComponent<SoulEaterVFX>();
         airBulletVFX = GetComponent<AirBulletVFX>();
         CamazotzAgentSetter();
+        photonMatchManager = GameObject.FindWithTag("Photon").GetComponent<PhotonMatchManager>();
     }
 
     void CamazotzAgentSetter()
@@ -706,7 +709,10 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private void HandleCamazotzDeathState()
     {
         Debug.Log("Camazotz Death");
-        animator.SetBool("Death", true);
+        currentAnimationBool = "Death";
+        animator.SetBool(currentAnimationBool, true);
+        ResetBooleanParametersAfterDelay(currentAnimationBool, "none", 2f);
+        photonMatchManager.EndGame();
     }
 
     private void ChangeState(State newState)
