@@ -119,7 +119,8 @@ public class SpiritBond : MonoBehaviour
 
     }
 
-
+    // Places the player's spirit bond chain in the middle point between its parent and the next player on the list
+    // Receives two transforms and one GameObject, Returns nothing
     void MoveCubeToEdgeCenter(Transform pos1, Transform pos2, GameObject cube){
         Vector3 edgeCenter = Vector3.Lerp(pos1.position, pos2.position, 0.5f);
         cube.transform.position = edgeCenter;
@@ -127,18 +128,28 @@ public class SpiritBond : MonoBehaviour
         cube.transform.localScale = new Vector3(0.05f, 0.05f, Vector3.Distance(pos1.position, pos2.position));
     }
 
+
+    // Finds a random position Vector between two other vectors
+    // Receives two Vector3, returns one Vector3
     Vector3 FindRandomPositionInLine(Vector3 pos1, Vector3 pos2){
         return new Vector3(random.Range(pos1.x, pos2.x), random.Range(pos1.y, pos2.y), random.Range(pos1.z, pos2.z));
 
     }
 
+    // Coroutine that controls the particle systems while they are active.
+    // Receives Two transforms, and one GameObject
     IEnumerator ActivateParticleSystems(Transform pos1, Transform pos2, GameObject cube){
+        // While the bond is active
         while(bondActive){
+            // Wait for the previous system to finish emitting
             yield return new WaitForSeconds(1.5f);
-            
+            // For each of the cube's children particle systems
             foreach(Transform child in cube.transform){
+                // Find a new RandomPosition
                 Vector3 newRandPos = FindRandomPositionInLine(pos1.position, pos2.position);
+                // Assign that position to its respective child
                 child.gameObject.transform.position = newRandPos;
+                // Play the particle system again
                 child.gameObject.GetComponent<ParticleSystem>().Play();
             }
 
@@ -147,7 +158,7 @@ public class SpiritBond : MonoBehaviour
     }
 
     // Bubble Sort Alogrithm adapted to arrange the players in the correct order based from lowest to highest depending on their angle relative to front.
-    // Receives an array of transforms, 
+    // Receives an array of transforms, returns nothing
     void BubbleSort(Transform[] playerPos, Vector3 front, Vector3 center){
         Transform temp;
         int i, j;
@@ -182,6 +193,8 @@ public class SpiritBond : MonoBehaviour
         return (Vector3.Cross(directionToFront, directionToAngle).y < 0) ? 360 - calculatedAngle : calculatedAngle;
     }
 
+
+    // Determines the correct player order based on their positioning only on the X and Z axes
     void CalculatePlayerOrder(){
         // find the vertex of the angle. this is used in every calculation
         Vector3 centroid = FindCentroid();
@@ -195,7 +208,7 @@ public class SpiritBond : MonoBehaviour
 
     }
 
-    
+    // Finds the center point between four other points by obtaining the average value between them
     Vector3 FindCentroid(){
         // Initialize the coordinates for X and Z as 0
         float centroidX = 0, centroidZ = 0;
