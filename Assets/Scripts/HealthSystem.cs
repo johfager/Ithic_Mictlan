@@ -138,8 +138,11 @@ public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     private void SyncHealth(float newHealth)
     {
-        currentHealth = newHealth;
-        UpdateHealthUI();
+        if(photonView.IsMine)
+        {
+            currentHealth = newHealth;
+            UpdateHealthUI();
+        }
     }
 
     // IPunObservable implementation for custom synchronization (optional).
