@@ -2894,6 +2894,16 @@ MonoBehaviour:
   - {fileID: 7080233633590426874}
   photonView: {fileID: 9053782129282251593}
   xoloSpawner: {fileID: 170453802}
+  normalSprites:
+  - {fileID: 21300000, guid: 04299ac1fd8d0eb48bec80676dc3b141, type: 3}
+  - {fileID: 21300000, guid: 06e1d315490092740a96eb86b3ae61e0, type: 3}
+  - {fileID: 21300000, guid: 4c6dd33fb3567e34ba67d117b1e5b572, type: 3}
+  - {fileID: 21300000, guid: 64bcbd56789a4d949866b7a3aa4849e5, type: 3}
+  selectedSprites:
+  - {fileID: 21300000, guid: 054ce2b43be8e3e48821ffe785fc5363, type: 3}
+  - {fileID: 21300000, guid: 56275b3dacb720347a5d7f7c5dbc8006, type: 3}
+  - {fileID: 21300000, guid: 9ba3ff9185b03f845a8f8629c9dec605, type: 3}
+  - {fileID: 21300000, guid: b8b602c55aba5ef4d9ec882c3e640929, type: 3}
 --- !u!114 &3081230851069397052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4029,10 +4039,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
