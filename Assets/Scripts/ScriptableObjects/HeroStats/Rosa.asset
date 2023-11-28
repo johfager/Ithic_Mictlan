@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
     characterName: Rosa
-    description: "Descripci\xF3n de Rosa"
+    description: "En el d\xEDa a d\xEDa, es una maestra que lucha por ser vista como
+      alguien amigable y de fiar para sus estudiantes y los dem\xE1s. Sin embargo,
+      su actitud sombr\xEDa y seria hacen que sea dif\xEDcil acercarse a ella. El
+      haber sido elegida como guardiana del quinto sol es una oportunidad de desmontar
+      esta imagen que tienen de ella. Esto ser\xE1 un reto, pues Xochizuatl tiende
+      a perder la cabeza en situaciones de gran estr\xE9s, como en una ardua batalla."
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1

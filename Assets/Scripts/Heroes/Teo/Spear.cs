@@ -11,14 +11,10 @@ namespace Heroes.Teo
 
         [SerializeField] private HeroStats teoStats; // Set the damage amount
 
-        [SerializeField] private GameObject spearPrefab;
         public float maxRange = 10f;
         
         public Vector3 spearDirection;
         
-
-        public UIManager teoUIManager;
-
         private Vector3 startPosition;
         [SerializeField] private PhotonView _photonView;
         private void OnEnable()

@@ -6,7 +6,6 @@ using UnityEngine.Animations;
 
 public class XoloitzcuintleController : MonoBehaviour
 {
-    public static XoloitzcuintleController instance;
     [SerializeField] private float wanderSpeed;
     [SerializeField] private float runAwaySpeed;
     [SerializeField] private float detectionRadius;
@@ -23,27 +22,24 @@ public class XoloitzcuintleController : MonoBehaviour
     // PHOTON
     [SerializeField] private PhotonView photonView;
 
-    void Awake() {
-        if(instance == null)
-        {
-            instance = this;
-        }
-    }
 
-    private void Start()
+    private void OnEnable()
     {
-        isPlayerDetected = false;
-        wanderTimer = 0f;
-        wasCatched = false;
-
-        GameObject[] temp = GameObject.FindGameObjectsWithTag("Hero");
-
-        foreach (GameObject item in temp)
+        if(photonView.IsMine)
         {
-            players.Add(item.transform);
-        }
+            isPlayerDetected = false;
+            wanderTimer = 0f;
+            wasCatched = false;
 
-        SetNewWanderTarget();
+            GameObject[] temp = GameObject.FindGameObjectsWithTag("Hero");
+
+            foreach (GameObject item in temp)
+            {
+                players.Add(item.transform);
+            }
+
+            SetNewWanderTarget();
+        }
     }
 
     private void Update()
@@ -79,10 +75,8 @@ public class XoloitzcuintleController : MonoBehaviour
             }
             else
             {
-                animationController.SetBool("isRunning", false);
-                animationController.SetFloat("Speed", 0);
-                animationController.SetBool("hasStopped", wasCatched);
-                StartCoroutine(DispawnXolo());
+                runAwaySpeed = 0;
+                wanderSpeed = 0;
             }   
         }
     }
@@ -137,10 +131,19 @@ public class XoloitzcuintleController : MonoBehaviour
 
     public void SetWasCatched()
     {
+        photonView.RPC("Catch", RpcTarget.All);
+    }
+    
+    [PunRPC]
+    private void Catch()
+    {
         if(photonView.IsMine)
         {
-            Debug.Log("unu");
             wasCatched = true;
+            animationController.SetBool("isRunning", false);
+            animationController.SetFloat("Speed", 0);
+            animationController.SetBool("hasStopped", true);
+            StartCoroutine(DispawnXolo());
         }
     }
 

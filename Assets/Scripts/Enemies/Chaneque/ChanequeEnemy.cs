@@ -28,6 +28,7 @@ public class ChanequeEnemy : MonoBehaviourPun
     private GameObject closestTarget;
 
     private bool isAttacking = false;
+    private bool canAttack = true;
 
     private void Start()
     {
@@ -69,12 +70,15 @@ public class ChanequeEnemy : MonoBehaviourPun
 
             if (closestTarget != null && Vector3.Distance(transform.position, closestTarget.transform.position) < attackDistanceThreshold)
             {
-                if(!isAttacking)
+                if(ChanequeAttackRange.instance.GetAttackState())
                 {
-                    // Call RPC to sync the attack action across the network
-                    ChangeState(ChanequeState.Attack);
-                    StartCoroutine(TriggerAttack());
-                }          
+                    if(canAttack)
+                    {
+                        // Call RPC to sync the attack action across the network
+                        ChangeState(ChanequeState.Attack);
+                        StartCoroutine(TriggerAttack());
+                    }  
+                }        
             }
             else if (closestTarget != null)
             {
@@ -122,12 +126,21 @@ public class ChanequeEnemy : MonoBehaviourPun
 
     private IEnumerator TriggerAttack()
     {
-        animator.SetBool("IsAttacking", true);
+        /*animator.SetBool("IsAttacking", true);
         isAttacking = true;
         closestTarget.GetComponent<HealthSystem>().TakeDamage(enemyStats.combatAttributes.basicAttackDamage);
         yield return new WaitForSeconds(2f);
         isAttacking = false;
-        animator.SetBool("IsAttacking", false);
+        animator.SetBool("IsAttacking", false);*/
+        animator.SetBool("IsAttacking", canAttack);
+        canAttack = false;
+        animator.SetBool("IsAttacking", canAttack);
+        GameObject targetObject = ChanequeAttackRange.instance.GetClosestTarget();
+        targetObject.GetComponent<HealthSystem>().TakeDamage(enemyStats.combatAttributes.basicAttackDamage);
+        gameObject.transform.LookAt(targetObject.transform);
+        yield return new WaitForSeconds(3f);
+        canAttack = true;
+        animator.SetBool("IsAttacking", canAttack);
     }
     
     GameObject GetClosestTarget()
@@ -141,6 +154,7 @@ public class ChanequeEnemy : MonoBehaviourPun
             {
                 closestDistance = distanceToTarget;
                 closestTarget = target;
+                ChanequeAttackRange.instance.SetClosestTarget(closestTarget);
             }
         }
         return closestTarget;

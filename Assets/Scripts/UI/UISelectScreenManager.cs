@@ -21,6 +21,8 @@ public class UISelectScreenManager : MonoBehaviour
     [SerializeField] private Button[] characterButtons;
     [SerializeField] private PhotonView photonView;
     [SerializeField] private Spawner xoloSpawner;
+    [SerializeField] private Sprite[] normalSprites;
+    [SerializeField] private Sprite[] selectedSprites;
 
     private int HeroID;
     private int playersReady;
@@ -69,25 +71,29 @@ public class UISelectScreenManager : MonoBehaviour
         if(name == "Maira")
         {
             HeroID = 0;
+            ChangeSelectedSprite(0);
         }
         if(name == "Teo")
         {
             HeroID = 1;
+            ChangeSelectedSprite(1);
         }
         if(name == "Ignacio")
         {
             HeroID = 2;
+            ChangeSelectedSprite(2);
         }
         if(name == "Rosa")
         {
             HeroID = 3;
+            ChangeSelectedSprite(3);
         }
 
     }
 
     public void StartMatch()
     {
-        xoloSpawner.SetSpwans(GameObject.Find("Rosa"));
+        xoloSpawner.SetSpawns();
         photonView.RPC("HideSelectScreen", RpcTarget.All);
     }
 
@@ -193,5 +199,13 @@ public class UISelectScreenManager : MonoBehaviour
                 startGameButton.interactable = true;
             }
         }
+    }
+
+    public void ChangeSelectedSprite(int id){
+        for (int i = 0; i < characterButtons.Length; i++)
+        {
+            characterButtons[i].GetComponent<Image>().sprite = normalSprites[i];
+        }
+        characterButtons[id].GetComponent<Image>().sprite = selectedSprites[id];
     }
 }
