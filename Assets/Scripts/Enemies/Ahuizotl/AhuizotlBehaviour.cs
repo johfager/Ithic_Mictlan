@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.MLAgents;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class AhuizotlBehaviour : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class AhuizotlBehaviour : MonoBehaviour
 
     private Animator animator;
     private HealthSystem myAhuizotlHealth;
+    // Photon
+    [SerializeField] private PhotonView photonView;
 
 
     void OnEnable()
@@ -50,45 +53,48 @@ public class AhuizotlBehaviour : MonoBehaviour
 
     void Update()
     {
-        CheckHealth();
-
-        // Detection and movement logic
-        if (sharedTarget == null)
+        if(photonView.IsMine)
         {
-            // Move in a circular pattern
-            timeCounter += Time.deltaTime * circleSpeed;
-            float x = Mathf.Cos(timeCounter) * circleRadius + spawnPoint.x;
-            float z = Mathf.Sin(timeCounter) * circleRadius + spawnPoint.z;
-            Vector3 newPosition = new Vector3(x, transform.position.y, z);
-            agent.SetDestination(newPosition);
-            // Si no hay un objetivo compartido, escanea la zona en busca de uno
-            ScanForTarget();
-        }
-        else
-        {
-            // Usa el objetivo compartido
-            target = sharedTarget;
-            targetWasFound = true;
-            agent.SetDestination(target.position);
-        }
+            CheckHealth();
 
-        animator.SetBool("targetWasFound", targetWasFound);
-
-        // TODO: CAMBIAR LA FORMA EN LA QUE SE HACE EL GET COMPONENT >:c ESTA MAL HACER EL SET TODO EL TIEMPO 
-
-        // Attack logic
-        if(AhuizotlAttack.instance.GetAttackState())
-        {
-            if(canBite)
+            // Detection and movement logic
+            if (sharedTarget == null)
             {
-                StartCoroutine(attackSpeedController());
+                // Move in a circular pattern
+                timeCounter += Time.deltaTime * circleSpeed;
+                float x = Mathf.Cos(timeCounter) * circleRadius + spawnPoint.x;
+                float z = Mathf.Sin(timeCounter) * circleRadius + spawnPoint.z;
+                Vector3 newPosition = new Vector3(x, transform.position.y, z);
+                agent.SetDestination(newPosition);
+                // Si no hay un objetivo compartido, escanea la zona en busca de uno
+                ScanForTarget();
             }
-            animator.SetBool("canAttack", AhuizotlAttack.instance.GetAttackState());
-        }
+            else
+            {
+                // Usa el objetivo compartido
+                target = sharedTarget;
+                targetWasFound = true;
+                agent.SetDestination(target.position);
+            }
 
-        if(!AhuizotlAttack.instance.GetAttackState())
-        {
-            animator.SetBool("canAttack", AhuizotlAttack.instance.GetAttackState());
+            animator.SetBool("targetWasFound", targetWasFound);
+
+            // TODO: CAMBIAR LA FORMA EN LA QUE SE HACE EL GET COMPONENT >:c ESTA MAL HACER EL SET TODO EL TIEMPO 
+
+            // Attack logic
+            if(AhuizotlAttack.instance.GetAttackState())
+            {
+                if(canBite)
+                {
+                    StartCoroutine(attackSpeedController());
+                }
+                animator.SetBool("canAttack", AhuizotlAttack.instance.GetAttackState());
+            }
+
+            if(!AhuizotlAttack.instance.GetAttackState())
+            {
+                animator.SetBool("canAttack", AhuizotlAttack.instance.GetAttackState());
+            }
         }
     }
 

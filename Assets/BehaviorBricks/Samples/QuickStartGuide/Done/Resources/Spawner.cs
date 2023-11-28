@@ -13,10 +13,6 @@ public class Spawner : MonoBehaviour {
     ///<value>the position that the gameobject will be spawned</value>
     //public Vector3 position;
 
-    ///<value>Area where the Gameobjects will move</value>
-    public GameObject wanderArea;
-    ///<value>Target GameObject to follow</value>
-    public GameObject player;
     [SerializeField] private string xoloPath;
     public List<Transform> xoloPositions = new List<Transform>();
 
@@ -47,15 +43,13 @@ public class Spawner : MonoBehaviour {
         }*/
 	}
 
-    public void SetSpwans(GameObject playerToRun)
+    public void SetSpawns()
     {
-        player = playerToRun;
-
         xoloPath = "NPCS/" + prefab.name;
 
         foreach (Transform xoloSpawn in xoloPositions)
         {
-            GameObject instance = PhotonNetwork.Instantiate(xoloPath,xoloSpawn.position,Quaternion.identity) as GameObject;
+            GameObject instance = PhotonNetwork.Instantiate(xoloPath,xoloSpawn.position,Quaternion.identity);
         }
     }
 }
