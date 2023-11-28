@@ -47,7 +47,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/Builds\VideoGame_Icthi_Mictlan.exe" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/Builds/VideoGame_Icthi_Mictlan.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="C:\Users\ricar\Icthi_Mictlan\Builds" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -109,7 +109,7 @@
       <workItem from="1700870244229" duration="363000" />
       <workItem from="1700970242854" duration="2405000" />
       <workItem from="1701110462966" duration="6464000" />
-      <workItem from="1701122723330" duration="5381000" />
+      <workItem from="1701122723330" duration="16203000" />
     </task>
     <servers />
   </component>
