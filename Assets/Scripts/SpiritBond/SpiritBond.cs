@@ -29,6 +29,10 @@ public class SpiritBond : MonoBehaviour
     // Controls the distance that has to exist between players before damage starts to decrease. The higher it is, the further apart players must be for falloff to occur
     private float distanceFalloff = 180.0f;
 
+    [SerializeField] public GameObject cubelolxd;
+    [SerializeField] public GameObject cubelolxd2;
+    [SerializeField] public GameObject cubelolxd3;
+    [SerializeField] public GameObject cubelolxd4;
     
 
     // Initializes player positions as an array of 4 elements, each containing the Transform of its respective player; TotalDistance as 0.0f
@@ -46,6 +50,8 @@ public class SpiritBond : MonoBehaviour
         PlayerPositionsDelta = playerPositions;
         
     }
+
+    
 
     void Update()
     {
@@ -73,14 +79,34 @@ public class SpiritBond : MonoBehaviour
         bonusMultiplier = -Math.Pow(decreaseRate, (TotalDistance - distanceFalloff / 2)) + 4.0f;
         bonusMultiplier = bonusMultiplier < 0.5 ? 0.5 : bonusMultiplier;
 
-        if(bonusMultiplier > 3.8){
-            ActivateParticleSystems();
-        } else {
-            DeactivateParticleSystems();
-        }
+        
 
         CalculatePlayerOrder();
 
+        MoveCubeToEdgeCenter(PlayerPositionsDelta[0], PlayerPositionsDelta[1], cubelolxd);
+        MoveCubeToEdgeCenter(PlayerPositionsDelta[1], PlayerPositionsDelta[2], cubelolxd2);
+        MoveCubeToEdgeCenter(PlayerPositionsDelta[2], PlayerPositionsDelta[3], cubelolxd3);
+        MoveCubeToEdgeCenter(PlayerPositionsDelta[3], PlayerPositionsDelta[0], cubelolxd4);
+
+        if (bonusMultiplier == 0.5){
+            cubelolxd.SetActive(false);
+            cubelolxd2.SetActive(false);
+            cubelolxd3.SetActive(false);
+            cubelolxd4.SetActive(false);
+        } else {
+             cubelolxd.SetActive(true);
+            cubelolxd2.SetActive(true);
+            cubelolxd3.SetActive(true);
+            cubelolxd4.SetActive(true);
+        }
+
+    }
+
+    void MoveCubeToEdgeCenter(Transform pos1, Transform pos2, GameObject cube){
+        Vector3 edgeCenter = Vector3.Lerp(pos1.position, pos2.position, 0.5f);
+        cube.transform.position = edgeCenter;
+        cube.transform.LookAt(pos2);
+        cube.transform.localScale = new Vector3(0.05f, 0.05f, Vector3.Distance(pos1.position, pos2.position));
     }
 
     void BubbleSort(Transform[] playerPos, Vector3 front, Vector3 center){
