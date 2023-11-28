@@ -682,6 +682,7 @@ MonoBehaviour:
   currentHealth: 0
   uiManager: {fileID: 6083050721629046674}
   characterType: 0
+  photonView: {fileID: 7059473713104472160}
 --- !u!114 &7429227378938455660
 MonoBehaviour:
   m_ObjectHideFlags: 0
