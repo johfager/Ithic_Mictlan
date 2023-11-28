@@ -6,25 +6,24 @@ using UnityEngine;
 public class AirBulletVFX : MonoBehaviour
 {
     [SerializeField] private GameObject airBulletVFX;
-    public float projectileSpeed = 75f;
+    AirBulletDamage airBulletDamage;
+    public float projectileSpeed = 50f;
     private float projectileDamage;
 
-    public void LaunchAirBullet(Vector3 position, Vector3 scale, float damage)
+    public void LaunchAirBullet(Vector3 position, Vector3 scale, float scScale, float damage)
     {
-        projectileDamage = damage;
         GameObject airBullet = Instantiate(airBulletVFX, position, transform.rotation);
+        
         airBullet.transform.localScale = scale;
         Rigidbody rb = airBullet.GetComponent<Rigidbody>();
+        SphereCollider sc = airBullet.GetComponent<SphereCollider>();
+        sc.radius = scScale;
         rb.velocity = transform.forward * projectileSpeed;
+
+        airBulletDamage = airBullet.GetComponent<AirBulletDamage>();
+        airBulletDamage.SetDamage(damage);
+
+        Destroy(airBullet, 5f);
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        HealthSystem objectiveLife = other.GetComponent<HealthSystem>();
-
-        if (objectiveLife != null)
-        {
-            objectiveLife.TakeDamage(projectileDamage);
-        }
-    }
 }

@@ -530,6 +530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xolosInScene: 0
   xoloSpawner: {fileID: 170453802}
+  chanequeSpawner: {fileID: 0}
 --- !u!4 &520111687
 Transform:
   m_ObjectHideFlags: 0
@@ -1688,7 +1689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rosaPrefab: {fileID: 4868826238426160607, guid: f88520e0b07b19c489f92117edd82042, type: 3}
-  teoPrefab: {fileID: 2367014908967302044, guid: b252dddbfe2f2214190bd3c33797818f, type: 3}
+  teoPrefab: {fileID: 7341672714092922010, guid: 5655b4ef02abe3248996080cb2718364, type: 3}
   ignacioPrefab: {fileID: 3423656044886117104, guid: 89f32e9539b4ca14c8082786249fa2df, type: 3}
   mairaPrefab: {fileID: 8133008710918818007, guid: 53947a2da090c7e4981b5d60fa617aa9, type: 3}
   playerPrefabPath: 

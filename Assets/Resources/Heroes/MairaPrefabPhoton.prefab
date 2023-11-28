@@ -611,6 +611,7 @@ MonoBehaviour:
   heroesCombatScript: {fileID: 891576384189073214}
   heroStats: {fileID: 11400000, guid: 9c605feeaf61b714bbe95cc92dfe8ad7, type: 2}
   photonView: {fileID: 7059473713104472160}
+  canvas: {fileID: 4884699283729107396}
 --- !u!114 &2534308856849189679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1156,6 +1157,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4884699283729107396 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1188578820958234546, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}
+  m_PrefabInstance: {fileID: 6032393844715417206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7974096699461348135 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4404221981436790097, guid: 49e69adb4c35a3b45b4f76a33fbad8f8, type: 3}

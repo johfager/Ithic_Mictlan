@@ -259,11 +259,11 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
         if (vfx == "LargeBasic")
         {
-            airBulletVFX.LaunchAirBullet(transform.position, new Vector3(1f, 1f, 1f), 25);
+            airBulletVFX.LaunchAirBullet(transform.position, new Vector3(1f, 1f, 1f), 1.1f, 25);
         }
         else if (vfx == "InfernalScreech")
         {
-            airBulletVFX.LaunchAirBullet(transform.position, new Vector3(3f, 3f, 3f), 40);
+            airBulletVFX.LaunchAirBullet(transform.position, new Vector3(3f, 3f, 3f), 3.1f, 40);
         }
 
         yield return new WaitForSeconds(delay - preDelay);
@@ -339,9 +339,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
             currentAnimationBool = "LongRange";
             animator.SetBool(currentAnimationBool, true);
             isInMidAttack = true;
-            airBulletVFX.LaunchAirBullet(transform.position, new Vector3(1f, 1f, 1f), 25);
+            StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, "LargeBasic", .5f));
         }
-        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, "LargeBasic", .5f));
         AttacksSoftReset();
         PhaseChecker(attackIndex);
     }

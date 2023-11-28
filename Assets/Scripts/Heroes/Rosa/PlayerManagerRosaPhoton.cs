@@ -11,6 +11,7 @@ namespace Heroes.Rosa
         public HeroStats heroStats;
         private bool isMoving = true;
         [SerializeField] private PhotonView photonView;
+        [SerializeField] private GameObject canvas;
 
 
         void Start()
@@ -44,7 +45,13 @@ namespace Heroes.Rosa
 
                 heroesCombatScript.HandleAttackStateMachine();
             }
-
+        }
+        public void ActivationUI()
+        {
+            if (photonView.IsMine)
+            {
+                canvas.SetActive(true);
+            }
         }
     }
 }
