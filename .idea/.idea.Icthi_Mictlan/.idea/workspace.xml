@@ -13,6 +13,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Heroes/Teo/HeroesCombatTeo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Heroes/Teo/PlayerManagerTeo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Heroes/Teo/SpearRain.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -110,7 +111,7 @@
       <workItem from="1700970242854" duration="2405000" />
       <workItem from="1701110462966" duration="6464000" />
       <workItem from="1701122723330" duration="16855000" />
-      <workItem from="1701192011123" duration="11140000" />
+      <workItem from="1701192011123" duration="12106000" />
     </task>
     <servers />
   </component>
