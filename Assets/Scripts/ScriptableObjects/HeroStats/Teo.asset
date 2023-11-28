@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
     characterName: Teo
-    description: "Descripci\xF3n de Teo"
+    description: "Es alguien serio, imponente y que transmite mucha madurez. Es muy
+      raro que hable, pues cree que las acciones son un reflejo de su pensar. No
+      obstante, en los momentos en que transmite sus ideas, tienen un alto impacto
+      en los que lo escuchan, transmitiendo mucha sabidur\xEDa. De los cuatro, es
+      quien m\xE1s se toma en serio su rol de guardi\xE1n del quinto sol."
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1

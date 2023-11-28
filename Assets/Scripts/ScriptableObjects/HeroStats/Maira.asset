@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
     characterName: Maira
-    description: "Descripci\xF3n de Maira"
+    description: "Es una chica con mucha confianza en su fuerza y liderazgo. Seg\xFAn
+      sus propias palabras, no hay quien pueda hacerle frente en una pelea. Puede
+      caer en la arrogancia e impulsividad, pues su car\xE1cter es explosivo. Sin
+      embargo, su gran personalidad es el pilar que une al equipo m\xE1s oscuro,
+      ya que demuestra seguridad y transmite un sentimiento de invencibilidad/protecci\xF3n."
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1
