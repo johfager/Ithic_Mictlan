@@ -224,8 +224,8 @@ namespace Heroes.Rosa
             {
                 ultimateAbilityCooldownImage.enabled = true;;
             }
-            
-            
+                
+ 
             if(currentAttack != null)
             {
                 ExitAttack(currentAttack);
@@ -283,9 +283,9 @@ namespace Heroes.Rosa
                 {
                     if(xolo.CompareTag("Xolo"))
                     {
-                        if(xolo.transform.GetComponent<XoloitzcuintleController>() != null)
+                        if(xolo.GetComponent<XoloitzcuintleController>() != null)
                         {
-                            xolo.transform.GetComponent<XoloitzcuintleController>().SetWasCatched();
+                            xolo.GetComponent<XoloitzcuintleController>().SetWasCatched();
                         }
 
                     }

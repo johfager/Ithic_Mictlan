@@ -39,6 +39,7 @@ MonoBehaviour:
   - RPC_Combat
   - DisableButton
   - HideSelectScreen
+  - Catch
   - SyncHealth
   - TriggerAttack
   DisableAutoOpenWizard: 1
