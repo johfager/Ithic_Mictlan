@@ -30,6 +30,7 @@ namespace Heroes.Teo
         private float attackSpeed;
         private float attackSpeedMultiplier = 1.0f;
         [SerializeField] Spear spearPrefab;
+        [SerializeField] private GameObject idleSpear;
 
 
         public TextMeshProUGUI combatStateText;
@@ -37,6 +38,10 @@ namespace Heroes.Teo
 
         private PlayerManager playerManager; //Not used
         public bool IsInCombatMode;
+        
+        public Slider progressBar; 
+
+        private bool firstClick = true;
         
     
         //For hitboxes
@@ -132,20 +137,45 @@ namespace Heroes.Teo
                 }
             }
         }
-
-        private void HandlePrimaryAbility()
+        
+        private IEnumerator ShowProgressBar()
         {
-            currentAttack = "PrimaryAbility";
-            if (primaryAbilityCooldownImage != null && primaryAbilityCooldownText != null)
-            {
-                primaryAbilityCooldownImage.enabled = true;
-                primaryAbilityCooldownText.enabled = true;
-            }
-            primaryAbilityCooldown = _heroStats.abilityAttributes.primaryAbility.cooldown;
+            // Aquí puedes personalizar cómo se llena la barra de progreso
+            float duration = 3f; // Duración en segundos
 
-            _currentAttackDirection = -transform.up;
-            //We call on this with 0f spheresize to wait with hitbox until Maira lands.
-            StartAttackAnimation(currentAttack, primaryAbility, _currentAttackDirection );
+            float elapsedTime = 0f;
+            
+            while (elapsedTime < duration)
+            {
+                progressBar.value = Mathf.Lerp(0f, 1f, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            
+            anim.speed = 1;
+            progressBar.value = 0f;
+
+            // Aquí puedes realizar acciones adicionales después de cargar la barra de progreso
+        }
+
+        private void HandlePrimaryAbilityFirst()
+        {
+
+                currentAttack = "PrimaryAbility";
+                if (primaryAbilityCooldownImage != null && primaryAbilityCooldownText != null)
+                {
+                    primaryAbilityCooldownImage.enabled = true;
+                    primaryAbilityCooldownText.enabled = true;
+                }
+                primaryAbilityCooldown = _heroStats.abilityAttributes.primaryAbility.cooldown;
+                StartAttackAnimation(currentAttack, primaryAbility, _currentAttackDirection );
+                StartCoroutine(ShowProgressBar());
+
+        }
+        
+        private void PauseAttackAnimation()
+        {
+            anim.speed = 0;
         }
 
 
@@ -193,7 +223,7 @@ namespace Heroes.Teo
             }
             if (currentHeroesAttackState == HeroesAttackState.Idle)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {
                     if (basicAttackCooldown <= 0.0f)
                     {
@@ -208,7 +238,7 @@ namespace Heroes.Teo
 
                     if (primaryAbilityCooldown <= 0.0f)
                     {
-                        HandlePrimaryAbility();
+                        HandlePrimaryAbilityFirst();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -388,7 +418,7 @@ namespace Heroes.Teo
                     GameObject spearObject = PhotonNetwork.Instantiate(spearPath, transform.position, transform.rotation);
                     if (spearObject == null)
                     {
-                        spearObject = PhotonNetwork.Instantiate("Assets/Resources/Objects/Spear.prefab", transform.position, transform.rotation);
+                        spearObject = PhotonNetwork.Instantiate("Assets/Resources/Objects/TeoSpear.prefab", transform.position, transform.rotation);
 
                     }
                     Spear spear = spearObject.GetComponent<Spear>();
@@ -397,12 +427,19 @@ namespace Heroes.Teo
                     spear.transform.rotation = transform.rotation * UnityEngine.Quaternion.Euler(-90f, 0f, 0f) ;
                     Vector3 direction = transform.forward;
                     spear.spearDirection = direction * 20f;
-                
+                    idleSpear.SetActive(false);
                     spear.Launch();
-                    
+                    StartCoroutine(SpawnInHand());
+
             }
         }
 
+        IEnumerator SpawnInHand()
+        {
+            yield return new WaitForSeconds(0.5f);
+            idleSpear.SetActive(true);
+        }
+        
         private IEnumerator ResetCooldown(string cooldownType)
         {
             float cooldownTime = 0.0f;
