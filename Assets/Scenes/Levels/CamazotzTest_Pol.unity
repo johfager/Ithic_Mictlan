@@ -131,12 +131,32 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 147944985191153480, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1424307446014335288, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1424307446014335288, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2507549633815964280, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2533730488239839321, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2533730488239839321, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2533730488239839321, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2844640638031195154, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
@@ -153,7 +173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4854483802859209155, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.33
       objectReference: {fileID: 0}
     - target: {fileID: 4854483802859209155, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
       propertyPath: m_LocalPosition.z
@@ -190,6 +210,18 @@ PrefabInstance:
     - target: {fileID: 4868826238426160607, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
       propertyPath: m_Name
       value: RosaPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133249387134872183, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133249387134872183, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133249387134872183, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6526790962088954807, guid: 324de0588e1f1a344b3995fcd86a6eff, type: 3}
       propertyPath: m_AnchorMax.x
@@ -458,7 +490,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6454154051156726909, guid: c250e611cbf3954448e384fe6f2ad283, type: 3}
       propertyPath: m_Name
-      value: CamazotzAnimations
+      value: CamazotzFinal
       objectReference: {fileID: 0}
     - target: {fileID: 7469822379930632788, guid: c250e611cbf3954448e384fe6f2ad283, type: 3}
       propertyPath: m_LocalPosition.x
@@ -499,10 +531,6 @@ PrefabInstance:
     - target: {fileID: 7469822379930632788, guid: c250e611cbf3954448e384fe6f2ad283, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7535663597989983417, guid: c250e611cbf3954448e384fe6f2ad283, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

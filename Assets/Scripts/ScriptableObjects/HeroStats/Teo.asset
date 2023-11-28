@@ -33,6 +33,6 @@ MonoBehaviour:
   lassoAttributes:
     lassoCircleDiameter: 10
   abilityAttributes:
-    primaryAbility: {fileID: 0}
-    secondaryAbility: {fileID: 0}
-    ultimateAbility: {fileID: 0}
+    primaryAbility: {fileID: 11400000, guid: 320a1e6bb9eead44db5076d138557eb3, type: 2}
+    secondaryAbility: {fileID: 11400000, guid: bad4bdeefd0a8ee468279ea3b63755da, type: 2}
+    ultimateAbility: {fileID: 11400000, guid: 4c3665d2e1c042c4fb5e176d8d34cda2, type: 2}

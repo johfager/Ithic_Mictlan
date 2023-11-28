@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using Photon.Pun;
+using UI;
 using UnityEngine;
 
 namespace Heroes.Rosa
@@ -9,14 +11,21 @@ namespace Heroes.Rosa
 
         [SerializeField] private HeroStats rosaStats; // Set the damage amount
 
+        [SerializeField] private GameObject featherPrefab;
         public float maxRange = 5f;
-
+        
         public Vector3 featherDirection = Vector3.forward;
         
+
+        public UIManager rosaUIManager;
+
         private Vector3 startPosition;
+        [SerializeField] private PhotonView _photonView;
         private void OnEnable()
         {
-            startPosition = transform.position;
+
+                startPosition = transform.position;
+            
         }
         
 
@@ -24,11 +33,12 @@ namespace Heroes.Rosa
         {
             Launch(featherDirection);
             float distanceTravelled = Vector3.Distance(startPosition, transform.position);
-    
+
             if (distanceTravelled > maxRange)
             {
-                Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
+            
         }
 
         public void Launch(Vector3 direction)
@@ -42,9 +52,9 @@ namespace Heroes.Rosa
             {
                 // Apply damage to enemy
                 other.gameObject.GetComponent<HealthSystem>().TakeDamage(rosaStats.abilityAttributes.primaryAbility.damage);
-
+                rosaUIManager.UpdateMadness(rosaStats.abilityAttributes.primaryAbility.madnessValue);
                 // Destroy the feather game object
-                Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
         }
         

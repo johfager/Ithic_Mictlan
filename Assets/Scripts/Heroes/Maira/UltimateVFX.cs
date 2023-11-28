@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace Heroes.Maira
         private GameObject _wrestlingRingObject;
         [SerializeField] private ParticleSystem leftHandFireVFX;
         [SerializeField] private ParticleSystem rightHandFireVFX;
-
+        [SerializeField] private PhotonView _photonView;
         
         public void PlayFireHandVFX()
         {
@@ -28,26 +29,32 @@ namespace Heroes.Maira
             leftHandFireVFX.Stop();
             rightHandFireVFX.Stop();
         }
+
         public void TriggerUltimate()
         {
-            Quaternion rotation = Quaternion.Euler(-90, 0, 0);
-            GameObject spawningVFX = Instantiate(spawningVFXPrefab,
-                transform.position + transform.forward * 2 + -transform.up, rotation);
-            // Set the VFX to play
-            ParticleSystem particleSystem = spawningVFX.GetComponent<ParticleSystem>();
-            if (particleSystem != null)
+            if (_photonView.IsMine)
             {
+                Quaternion rotation = Quaternion.Euler(-90, 0, 0);
+                GameObject spawningVFX = Instantiate(spawningVFXPrefab,
+                    transform.position + transform.forward * 2 + -transform.up, rotation);
+                // Set the VFX to play
+                ParticleSystem particleSystem = spawningVFX.GetComponent<ParticleSystem>();
+                if (particleSystem != null)
+                {
 
-                particleSystem.Play();
+                    particleSystem.Play();
+                }
+
+                string wrestlingRingPath = "Objects/" + wrestlingRingPrefab.name;
+
+                _wrestlingRingObject = PhotonNetwork.Instantiate(wrestlingRingPath, transform.position + -Vector3.up * 2.7f,
+                    Quaternion.identity);
+                // Destroy the VFX after it finishes playing
+                //PhotonNetwork.Destroy(spawningVFX);
+                //PhotonNetwork.Destroy(particleSystem, particleSystem.main.duration);
+
+                StartCoroutine(DestroyWrestlingRing());
             }
-
-            _wrestlingRingObject = Instantiate(wrestlingRingPrefab, transform.position + -Vector3.up * 2.7f,
-                Quaternion.identity);
-            // Destroy the VFX after it finishes playing
-            Destroy(spawningVFX, particleSystem.main.duration);
-
-            StartCoroutine(DestroyWrestlingRing());
-
         }
 
         private void OnApplicationQuit()
@@ -58,36 +65,41 @@ namespace Heroes.Maira
         private IEnumerator DestroyWrestlingRing()
         {
             yield return new WaitForSeconds(duration);
-            yield return StartCoroutine(ScaleDownAndDestroy(_wrestlingRingObject, 0.2f));
+            yield return StartCoroutine(ScaleDownAndDestroy(_wrestlingRingObject, 0.6f));
+            StopFireHandVFX();
         }
 
 
         private IEnumerator ScaleDownAndDestroy(GameObject target, float scaleDownDuration)
         {
-            
-            // Get all colliders of the object
-            Collider[] colliders = target.GetComponents<Collider>();
-
-            // Disable all colliders 
-            foreach (var collider in colliders)
+            if (_photonView.IsMine)
             {
-                collider.enabled = false;
+                // Get all colliders of the object
+                Collider[] colliders = target.GetComponents<Collider>();
+
+                // Disable all colliders 
+                foreach (var collider in colliders)
+                {
+                    collider.enabled = false;
+                }
+
+                float timePassed = 0;
+                Vector3 initialScale = target.transform.localScale;
+
+                while (timePassed < scaleDownDuration)
+                {
+                    timePassed += Time.deltaTime;
+                    float lerpValue = timePassed / scaleDownDuration;
+
+                    target.transform.localScale = Vector3.Lerp(initialScale, Vector3.zero, lerpValue);
+
+                    yield return null;
+                }
+
+                //Make sure to stop the fire hand VFX
+                StopFireHandVFX();
+                PhotonNetwork.Destroy(target);
             }
-            
-            float timePassed = 0;
-            Vector3 initialScale = target.transform.localScale;
-
-            while (timePassed < scaleDownDuration)
-            {
-                timePassed += Time.deltaTime;
-                float lerpValue = timePassed / scaleDownDuration;
-
-                target.transform.localScale = Vector3.Lerp(initialScale, Vector3.zero, lerpValue);
-
-                yield return null;
-            }
-
-            Destroy(target);
         }
     }
 }

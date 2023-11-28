@@ -11,7 +11,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/ed6c4020915a41e1b5eb5e4c6a560e952d400/57/2787e814/BehaviorBricks.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Heroes/Teo/HeroesCombatTeo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Heroes/Teo/PlayerManagerTeo.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -103,6 +104,12 @@
       <workItem from="1699928661259" duration="190000" />
       <workItem from="1699928907250" duration="22000" />
       <workItem from="1700173291189" duration="394000" />
+      <workItem from="1700707263099" duration="392000" />
+      <workItem from="1700788443684" duration="1796000" />
+      <workItem from="1700870244229" duration="363000" />
+      <workItem from="1700970242854" duration="2405000" />
+      <workItem from="1701110462966" duration="6464000" />
+      <workItem from="1701122723330" duration="5381000" />
     </task>
     <servers />
   </component>

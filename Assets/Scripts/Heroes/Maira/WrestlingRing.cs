@@ -7,6 +7,7 @@ namespace Heroes.Maira
 {
     public class WrestlingRing : MonoBehaviour
     {
+        //Do we need to add photnoview here?
         void OnTriggerEnter(Collider other) 
         {
             if(other.gameObject.CompareTag("Hero"))

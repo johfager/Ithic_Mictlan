@@ -215,6 +215,7 @@ public class HeroesCombat : MonoBehaviour
                 }
                 else if(Input.GetKeyDown(KeyCode.E))
                 {
+                    Debug.Log("E");
                     HandleXoloCatch();
                 }
             }
@@ -223,7 +224,7 @@ public class HeroesCombat : MonoBehaviour
 
     private void HandleXoloCatch()
     {
-        Collider[] xolos = Physics.OverlapSphere(transform.position, 1.5f);
+        Collider[] xolos = Physics.OverlapSphere(transform.position, 2f);
 
         if(xolos != null)
         {
@@ -231,9 +232,10 @@ public class HeroesCombat : MonoBehaviour
             {
                 if(xolo.CompareTag("Xolo"))
                 {
-                    if(xolo.transform.GetChild(0).GetComponent<XoloController>() != null)
+                    if(xolo.transform.GetComponent<XoloitzcuintleController>() != null)
                     {
-                        xolo.transform.GetChild(0).GetComponent<XoloController>().CatchXolo();
+                        Debug.Log("GOT U >:C");
+                        xolo.transform.GetComponent<XoloitzcuintleController>().SetWasCatched();
                     }
 
                 }
