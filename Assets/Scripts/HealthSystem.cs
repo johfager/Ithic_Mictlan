@@ -15,6 +15,8 @@ public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
     // Object pooling variables
     private static Queue<GameObject> enemyPool = new Queue<GameObject>();
     private const int PoolSize = 10;
+    // Photon variables
+    [SerializeField] private PhotonView photonView;
 
     private void Start()
     {
@@ -33,31 +35,37 @@ public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
 
     public void HealPlayer(float damage)
     {
-        currentHealth += damage;
-        if (currentHealth > maxHealth)
+        if(photonView.IsMine)
         {
-            currentHealth = maxHealth;
-            Debug.Log("Health was maxed out");
+            currentHealth += damage;
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+                Debug.Log("Health was maxed out");
+            }
+
+            UpdateHealthUI();
+
+            // Sync health across the network
+            photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);  
         }
-
-        UpdateHealthUI();
-
-        // Sync health across the network
-        photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);
     }
 
     public void TakeDamage(float damage)
     {
-        Debug.Log($"{gameObject.name} took {damage} damage");
-        currentHealth -= damage;
-        UpdateHealthUI();
-
-        // Sync health across the network
-        photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);
-
-        if (currentHealth <= 0)
+        if(photonView.IsMine)
         {
-            HandleDeath();
+            Debug.Log($"{gameObject.name} took {damage} damage");
+            currentHealth -= damage;
+            UpdateHealthUI();
+
+            // Sync health across the network
+            photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);
+
+            if (currentHealth <= 0)
+            {
+                HandleDeath();
+            }
         }
     }
 

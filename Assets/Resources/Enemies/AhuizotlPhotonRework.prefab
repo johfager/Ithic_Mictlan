@@ -224,6 +224,7 @@ MonoBehaviour:
   currentHealth: 25
   uiManager: {fileID: 0}
   characterType: 1
+  photonView: {fileID: 6161007986518403341}
 --- !u!114 &6161007986518403341
 MonoBehaviour:
   m_ObjectHideFlags: 0
