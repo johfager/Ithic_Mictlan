@@ -1325,7 +1325,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemigos:
-  - {fileID: 5163296058186915139, guid: 9fa6f09a13c7cf343bfba5f9d4f2ad99, type: 3}
+  - {fileID: 5163296058186915139, guid: 81fee550851c9e342be5dc062007eb57, type: 3}
+  - {fileID: 5163296058186915139, guid: 81fee550851c9e342be5dc062007eb57, type: 3}
   cantidadEnemigos: 1
   radioSpawn: 3
   radioTrigger: 4
