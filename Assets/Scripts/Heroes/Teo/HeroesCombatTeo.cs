@@ -210,10 +210,17 @@ namespace Heroes.Teo
             ultimateAbilityCooldown = _heroStats.abilityAttributes.ultimateAbility.cooldown;
             
             _currentAttackDirection = Vector3.zero;
-            IsInCombatMode = true;
-            HandleAreaOfEffectDamage(10, transform.forward * 2, "ultimateSpear");
-            IsInCombatMode = false;
             StartAttackAnimation(currentAttack, ultimateAbility, _currentAttackDirection);
+
+            StartCoroutine(WaitForUltimateAnimation());
+        }
+
+        private IEnumerator WaitForUltimateAnimation()
+        {
+            yield return new WaitForSeconds(2f);
+            IsInCombatMode = true;
+            HandleAreaOfEffectDamage(10, transform.forward * 10, "ultimateSpear");
+            IsInCombatMode = false;
         }
 
         private void UpdateCooldowns()
