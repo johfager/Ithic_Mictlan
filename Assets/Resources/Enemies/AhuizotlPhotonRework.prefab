@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 6161007986518403341}
   - component: {fileID: 9140555687093773866}
   - component: {fileID: 1913540112163026390}
+  - component: {fileID: 4436594301497739987}
   m_Layer: 0
   m_Name: AhuizotlPhotonRework
   m_TagString: Untagged
@@ -127,7 +128,7 @@ Transform:
   m_GameObject: {fileID: 5163296058186915139}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.82, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -297,6 +298,27 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!65 &4436594301497739987
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5163296058186915139}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.42, z: 0.92}
+  m_Center: {x: 0, y: 0.28, z: 0}
 --- !u!1001 &896025199621359441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -311,7 +333,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2172201404112820252, guid: 9b660b04a48edf043bfa1d8e74fc80fa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.824
+      value: -0.43
       objectReference: {fileID: 0}
     - target: {fileID: 2172201404112820252, guid: 9b660b04a48edf043bfa1d8e74fc80fa, type: 3}
       propertyPath: m_LocalPosition.z
