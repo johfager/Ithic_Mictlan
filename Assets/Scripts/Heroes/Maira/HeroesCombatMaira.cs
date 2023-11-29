@@ -382,6 +382,7 @@ namespace Heroes.Maira
                         {
                             // Apply damage from the current attack
                             healthSystem.TakeDamage(attackDamage);
+                            mairaSounds.PlayHitVoice();
 
                         }
                         if (bossHealthSystem != null)

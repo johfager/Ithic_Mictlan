@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MairaSounds : MonoBehaviour
+public class RosaSounds : MonoBehaviour
 {
-    private AudioSource audioSource;
+    
+        private AudioSource audioSource;
 
     // Lists for different types of voice lines
     public AudioClip[] hability1VoiceLines;
@@ -66,13 +67,13 @@ public class MairaSounds : MonoBehaviour
     }
 
     // Call this method with the index of the voice line you want to play for Final Boss
-    public void PlayFinalBossVoice(int voiceLineIndex)
+    public void PlayFinalBossVoice()
     {
-        PlayVoice(finalBossVoiceLines, voiceLineIndex);
+        PlayRandomVoice(finalBossVoiceLines);
     }
 
     // Call this method with the index of the voice line you want to play for Selection
-    public void PlaySelectionVoice(int voiceLineIndex)
+    public void PlaySelectionVoice()
     {
         PlayRandomVoice(selectionVoiceLines);
     }

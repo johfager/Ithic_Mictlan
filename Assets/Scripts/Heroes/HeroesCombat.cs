@@ -61,6 +61,8 @@ public class HeroesCombat : MonoBehaviour
     private TextMeshProUGUI primaryAbilityCooldownText;
     private TextMeshProUGUI secondaryAbilityCooldownText;
     private TextMeshProUGUI ultimateAbilityCooldownText;
+
+    [SerializeField] private NachoSounds nachoSounds;
     private enum HeroesAttackState
     {
         Idle,
@@ -189,6 +191,7 @@ public class HeroesCombat : MonoBehaviour
                         currentAttack = "PrimaryAttack";
                         basicAttackCooldown = 0f;
                         StartAttackAnimation(currentAttack, primaryAttack);
+                        nachoSounds.PlayBasicAttackVoice();
                     }
                 }
                 else if (Input.GetMouseButtonDown(1))
@@ -197,6 +200,7 @@ public class HeroesCombat : MonoBehaviour
                     if (primaryAbilityCooldown <= 0.0f)
                     {
                         HandlePrimaryAbility();
+                        nachoSounds.PlayHability1Voice();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -204,6 +208,7 @@ public class HeroesCombat : MonoBehaviour
                     if (secondaryAbilityCooldown <= 0.0f)
                     {
                         HandleSecondaryAbility();
+                        nachoSounds.PlayHability2Voice();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Q))
@@ -211,6 +216,7 @@ public class HeroesCombat : MonoBehaviour
                     if (ultimateAbilityCooldown <= 0.0f)
                     {
                         HandleUltimateAbility();
+                        nachoSounds.PlayUltimateVoice();
                     }
                 }
                 else if(Input.GetKeyDown(KeyCode.E))
@@ -321,6 +327,7 @@ public class HeroesCombat : MonoBehaviour
                     {
                         // Apply damage from the current attack
                         healthSystem.TakeDamage(attackDamage);
+                        nachoSounds.PlayHitVoice();
                     }
                     if (bossHealthSystem != null)
                     {

@@ -75,6 +75,8 @@ namespace Heroes.Rosa
         private TextMeshProUGUI primaryAbilityCooldownText;
         private TextMeshProUGUI secondaryAbilityCooldownText;
         private TextMeshProUGUI ultimateAbilityCooldownText;
+
+        [SerializeField] private RosaSounds rosaSounds;
         private enum HeroesAttackState
         {
             Idle,
@@ -239,6 +241,7 @@ namespace Heroes.Rosa
                         currentAttack = "PrimaryAttack";
                         basicAttackCooldown = 0f; 
                         StartAttackAnimation(currentAttack, primaryAttack);
+                        rosaSounds.PlayBasicAttackVoice();
                     }
                 }
                 else if (Input.GetMouseButtonDown(1))
@@ -247,6 +250,7 @@ namespace Heroes.Rosa
                     if (primaryAbilityCooldown <= 0.0f)
                     {
                         HandlePrimaryAbility();
+                        rosaSounds.PlayHability1Voice();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -254,6 +258,7 @@ namespace Heroes.Rosa
                     if (secondaryAbilityCooldown <= 0.0f)
                     {
                         HandleSecondaryAbility();
+                        rosaSounds.PlayHability2Voice();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Q))
@@ -263,6 +268,7 @@ namespace Heroes.Rosa
                         if (ultimateAbilityCooldown <= 0.0f)
                         {
                             HandleUltimateAbility();
+                            rosaSounds.PlayUltimateVoice();
                         }
                     }
                 }
@@ -480,6 +486,7 @@ namespace Heroes.Rosa
                             _totalMadness += currentMadness;
                             // Apply damage from the current attack
                             healthSystem.TakeDamage(attackDamage);
+                            rosaSounds.PlayHitVoice();
                         }
                         if (bossHealthSystem != null)
                         {
