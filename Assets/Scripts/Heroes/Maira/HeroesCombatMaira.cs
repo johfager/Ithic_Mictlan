@@ -64,7 +64,7 @@ namespace Heroes.Maira
         private TextMeshProUGUI ultimateAbilityCooldownText;
 
         
-        public MairaSounds mairaSounds;
+        [SerializeField] private MairaSounds mairaSounds;
         private enum HeroesAttackState
         {
             Idle,

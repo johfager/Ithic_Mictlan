@@ -23,6 +23,10 @@ public class UISelectScreenManager : MonoBehaviour
     [SerializeField] private Spawner xoloSpawner;
     [SerializeField] private Sprite[] normalSprites;
     [SerializeField] private Sprite[] selectedSprites;
+    [SerializeField] private MairaSounds mairaSounds;
+    [SerializeField] private RosaSounds rosaSounds;
+    [SerializeField] private TeoSounds teoSounds;
+    [SerializeField] private NachoSounds nachoSounds;
 
     private int HeroID;
     private int playersReady;
@@ -72,21 +76,25 @@ public class UISelectScreenManager : MonoBehaviour
         {
             HeroID = 0;
             ChangeSelectedSprite(0);
+            mairaSounds.PlaySelectionVoice();
         }
         if(name == "Teo")
         {
             HeroID = 1;
             ChangeSelectedSprite(1);
+            teoSounds.PlaySelectionVoice();
         }
         if(name == "Ignacio")
         {
             HeroID = 2;
             ChangeSelectedSprite(2);
+            nachoSounds.PlaySelectionVoice();
         }
         if(name == "Rosa")
         {
             HeroID = 3;
             ChangeSelectedSprite(3);
+            rosaSounds.PlaySelectionVoice();
         }
 
     }
