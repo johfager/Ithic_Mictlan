@@ -62,6 +62,9 @@ namespace Heroes.Maira
         private TextMeshProUGUI primaryAbilityCooldownText;
         private TextMeshProUGUI secondaryAbilityCooldownText;
         private TextMeshProUGUI ultimateAbilityCooldownText;
+
+        
+        public MairaSounds mairaSounds;
         private enum HeroesAttackState
         {
             Idle,
@@ -198,7 +201,8 @@ namespace Heroes.Maira
                         currentAttack = "PrimaryAttack";
                         basicAttackCooldown = 0f;
                         _currentAttackDirection = transform.forward * 2;
-                    StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection);
+                       StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection);
+                       mairaSounds.PlayBasicAttackVoice();
                     }
                 }
                 else if (Input.GetMouseButtonDown(1))
@@ -207,6 +211,7 @@ namespace Heroes.Maira
                     if (primaryAbilityCooldown <= 0.0f)
                     {
                         HandlePrimaryAbility();
+                        mairaSounds.PlayHability1Voice();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -214,6 +219,7 @@ namespace Heroes.Maira
                     if (secondaryAbilityCooldown <= 0.0f)
                     {
                         HandleSecondaryAbility();
+                        mairaSounds.PlayHability2Voice();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Q))
@@ -221,6 +227,7 @@ namespace Heroes.Maira
                     if (ultimateAbilityCooldown <= 0.0f)
                     {
                         HandleUltimateAbility();
+                        mairaSounds.PlayUltimateVoice();
                     }
                 }
                 else if(Input.GetKeyDown(KeyCode.E))
@@ -375,6 +382,8 @@ namespace Heroes.Maira
                         {
                             // Apply damage from the current attack
                             healthSystem.TakeDamage(attackDamage);
+                            mairaSounds.PlayHitVoice();
+
                         }
                         if (bossHealthSystem != null)
                         {

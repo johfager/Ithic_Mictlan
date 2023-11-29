@@ -42,6 +42,7 @@ namespace Heroes.Teo
         public Slider progressBar; 
 
         private bool firstClick = true;
+        
 
         
     
@@ -72,6 +73,8 @@ namespace Heroes.Teo
         private TextMeshProUGUI primaryAbilityCooldownText;
         private TextMeshProUGUI secondaryAbilityCooldownText;
         private TextMeshProUGUI ultimateAbilityCooldownText;
+
+        [SerializeField] private TeoSounds teoSounds;
         private enum HeroesAttackState
         {
             Idle,
@@ -247,6 +250,7 @@ namespace Heroes.Teo
                         _currentAttackDirection = transform.forward * 2;
                         spearPrefab.transform.localScale = new Vector3(0.01585224f, 0.6414995f, 0.01585224f);
                        StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection);
+                       teoSounds.PlayBasicAttackVoice();
                     }
                 }
                 else if (Input.GetMouseButtonDown(1))
@@ -255,6 +259,7 @@ namespace Heroes.Teo
                     if (primaryAbilityCooldown <= 0.0f)
                     {
                         HandlePrimaryAbilityFirst();
+                        teoSounds.PlayHability1Voice();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -262,6 +267,7 @@ namespace Heroes.Teo
                     if (secondaryAbilityCooldown <= 0.0f)
                     {
                         HandleSecondaryAbility();
+                        teoSounds.PlayHability2Voice();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Q))
@@ -269,6 +275,7 @@ namespace Heroes.Teo
                     if (ultimateAbilityCooldown <= 0.0f)
                     {
                         HandleUltimateAbility();
+                        teoSounds.PlayUltimateVoice();
                     }
                 }
                 else if(Input.GetKeyDown(KeyCode.E))
@@ -398,6 +405,7 @@ namespace Heroes.Teo
                         {
                             // Apply damage from the current attack
                             healthSystem.TakeDamage(attackDamage);
+                            teoSounds.PlayHitVoice();
                         }
                         if (bossHealthSystem != null)
                         {
