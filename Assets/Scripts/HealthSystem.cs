@@ -159,10 +159,10 @@ public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
             //photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);
             photonMatchManager.ChangeStatSent(PhotonNetwork.LocalPlayer.ActorNumber, 1, -(int)damage);
 
-            if (currentHealth <= 0)
+            /*if (currentHealth <= 0)
             {
                 HandleDeath();
-            }
+            }*/
         }
     }
 

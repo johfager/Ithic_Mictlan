@@ -65,6 +65,10 @@ public class ChanequeEnemy : MonoBehaviourPun
         // Check if this is the local player's enemy
         if (photonView.IsMine)
         {
+            if(_healthSystem.currentHealth <= 0)
+            {
+                StartCoroutine(KillChaneque());
+            }
             // Your AI logic to determine when to switch states
             closestTarget = GetClosestTarget();
 
@@ -90,6 +94,12 @@ public class ChanequeEnemy : MonoBehaviourPun
                 ChangeState(ChanequeState.Idle);
             }
         }
+    }
+
+    private IEnumerator KillChaneque()
+    {
+        yield return new WaitForSeconds(2f);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     private void ChangeState(ChanequeState newState)
