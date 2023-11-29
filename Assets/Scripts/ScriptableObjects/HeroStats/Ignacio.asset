@@ -13,19 +13,29 @@ MonoBehaviour:
   m_Name: Ignacio
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
-    characterName: default
+    characterName: Ignacio
+    description: "Un joven servicial y simp\xE1tico, que siempre quiere ayudar a
+      los dem\xE1s. Como elegido del sol y la luna, tiene el poder de hacer que la
+      vida florezca o se marchite a su voluntad. (Antepasado: Icniuhtli, \u201CEl
+      juez de las estrellas\u201D)"
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1
     jumpHeight: 15.5
     jumpAgility: 5
     sprintSpeedMultiplier: 2
+    sprintGradualAcceleration: 5
   healthAttributes:
     maxHealth: 200
     healthRegen: 0.1
-    currentHealth: 200
   combatAttributes:
     basicAttackDamage: 10
     attackSpeed: 1
+    criticalHitChance: 1
+    defense: 1
   lassoAttributes:
     lassoCircleDiameter: 10
+  abilityAttributes:
+    primaryAbility: {fileID: 0}
+    secondaryAbility: {fileID: 0}
+    ultimateAbility: {fileID: 0}

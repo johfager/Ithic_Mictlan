@@ -11,7 +11,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/ed6c4020915a41e1b5eb5e4c6a560e952d400/57/2787e814/BehaviorBricks.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Downloads/ItemManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Heroes/Teo/HeroesCombatTeo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Heroes/Teo/PlayerManagerTeo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Heroes/Teo/SpearRain.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -38,15 +41,23 @@
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\avata\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\avata\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\avata\\AppData\\Local\\Symbols\\src&quot;
+      &quot;C:\\Users\\ricar\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\ricar\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\ricar\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/Builds/VideoGame_Icthi_Mictlan.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\ricar\Icthi_Mictlan\Builds" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity 2022.3.7f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.7f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath C:\Users\avata\OneDrive\Documentos\GitHub\Icthi_Mictlan -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="C:\Users\avata\OneDrive\Documentos\GitHub\Icthi_Mictlan" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -54,7 +65,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity 2022.3.7f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.7f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath C:\Users\avata\OneDrive\Documentos\GitHub\Icthi_Mictlan -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="C:\Users\avata\OneDrive\Documentos\GitHub\Icthi_Mictlan" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -94,6 +105,14 @@
       <workItem from="1699843740980" duration="594000" />
       <workItem from="1699928661259" duration="190000" />
       <workItem from="1699928907250" duration="22000" />
+      <workItem from="1700173291189" duration="394000" />
+      <workItem from="1700707263099" duration="392000" />
+      <workItem from="1700788443684" duration="1796000" />
+      <workItem from="1700870244229" duration="363000" />
+      <workItem from="1700970242854" duration="2405000" />
+      <workItem from="1701110462966" duration="6464000" />
+      <workItem from="1701122723330" duration="16855000" />
+      <workItem from="1701192011123" duration="19380000" />
     </task>
     <servers />
   </component>

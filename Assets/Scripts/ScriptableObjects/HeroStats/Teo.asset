@@ -13,19 +13,28 @@ MonoBehaviour:
   m_Name: Teo
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
-    characterName: default
+    characterName: Teo
+    description: "Una persona de pocas palabras, pero de acciones decisivas. Teo
+      cazara a todo aquel que se interponga entre su deber como guardi\xE1n del quinto
+      sol. (Antepasado: Tlapaltic, \u201CEl guardi\xE1n de los cielos\u201D)"
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1
     jumpHeight: 15.5
     jumpAgility: 5
     sprintSpeedMultiplier: 2
+    sprintGradualAcceleration: 5
   healthAttributes:
     maxHealth: 200
     healthRegen: 0.1
-    currentHealth: 200
   combatAttributes:
     basicAttackDamage: 10
     attackSpeed: 1
+    criticalHitChance: 1
+    defense: 1
   lassoAttributes:
     lassoCircleDiameter: 10
+  abilityAttributes:
+    primaryAbility: {fileID: 11400000, guid: 320a1e6bb9eead44db5076d138557eb3, type: 2}
+    secondaryAbility: {fileID: 11400000, guid: bad4bdeefd0a8ee468279ea3b63755da, type: 2}
+    ultimateAbility: {fileID: 11400000, guid: 4c3665d2e1c042c4fb5e176d8d34cda2, type: 2}

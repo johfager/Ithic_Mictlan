@@ -1,6 +1,7 @@
 using UnityEngine;
-
+using Photon.Pun;
 namespace Heroes
+
 {
     public class PlayerManager : MonoBehaviour
     {
@@ -8,51 +9,37 @@ namespace Heroes
         public HeroesCombat heroesCombatScript;
         public HeroStats heroStats;
         private bool isMoving = true;
-        public GameObject heroModel;
+        [SerializeField] private PhotonView photonView;
 
         void Start()
         {
             HealthSystem healthSystem = GetComponent<HealthSystem>();
-            healthSystem.Initialize(heroStats.healthAttributes.maxHealth);
+            healthSystem.InitializeHealth(heroStats.healthAttributes.maxHealth);
             playerMovement = GetComponent<PlayerMovement>();
             heroesCombatScript = GetComponent<HeroesCombat>();
         }
 
         void Update()
         {
-            // // Check if the player is in combat mode
-            // if (mairaCombatScript.IsInCombatMode)
-            // {
-            //     isMoving = false; // Disable movement
-            // }
-            // else
-            // {
-            //     isMoving = true; // Enable movement
-            // }
+            if(photonView.IsMine)
+            {
+                // Check if the player is in combat mode
+                if (heroesCombatScript.IsInCombatMode)
+                {
+                    isMoving = false; // Disable movement
+                }
+                else
+                {
+                    isMoving = true; // Enable movement
+                }
 
-            // if (isMoving)
-            // {
-            //     playerMovement.HandleMovement();
-            // }
-            // Debug.Log("combat mode is: " + mairaCombatScript.IsInCombatMode.ToString());
-            // mairaCombatScript.HandleAttackStateMachine();
-        
-            // Check if the player is in combat mode
-            if (heroesCombatScript.IsInCombatMode)
-            {
-                isMoving = false; // Disable movement
+                if (isMoving)
+                {
+                    playerMovement.HandleMovement();
+                }
+            //Debug.Log("combat mode is: " + heroesCombatScript.IsInCombatMode.ToString());
+                heroesCombatScript.HandleAttackStateMachine();
             }
-            else
-            {
-                isMoving = true; // Enable movement
-            }
-
-            if (isMoving)
-            {
-                playerMovement.HandleMovement();
-            }
-            Debug.Log("combat mode is: " + heroesCombatScript.IsInCombatMode.ToString());
-            heroesCombatScript.HandleAttackStateMachine();
 
         
         }

@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
 using Heroes;
 using UnityEngine;
 using TMPro;
 using UnityEditor;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class HeroesCombat : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class HeroesCombat : MonoBehaviour
     private float lastComboEnd;
     private int comboCounter;
     private Animator anim;
+    private RuntimeAnimatorController originalAnim;
 
     private float followUpAttackTimer = 0.0f; //Not used
     private float attackDamage;
@@ -26,11 +29,13 @@ public class HeroesCombat : MonoBehaviour
     private string currentAttack;
 
     public TextMeshProUGUI combatStateText;
-    [SerializeField] float comboTime = 0.4f;
+    [SerializeField] float comboTime = 0.2f;
 
     private PlayerManager playerManager; //Not used
     public bool IsInCombatMode;
-    
+
+    //Photon variables
+    [SerializeField] private PhotonView photonView;
     
     //For UI
     [SerializeField] private int primaryAbilityTimerUI;
@@ -56,6 +61,8 @@ public class HeroesCombat : MonoBehaviour
     private TextMeshProUGUI primaryAbilityCooldownText;
     private TextMeshProUGUI secondaryAbilityCooldownText;
     private TextMeshProUGUI ultimateAbilityCooldownText;
+
+    [SerializeField] private NachoSounds nachoSounds;
     private enum HeroesAttackState
     {
         Idle,
@@ -79,6 +86,8 @@ public class HeroesCombat : MonoBehaviour
         
         combatStateText.enabled = false; // Hide the debug text
         anim = GetComponent<Animator>();
+        originalAnim = anim.runtimeAnimatorController;
+        
         playerManager = GetComponentInParent<PlayerManager>(); // Get the PlayerManager reference
         
     }
@@ -113,8 +122,6 @@ public class HeroesCombat : MonoBehaviour
                 }
                 else
                 {
-                    //cooldownImage.fillAmount = cooldown / initialCooldownValue; // Update the fill amount
-                    Debug.Log("Current Cooldown is: " + cooldown.ToString("F1") + " seconds");
                     cooldownText.text = cooldown.ToString("F1"); // Display cooldown timer
                 }
             }
@@ -130,8 +137,7 @@ public class HeroesCombat : MonoBehaviour
             primaryAbilityCooldownText.enabled = true;
         }
         primaryAbilityCooldown = _heroStats.abilityAttributes.primaryAbility.cooldown;
-        Debug.Log("This is primaryAbilityCooldown: " + primaryAbilityCooldown.ToString("F1") + " seconds");
-        StartCoroutine(StartAttackAnimation(currentAttack, primaryAbility));
+        StartAttackAnimation(currentAttack, primaryAbility);
     }
 
 
@@ -145,7 +151,7 @@ public class HeroesCombat : MonoBehaviour
         }
         secondaryAbilityCooldown = _heroStats.abilityAttributes.secondaryAbility.cooldown;
 
-        StartCoroutine(StartAttackAnimation(currentAttack, secondaryAbility));
+        StartAttackAnimation(currentAttack, secondaryAbility);
     }
 
     private void HandleUltimateAbility()
@@ -157,7 +163,7 @@ public class HeroesCombat : MonoBehaviour
             ultimateAbilityCooldownText.enabled = true;
         }
         ultimateAbilityCooldown = _heroStats.abilityAttributes.ultimateAbility.cooldown;
-        StartCoroutine(StartAttackAnimation(currentAttack, ultimateAbility));
+        StartAttackAnimation(currentAttack, ultimateAbility);
     }
 
     private void UpdateCooldowns()
@@ -169,77 +175,130 @@ public class HeroesCombat : MonoBehaviour
     
     public void HandleAttackStateMachine()
     {
-        if (currentHeroesAttackState == HeroesAttackState.Idle)
+        if(photonView.IsMine)
         {
-            if (Input.GetMouseButtonDown(0))
+            if(currentAttack != null)
             {
-                if (basicAttackCooldown <= 0.0f)
-                {
-                    currentAttack = "PrimaryAttack";
-                    basicAttackCooldown = 0.1f;
-                    StartCoroutine(StartAttackAnimation(currentAttack, primaryAttack));
-                }
+                ExitAttack(currentAttack);
             }
-            else if (Input.GetMouseButtonDown(1))
+            if (currentHeroesAttackState == HeroesAttackState.Idle)
             {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (basicAttackCooldown <= 0.0f)
+                    {
+                        
+                        currentAttack = "PrimaryAttack";
+                        basicAttackCooldown = 0f;
+                        StartAttackAnimation(currentAttack, primaryAttack);
+                        nachoSounds.PlayBasicAttackVoice();
+                    }
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
 
-                if (primaryAbilityCooldown <= 0.0f)
+                    if (primaryAbilityCooldown <= 0.0f)
+                    {
+                        HandlePrimaryAbility();
+                        nachoSounds.PlayHability1Voice();
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.LeftShift))
                 {
-                    HandlePrimaryAbility();
+                    if (secondaryAbilityCooldown <= 0.0f)
+                    {
+                        HandleSecondaryAbility();
+                        nachoSounds.PlayHability2Voice();
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    if (ultimateAbilityCooldown <= 0.0f)
+                    {
+                        HandleUltimateAbility();
+                        nachoSounds.PlayUltimateVoice();
+                    }
+                }
+                else if(Input.GetKeyDown(KeyCode.E))
+                {
+                    Debug.Log("E");
+                    HandleXoloCatch();
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.LeftShift))
+        }
+    }
+
+    private void HandleXoloCatch()
+    {
+        Collider[] xolos = Physics.OverlapSphere(transform.position, 2f);
+
+        if(xolos != null)
+        {
+            foreach (Collider xolo in xolos)
             {
-                if (secondaryAbilityCooldown <= 0.0f)
+                if(xolo.CompareTag("Xolo"))
                 {
-                    HandleSecondaryAbility();
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.Q))
-            {
-                if (ultimateAbilityCooldown <= 0.0f)
-                {
-                    HandleUltimateAbility();
+                    if(xolo.transform.GetComponent<XoloitzcuintleController>() != null)
+                    {
+                        Debug.Log("GOT U >:C");
+                        xolo.transform.GetComponent<XoloitzcuintleController>().SetWasCatched();
+                    }
+
                 }
             }
         }
     }
 
 
-    private IEnumerator StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType)
+    private void StartAttackAnimation(string attackAnimationName, List<HeroAttackObject> attackType)
     {
+        if (attackType.Count <= comboCounter)
+            {
+                comboCounter = 0;
+                anim.SetInteger("AttackCombo", 0);                
+        }
         IsInCombatMode = true;
-        if (Time.time - lastComboEnd > 0.5f && comboCounter < attackType.Count)
-        {
+        if ((Time.time - lastComboEnd > 0.1f && comboCounter < attackType.Count))
+        {   
             CancelInvoke("EndCombo");
-
             if (Time.time - lastClickedTime >= comboTime)
             {
-                anim.runtimeAnimatorController = attackType[comboCounter].animatorOV;
-                anim.Play(attackAnimationName, 0, 0);
+                if(attackType.Count > 1)
+                {
+                    anim.SetInteger("AttackCombo", comboCounter + 1);
+                } else {
+                    if(attackAnimationName == "PrimaryAbility")
+                    {
+                        anim.SetBool("IsPrimaryAbility", true);
+                    } else if(attackAnimationName == "SecondaryAbility")
+                    {
+                        anim.SetBool("IsSecondaryAbility", true);
+                    } else if(attackAnimationName == "UltimateAbility")
+                    {
+                        anim.SetBool("IsUltimateAbility", true);
+                    }
+                }
+                comboCounter++;
+                lastClickedTime = Time.time;
                 attackDamage = attackType[comboCounter].damage;
                 Debug.Log($"Current attack is dealing {attackDamage} damage");
                 attackAoE = attackType[comboCounter].areaOfEffect;
                 HandleAreaOfEffectDamage();
-                comboCounter++;
-                lastClickedTime = Time.time;
+
                 if (comboCounter >= attackType.Count)
                 {
                     comboCounter = 0;
                 }
             }
         }
-        StartCoroutine(ResetCooldown(currentAttack));
         Debug.Log($"Starting cooldown for {currentAttack}.");
+        StartCoroutine(ResetCooldown(currentAttack));
+
+
         // Wait for the animation to finish
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-
+       // yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         IsInCombatMode = false;
-
-        
         ExitAttack(currentAttack);
-
-
     }
 
     private void OnDrawGizmos()
@@ -268,6 +327,7 @@ public class HeroesCombat : MonoBehaviour
                     {
                         // Apply damage from the current attack
                         healthSystem.TakeDamage(attackDamage);
+                        nachoSounds.PlayHitVoice();
                     }
                     if (bossHealthSystem != null)
                     {
@@ -356,14 +416,13 @@ private IEnumerator ResetCooldown(string cooldownType)
 
 
 
-    void ExitAttack(string attackTagName)
+void ExitAttack(string attackTagName)
     {
         if (attackTagName != null)
         {
-            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f &&
-                anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName))
+            if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag(attackTagName))
             {
-                Invoke("EndCombo", 1);
+                Invoke("EndCombo", 0f);
             }
         }
     }
@@ -371,6 +430,10 @@ private IEnumerator ResetCooldown(string cooldownType)
     void EndCombo()
     {
         comboCounter = 0;
+        anim.SetInteger("AttackCombo", 0);
+        anim.SetBool("IsPrimaryAbility", false);
+        anim.SetBool("IsSecondaryAbility", false);
+        anim.SetBool("IsUltimateAbility", false);
         lastComboEnd = Time.time;
     }
 }

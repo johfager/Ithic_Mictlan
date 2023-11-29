@@ -8,6 +8,9 @@ TagManager:
   - Floor
   - Grass
   - Enemy
+  - Ground
+  - Xolo
+  - Photon
   layers:
   - Default
   - TransparentFX
@@ -18,8 +21,8 @@ TagManager:
   - NotPostProcessing
   - Enemy
   - Boss
-  - 
-  - 
+  - Ground
+  - Player
   - 
   - 
   - 

@@ -12,4 +12,9 @@ public class HeroAttackObject : ScriptableObject
     public float cooldown = 5.0f;
     public string name = "default";
     public string description = "default";
+
+    
+    //Only for Rosa
+    [Header("Only used for Rosa, leave at 0 if not Rosa")]
+    public float madnessValue = 0.0f;
 }
