@@ -833,6 +833,7 @@ MonoBehaviour:
   uiManager: {fileID: 8149308785772166330}
   characterType: 1
   photonView: {fileID: 257611792899789063}
+  photonMatchManager: {fileID: 0}
 --- !u!114 &257611792899789063
 MonoBehaviour:
   m_ObjectHideFlags: 0
