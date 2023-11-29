@@ -42,7 +42,7 @@ namespace Heroes.Teo
         public Slider progressBar; 
 
         private bool firstClick = true;
-        [SerializeField] private TeoSounds teoSounds;
+        
 
         
     
@@ -73,6 +73,8 @@ namespace Heroes.Teo
         private TextMeshProUGUI primaryAbilityCooldownText;
         private TextMeshProUGUI secondaryAbilityCooldownText;
         private TextMeshProUGUI ultimateAbilityCooldownText;
+
+        [SerializeField] private TeoSounds teoSounds;
         private enum HeroesAttackState
         {
             Idle,
