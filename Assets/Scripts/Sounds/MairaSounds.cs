@@ -72,7 +72,7 @@ public class MairaSounds : MonoBehaviour
     }
 
     // Call this method with the index of the voice line you want to play for Selection
-    public void PlaySelectionVoice(int voiceLineIndex)
+    public void PlaySelectionVoice()
     {
         PlayRandomVoice(selectionVoiceLines);
     }
