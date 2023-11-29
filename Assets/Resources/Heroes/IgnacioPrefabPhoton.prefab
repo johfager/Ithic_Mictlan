@@ -258,6 +258,7 @@ MonoBehaviour:
   primaryAbilityCooldownImage: {fileID: 0}
   secondaryAbilityCooldownImage: {fileID: 0}
   ultimateAbilityCooldownImage: {fileID: 0}
+  nachoSounds: {fileID: 0}
 --- !u!114 &3426769998037791045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,6 +275,8 @@ MonoBehaviour:
   currentHealth: 0
   uiManager: {fileID: 0}
   characterType: 0
+  photonView: {fileID: 0}
+  photonMatchManager: {fileID: 0}
 --- !u!95 &6670168449147886222
 Animator:
   serializedVersion: 5

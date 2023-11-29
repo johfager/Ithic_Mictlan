@@ -411,6 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xolosInScene: 0
   xoloSpawner: {fileID: 0}
+  chanequeSpawner: {fileID: 0}
 --- !u!4 &220240800
 Transform:
   m_ObjectHideFlags: 0
@@ -1665,6 +1666,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 257611792899789063, guid: 5b2d0db05a3365441ba8205ce1025b89, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2480105965934574462, guid: 5b2d0db05a3365441ba8205ce1025b89, type: 3}
       propertyPath: m_LocalPosition.x
       value: 486.6

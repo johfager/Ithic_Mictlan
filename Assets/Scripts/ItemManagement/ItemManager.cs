@@ -12,10 +12,16 @@ public class ItemManager : MonoBehaviour
     public Item[] CommonItemPool;
     // Array containing items of the rare rarity (2)
     public Item[] RareItemPool;
+    public Item[] VeryRareItemPool;
+    public Item[] LegendaryItemPool;
+    public Item[] JaguarWarriorItemPool;
+
 
     // Editor references to Prefabs and Sprites for common items that have them
     [SerializeField] public GameObject[] CommonItemPrefabs;
     [SerializeField] public Sprite[] CommonItemSprites;
+
+
 
 
     void Awake(){
@@ -56,9 +62,9 @@ public class ItemManager : MonoBehaviour
             new BuffConsumable {
             
                 id = 301,
-                name = "Makahuitl",
+                name = "Lanza Eterea",
                 rarity = 1,
-                description = "Incrementa el daño base del usuario en 15%", 
+                description = "Incrementa el daño base del usuario por 15%", 
 
 
                 healthBuff = 1f,
@@ -79,9 +85,9 @@ public class ItemManager : MonoBehaviour
 
             new BuffConsumable {
                 id = 302,
-                name = "Escudo de guerrero",
+                name = "Amuleto Eclipse",
                 rarity = 1,
-                description = "Incrementa la defensa base del usuario en 15%", 
+                description = "Incrementa la defensa base del usuario por 15%", 
 
 
                 healthBuff = 1f,
@@ -102,9 +108,9 @@ public class ItemManager : MonoBehaviour
 
             new BuffConsumable {
                 id = 302,
-                name = "Colgante de obsidiana",
-                rarity = 1,
-                description = "Incrementa la probabilidad de critco del usuario en 15%", 
+                name = "Colgante de Tlapaltic",
+                rarity = 2,
+                description = "Incrementa la probabilidad de critco del usuario por 15%", 
 
                 healthBuff = 1f,
                 defenseBuff = 1f,
@@ -120,19 +126,16 @@ public class ItemManager : MonoBehaviour
 
                 itemSprite = CommonItemSprites[2],
                 
-            }, 
+            },
+
+
+
+
             
 
         };
 
-        RareItemPool = new Item[] {
-            new ActiveItem{
-                id = 201,
-                name = "Orbe misterioso",
-                rarity = 2,
-                description = "Un orbe misterioso. Su efecto es aleatorio",  
-            },
-        };
+
         
 
     }

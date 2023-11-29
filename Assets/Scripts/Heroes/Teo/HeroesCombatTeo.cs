@@ -288,7 +288,7 @@ namespace Heroes.Teo
         
         private void HandleXoloCatch()
         {
-            Collider[] xolos = Physics.OverlapSphere(transform.position, 1.5f);
+            Collider[] xolos = Physics.OverlapSphere(transform.position + transform.forward * 2, 2f);
 
             if(xolos != null)
             {
@@ -296,9 +296,9 @@ namespace Heroes.Teo
                 {
                     if(xolo.CompareTag("Xolo"))
                     {
-                        if(xolo.transform.GetChild(0).GetComponent<XoloController>() != null)
+                        if(xolo.GetComponent<XoloitzcuintleController>() != null)
                         {
-                            xolo.transform.GetChild(0).GetComponent<XoloController>().CatchXolo();
+                            xolo.GetComponent<XoloitzcuintleController>().SetWasCatched();
                         }
 
                     }

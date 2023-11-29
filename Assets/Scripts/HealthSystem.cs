@@ -22,7 +22,6 @@ public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
     private void Start()
     {
         photonMatchManager = GameObject.FindWithTag("Photon").GetComponent<PhotonMatchManager>();
-        InitializeHealth(maxHealth);
     }
 
     public void InitializeHealth(float health)
@@ -84,7 +83,7 @@ public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
     private void OnEnable()
     {
         // If the GameObject is activated, reset its health to the maximum
-        InitializeHealth(maxHealth);
+        // InitializeHealth(maxHealth);
     }
 
     private void OnDisable()

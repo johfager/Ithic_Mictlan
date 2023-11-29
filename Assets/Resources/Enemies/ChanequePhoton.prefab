@@ -830,7 +830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  uiManager: {fileID: 8149308785772166330}
+  uiManager: {fileID: 0}
   characterType: 1
   photonView: {fileID: 257611792899789063}
   photonMatchManager: {fileID: 0}
