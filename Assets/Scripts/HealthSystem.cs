@@ -138,7 +138,7 @@ public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
             }
 
             UpdateHealthUI();
-            photonMatchManager.ChangeStatSent(PhotonNetwork.LocalPlayer.ActorNumber, 1, (int)currentHealth);
+            photonMatchManager.ChangeStatSent(PhotonNetwork.LocalPlayer.ActorNumber, 1, (int)damage);
 
 
             // Sync health across the network
@@ -157,7 +157,7 @@ public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
 
             // Sync health across the network
             //photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);
-            photonMatchManager.ChangeStatSent(PhotonNetwork.LocalPlayer.ActorNumber, 1, (int)damage);
+            photonMatchManager.ChangeStatSent(PhotonNetwork.LocalPlayer.ActorNumber, 1, -(int)damage);
 
             if (currentHealth <= 0)
             {

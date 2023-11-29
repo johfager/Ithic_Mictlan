@@ -169,7 +169,7 @@ public class PhotonMatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
                             Debug.Log($"Player [{_playersInfo[i].PlayerName}] has [{_playersInfo[i].HeroID}] as hero ID");
                             break;
                         case 1:
-                            _playersInfo[i].Health -= amountToChange;
+                            _playersInfo[i].Health += amountToChange;
                             Debug.Log($"Player [{_playersInfo[i].Health}] has [{_playersInfo[i].Health}] of health");
                             break;
                         default:
