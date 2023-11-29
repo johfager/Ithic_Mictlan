@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
     characterName: Maira
-    description: "Es una chica con mucha confianza en su fuerza y liderazgo. Seg\xFAn
-      sus propias palabras, no hay quien pueda hacerle frente en una pelea. Puede
-      caer en la arrogancia e impulsividad, pues su car\xE1cter es explosivo. Sin
-      embargo, su gran personalidad es el pilar que une al equipo m\xE1s oscuro,
-      ya que demuestra seguridad y transmite un sentimiento de invencibilidad/protecci\xF3n."
+    description: "Una chica cuya fortaleza f\xEDsica y mental no tienen comparaci\xF3n,
+      dentro y fuera del cuadril\xE1tero. Maira fue bendecida con el esp\xEDritu
+      del jaguar para proteger al quinto sol y a sus amigos. (Antepasada: Aymara,
+      \u201CLa fuerza de la selva\u201D)"
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1
