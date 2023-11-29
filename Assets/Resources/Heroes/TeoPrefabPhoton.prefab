@@ -797,6 +797,7 @@ GameObject:
   - component: {fileID: 3254057524418266246}
   - component: {fileID: 384116782914003791}
   - component: {fileID: -4735488594569743056}
+  - component: {fileID: -5897997881727394826}
   m_Layer: 0
   m_Name: TeoPrefabPhoton
   m_TagString: Hero
@@ -1069,6 +1070,20 @@ MonoBehaviour:
   lerpDuration: 1
   duration: 5
   _photonView: {fileID: 5343854590293816274}
+--- !u!114 &-5897997881727394826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7341672714092922010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566a0c9700f31d74aa1a00e090f7d94d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ultimateSpear: {fileID: 8179672144228715379, guid: 46e00eb54568730498a9b7e2dc6b1507, type: 3}
+  rainSpear: {fileID: 8725111648486407573, guid: 0365831aa045f414baec5c81801ee4a4, type: 3}
 --- !u!1 &8025508543236813704
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: TeoUltimateAbility
   m_EditorClassIdentifier: 
   animatorOV: {fileID: 22100000, guid: be55fe207df09b6448bb26db08b2c562, type: 2}
-  damage: 5
+  damage: 1
+  areaOfEffect: 3
+  cooldown: 15
+  name: default
+  description: default
+  madnessValue: 0

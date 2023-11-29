@@ -42,6 +42,7 @@ namespace Heroes.Teo
         public Slider progressBar; 
 
         private bool firstClick = true;
+
         
     
         //For hitboxes
@@ -53,6 +54,8 @@ namespace Heroes.Teo
         [SerializeField] HeroStats _heroStats;
     
         [SerializeField] private PhotonView _photonView;
+
+        private SpearRain _spearRain;
 
         
         private float basicAttackCooldown = 0.0f;
@@ -99,7 +102,8 @@ namespace Heroes.Teo
             originalAnim = anim.runtimeAnimatorController;
         
             playerManager = GetComponentInParent<PlayerManager>(); // Get the PlayerManager reference
-        
+            _spearRain = GetComponent<SpearRain>();
+
         }
     
         private void InitializeCooldownUI(Image cooldownImage, ref TextMeshProUGUI cooldownText)
@@ -206,7 +210,9 @@ namespace Heroes.Teo
             ultimateAbilityCooldown = _heroStats.abilityAttributes.ultimateAbility.cooldown;
             
             _currentAttackDirection = Vector3.zero;
-            HandleAreaOfEffectDamage(10, transform.position + transform.forward * 5, "");
+            IsInCombatMode = true;
+            HandleAreaOfEffectDamage(10, transform.forward * 2, "ultimateSpear");
+            IsInCombatMode = false;
             StartAttackAnimation(currentAttack, ultimateAbility, _currentAttackDirection);
         }
 
@@ -322,7 +328,6 @@ namespace Heroes.Teo
                     attackDamage = attackType[comboCounter].damage * attackDamageMultiplier;
                     Debug.Log($"Current attack is dealing {attackDamage} damage");
                     attackAoE = attackType[comboCounter].areaOfEffect;
-                    HandleAreaOfEffectDamage(attackAoE, direction, "");
                     comboCounter++;
                     lastClickedTime = Time.time;
                     if (comboCounter >= attackType.Count)
@@ -369,6 +374,12 @@ namespace Heroes.Teo
             {
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position + direction, sphereSize, enemyLayerMask);
                 Debug.Log("Amount of colliders hit: " + hitColliders.Length);
+                if (vfx == "ultimateSpear")
+                {
+                    _spearRain.LaunchUltimateTeo(transform.position + direction);
+                    
+                    
+                }
                 foreach (Collider collider in hitColliders)
                 {
                     if (collider.gameObject.CompareTag("Enemy"))
@@ -401,7 +412,7 @@ namespace Heroes.Teo
                     if (spearObject == null)
                     {
                         spearObject = PhotonNetwork.Instantiate("Assets/Resources/Objects/TeoSpear.prefab", transform.position, transform.rotation);
-
+                        _spearRain.rainSpear.Play();
                     }
                     Spear spear = spearObject.GetComponent<Spear>();
                     //do anything you want before
