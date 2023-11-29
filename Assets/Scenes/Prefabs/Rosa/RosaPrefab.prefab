@@ -598,6 +598,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _heroStats: {fileID: 11400000, guid: a8da2c3016204a14a9ef5bdb2da1433b, type: 2}
+  _photonView: {fileID: 0}
   primaryAbilityCooldownImage: {fileID: 1830166635286294754}
   secondaryAbilityCooldownImage: {fileID: 6715193714970095681}
   ultimateAbilityCooldownImage: {fileID: 965102110358838576}
@@ -656,7 +657,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 2826736688382291076}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -689,6 +691,8 @@ MonoBehaviour:
   newModel: {fileID: 547834242385734641}
   oldModel: {fileID: 2069929783146735771}
   delay: 5
+  transformationVFXPrefab: {fileID: 0}
+  _photonView: {fileID: 0}
 --- !u!1 &6895434999977517083
 GameObject:
   m_ObjectHideFlags: 0
@@ -2767,6 +2771,10 @@ PrefabInstance:
       propertyPath: m_FillAmount
       value: 0.145
       objectReference: {fileID: 0}
+    - target: {fileID: 8602397770998730820, guid: 9b0220e3a73d45948979e228640feb62, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: d3351e42a1197cb44bdb0fbba848231d, type: 3}
     - target: {fileID: 8604988442941950423, guid: 9b0220e3a73d45948979e228640feb62, type: 3}
       propertyPath: m_Color.b
       value: 0.2830189
