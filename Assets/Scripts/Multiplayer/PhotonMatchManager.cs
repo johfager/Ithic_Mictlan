@@ -193,28 +193,35 @@ public class PhotonMatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 // EndGame();
             }
         }
+        
+        public void StartGame()
+        {
+            gameState = GameStates.Playing;
+        }
 
-        // private void EndGame()
-        // {
-        //     // Set the game state to end game
-        //     gameState = GameStates.EndGame;
+        public void EndGame()
+        {
+            Debug.Log("AHHHHHHH");
+            gameState = GameStates.EndGame;
+        /*     // Set the game state to end game
+             gameState = GameStates.EndGame;
             
-        //     // Stops automatic player instantiation
-        //     FindObjectOfType<PhotonSpawnPlayer>().Instance.StopAllCoroutines();
+             // Stops automatic player instantiation
+            FindObjectOfType<PhotonSpawnPlayer>().Instance.StopAllCoroutines();
             
-        //     // Release the cursor
-        //     Cursor.lockState = CursorLockMode.None;
-        //     Cursor.visible = true;
+            // Release the cursor
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             
-        //     if (PhotonNetwork.IsMasterClient)
-        //     {
-        //         // Wait for the end of the game and then go mack to the main menu
-        //         StartCoroutine(CorBackToMainMenu());
+            if (PhotonNetwork.IsMasterClient)
+            {
+                // Wait for the end of the game and then go mack to the main menu
+                StartCoroutine(CorBackToMainMenu());
                 
-        //         // Destroy all the multiplayer objects
-        //         PhotonNetwork.DestroyAll();
-        //     }
-        // }
+                // Destroy all the multiplayer objects
+                PhotonNetwork.DestroyAll();
+            }*/
+        }
 
     public int GetActorID(string playerNickName)
         {

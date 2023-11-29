@@ -42,6 +42,7 @@ namespace Heroes.Teo
         public Slider progressBar; 
 
         private bool firstClick = true;
+
         
     
         //For hitboxes
@@ -53,6 +54,8 @@ namespace Heroes.Teo
         [SerializeField] HeroStats _heroStats;
     
         [SerializeField] private PhotonView _photonView;
+
+        private SpearRain _spearRain;
 
         
         private float basicAttackCooldown = 0.0f;
@@ -99,7 +102,8 @@ namespace Heroes.Teo
             originalAnim = anim.runtimeAnimatorController;
         
             playerManager = GetComponentInParent<PlayerManager>(); // Get the PlayerManager reference
-        
+            _spearRain = GetComponent<SpearRain>();
+
         }
     
         private void InitializeCooldownUI(Image cooldownImage, ref TextMeshProUGUI cooldownText)
@@ -151,7 +155,8 @@ namespace Heroes.Teo
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            
+
+            spearPrefab.transform.localScale = new Vector3(0.03170448f, 1.282999f, 0.03170448f);
             anim.speed = 1;
             progressBar.value = 0f;
 
@@ -206,6 +211,16 @@ namespace Heroes.Teo
             
             _currentAttackDirection = Vector3.zero;
             StartAttackAnimation(currentAttack, ultimateAbility, _currentAttackDirection);
+
+            StartCoroutine(WaitForUltimateAnimation());
+        }
+
+        private IEnumerator WaitForUltimateAnimation()
+        {
+            yield return new WaitForSeconds(2f);
+            IsInCombatMode = true;
+            HandleAreaOfEffectDamage(10, transform.forward * 10, "ultimateSpear");
+            IsInCombatMode = false;
         }
 
         private void UpdateCooldowns()
@@ -230,6 +245,7 @@ namespace Heroes.Teo
                         currentAttack = "PrimaryAttack";
                         basicAttackCooldown = 0f;
                         _currentAttackDirection = transform.forward * 2;
+                        spearPrefab.transform.localScale = new Vector3(0.01585224f, 0.6414995f, 0.01585224f);
                        StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection);
                     }
                 }
@@ -319,7 +335,6 @@ namespace Heroes.Teo
                     attackDamage = attackType[comboCounter].damage * attackDamageMultiplier;
                     Debug.Log($"Current attack is dealing {attackDamage} damage");
                     attackAoE = attackType[comboCounter].areaOfEffect;
-                    HandleAreaOfEffectDamage(attackAoE, direction);
                     comboCounter++;
                     lastClickedTime = Time.time;
                     if (comboCounter >= attackType.Count)
@@ -342,51 +357,36 @@ namespace Heroes.Teo
             Gizmos.DrawWireSphere(transform.position + _currentAttackDirection, attackAoE);
         }
         
-        public void TriggerAreaOfEffectDamageForPrimaryAbility()
+        public void TriggerSpeedForSecondaryAbility()
         {
             if (_photonView.IsMine)
             {
-                Debug.Log("Inside TriggerAreaOfEffectDamageForPrimaryAbility");
-                IsInCombatMode = true;
-                HandleAreaOfEffectDamage(primaryAbility[0].areaOfEffect, _currentAttackDirection);
-                IsInCombatMode = false;
+                _heroStats.movementAttributes.movementSpeed = 20;
+                StartCoroutine(WaitForSlow());
+                Debug.Log("RAPIDIN");
             }
         }
 
-
-        public void TriggerTauntForSecondaryAbility()
+        public IEnumerator WaitForSlow()
         {
-            if (_photonView.IsMine)
-            {
-                Debug.Log("Triggering Taunt for Maira");
-                IsInCombatMode = true;
-                Collider[] hitColliders = Physics.OverlapSphere(transform.position + _currentAttackDirection,
-                    secondaryAbility[0].areaOfEffect);
-                foreach (Collider collider in hitColliders)
-                {
-                    if (collider.gameObject.CompareTag("Enemy"))
-                    {
-                        // TODO Refactor this to general enemy Script
-                        ChanequeEnemy chanequeEnemy = collider.GetComponent<ChanequeEnemy>();
-
-                        if (chanequeEnemy != null)
-                        {
-                            chanequeEnemy.ChangeTarget(transform);
-                        }
-                    }
-                }
-
-                IsInCombatMode = false;
-            }
+            yield return new WaitForSeconds(5f);
+            _heroStats.movementAttributes.movementSpeed = 10;
+            
         }
         
         //We might want a specific function for each ability, but for now this will do. // Jojo
-        private void HandleAreaOfEffectDamage(float sphereSize, Vector3 direction)
+        private void HandleAreaOfEffectDamage(float sphereSize, Vector3 direction, string vfx)
         {
             if (IsInCombatMode)
             {
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position + direction, sphereSize, enemyLayerMask);
                 Debug.Log("Amount of colliders hit: " + hitColliders.Length);
+                if (vfx == "ultimateSpear")
+                {
+                    _spearRain.LaunchUltimateTeo(transform.position + direction);
+                    
+                    
+                }
                 foreach (Collider collider in hitColliders)
                 {
                     if (collider.gameObject.CompareTag("Enemy"))
@@ -419,7 +419,7 @@ namespace Heroes.Teo
                     if (spearObject == null)
                     {
                         spearObject = PhotonNetwork.Instantiate("Assets/Resources/Objects/TeoSpear.prefab", transform.position, transform.rotation);
-
+                        _spearRain.rainSpear.Play();
                     }
                     Spear spear = spearObject.GetComponent<Spear>();
                     //do anything you want before
