@@ -217,6 +217,10 @@ public class UIMenuController : MonoBehaviour
         for(int i = 1; i < buttonList.Length; i++)
         {
             buttonList[i].interactable = false;
+            if(i == 4)
+            {
+                buttonList[i].interactable = true;
+            }
         }
         
     } 

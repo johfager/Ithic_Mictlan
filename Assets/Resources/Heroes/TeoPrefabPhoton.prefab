@@ -940,6 +940,7 @@ MonoBehaviour:
   uiManager: {fileID: 7924237639277081509}
   characterType: 0
   photonView: {fileID: 5343854590293816274}
+  photonMatchManager: {fileID: 0}
 --- !u!95 &8530352118184263130
 Animator:
   serializedVersion: 5
