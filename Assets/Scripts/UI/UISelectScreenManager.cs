@@ -95,6 +95,7 @@ public class UISelectScreenManager : MonoBehaviour
     {
         xoloSpawner.SetSpawns();
         photonView.RPC("HideSelectScreen", RpcTarget.All);
+        photonMatchManager.StartGame();
     }
 
     public void SelectCharacter()
