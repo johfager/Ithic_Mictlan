@@ -15,5 +15,7 @@ public class PlayerSprite : MonoBehaviour
     public void SelectCharacter() {
         UISelectScreenManager.instance.SetCharacterInfo(playerDataScriptableObject.baseAttributes.characterName,
         playerDataScriptableObject.baseAttributes.description);
+
+        
     } 
 }
