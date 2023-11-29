@@ -17,9 +17,11 @@ public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
     private const int PoolSize = 10;
     // Photon variables
     [SerializeField] private PhotonView photonView;
+    [SerializeField] private PhotonMatchManager photonMatchManager;
 
     private void Start()
     {
+        photonMatchManager = GameObject.FindWithTag("Photon").GetComponent<PhotonMatchManager>();
         InitializeHealth(maxHealth);
     }
 
@@ -35,46 +37,24 @@ public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
 
     public void HealPlayer(float damage)
     {
-        if(photonView.IsMine)
-        {
-            currentHealth += damage;
-            if (currentHealth > maxHealth)
-            {
-                currentHealth = maxHealth;
-                Debug.Log("Health was maxed out");
-            }
-
-            UpdateHealthUI();
-
-            // Sync health across the network
-            photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);  
-        }
+        photonView.RPC("RPCHealPlayer", RpcTarget.All, damage);
     }
 
     public void TakeDamage(float damage)
     {
-        if(photonView.IsMine)
-        {
-            Debug.Log($"{gameObject.name} took {damage} damage");
-            currentHealth -= damage;
-            UpdateHealthUI();
-
-            // Sync health across the network
-            photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);
-
-            if (currentHealth <= 0)
-            {
-                HandleDeath();
-            }
-        }
+        photonView.RPC("RPCTakeDamagePlayer", RpcTarget.All, damage);
     }
 
     private void UpdateHealthUI()
     {
-        if (uiManager != null)
+        if(photonView.IsMine)
         {
-            uiManager.UpdateHealth(currentHealth, characterType);
+            if (uiManager != null)
+            {
+                uiManager.UpdateHealth(currentHealth, characterType);
+            }
         }
+
     }
 
     private void HandleDeath()
@@ -144,6 +124,48 @@ public class HealthSystem : MonoBehaviourPunCallbacks, IPunObservable
             UpdateHealthUI();
         }
     }
+
+    [PunRPC]
+    private void RPCHealPlayer(float damage)
+    {
+        if(photonView.IsMine)
+        {
+            currentHealth += damage;
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+                Debug.Log("Health was maxed out");
+            }
+
+            UpdateHealthUI();
+            photonMatchManager.ChangeStatSent(PhotonNetwork.LocalPlayer.ActorNumber, 1, (int)currentHealth);
+
+
+            // Sync health across the network
+            //photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);  
+        }
+    }
+
+    [PunRPC]
+    private void RPCTakeDamagePlayer(float damage)
+    {
+        if(photonView.IsMine)
+        {
+            Debug.Log($"{gameObject.name} took {damage} damage");
+            currentHealth -= damage;
+            UpdateHealthUI();
+
+            // Sync health across the network
+            //photonView.RPC("SyncHealth", RpcTarget.OthersBuffered, currentHealth);
+            photonMatchManager.ChangeStatSent(PhotonNetwork.LocalPlayer.ActorNumber, 1, (int)damage);
+
+            if (currentHealth <= 0)
+            {
+                HandleDeath();
+            }
+        }
+    }
+
 
     // IPunObservable implementation for custom synchronization (optional).
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
