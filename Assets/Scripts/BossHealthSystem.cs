@@ -1,4 +1,5 @@
 using System.Collections;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,13 +20,14 @@ public class BossHealthSystem : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            StartCoroutine(Die());
         }
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
         // Implement death logic here, such as destroying the GameObject
-        Destroy(gameObject);
+        yield return new WaitForSeconds(10f);
+        PhotonNetwork.Destroy(gameObject);
     }
 }

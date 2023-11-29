@@ -45,6 +45,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private float upsideDownWorldCooldown = 0.0f;
     private float infernalScreechCooldown = 0.0f;
     private float soulDevourerCooldown = 0.0f;
+    // DEATH STUFFF
+    [SerializeField] private PhotonMatchManager photonMatchManager;
 
     void Start()
     {
@@ -62,6 +64,7 @@ public class CamazotzBehaviour2 : MonoBehaviour
         soulEaterVFX = GetComponent<SoulEaterVFX>();
         airBulletVFX = GetComponent<AirBulletVFX>();
         CamazotzAgentSetter();
+        photonMatchManager = GameObject.FindWithTag("Photon").GetComponent<PhotonMatchManager>();
     }
 
     void CamazotzAgentSetter()
@@ -259,11 +262,11 @@ public class CamazotzBehaviour2 : MonoBehaviour
 
         if (vfx == "LargeBasic")
         {
-            airBulletVFX.LaunchAirBullet(transform.position, new Vector3(1f, 1f, 1f), 25);
+            airBulletVFX.LaunchAirBullet(transform.position, new Vector3(1f, 1f, 1f), 1.1f, 25);
         }
         else if (vfx == "InfernalScreech")
         {
-            airBulletVFX.LaunchAirBullet(transform.position, new Vector3(3f, 3f, 3f), 40);
+            airBulletVFX.LaunchAirBullet(transform.position, new Vector3(3f, 3f, 3f), 3.1f, 40);
         }
 
         yield return new WaitForSeconds(delay - preDelay);
@@ -339,9 +342,8 @@ public class CamazotzBehaviour2 : MonoBehaviour
             currentAnimationBool = "LongRange";
             animator.SetBool(currentAnimationBool, true);
             isInMidAttack = true;
-            airBulletVFX.LaunchAirBullet(transform.position, new Vector3(1f, 1f, 1f), 25);
+            StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, "LargeBasic", .5f));
         }
-        StartCoroutine(ResetBooleanParametersAfterDelay(currentAnimationBool, "LargeBasic", .5f));
         AttacksSoftReset();
         PhaseChecker(attackIndex);
     }
@@ -707,7 +709,10 @@ public class CamazotzBehaviour2 : MonoBehaviour
     private void HandleCamazotzDeathState()
     {
         Debug.Log("Camazotz Death");
-        animator.SetBool("Death", true);
+        currentAnimationBool = "Death";
+        animator.SetBool(currentAnimationBool, true);
+        ResetBooleanParametersAfterDelay(currentAnimationBool, "none", 2f);
+        photonMatchManager.EndGame();
     }
 
     private void ChangeState(State newState)

@@ -10,6 +10,7 @@ namespace Heroes.Maira
         public HeroStats heroStats;
         private bool isMoving;
         [SerializeField] private PhotonView photonView;
+        [SerializeField] private GameObject canvas;
 
         void Start()
         {
@@ -43,6 +44,13 @@ namespace Heroes.Maira
                 heroesCombatScript.HandleAttackStateMachine();
             }
 
+        }
+        public void ActivationUI()
+        {
+            if (photonView.IsMine)
+            {
+                canvas.SetActive(true);
+            }
         }
     }
 }

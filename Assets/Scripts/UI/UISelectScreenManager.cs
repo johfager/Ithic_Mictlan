@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Heroes.Maira;
 using Heroes.Rosa;
+using Heroes.Teo;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
@@ -20,6 +21,8 @@ public class UISelectScreenManager : MonoBehaviour
     [SerializeField] private Button[] characterButtons;
     [SerializeField] private PhotonView photonView;
     [SerializeField] private Spawner xoloSpawner;
+    [SerializeField] private Sprite[] normalSprites;
+    [SerializeField] private Sprite[] selectedSprites;
 
     private int HeroID;
     private int playersReady;
@@ -68,26 +71,31 @@ public class UISelectScreenManager : MonoBehaviour
         if(name == "Maira")
         {
             HeroID = 0;
+            ChangeSelectedSprite(0);
         }
         if(name == "Teo")
         {
             HeroID = 1;
+            ChangeSelectedSprite(1);
         }
         if(name == "Ignacio")
         {
             HeroID = 2;
+            ChangeSelectedSprite(2);
         }
         if(name == "Rosa")
         {
             HeroID = 3;
+            ChangeSelectedSprite(3);
         }
 
     }
 
     public void StartMatch()
     {
-        xoloSpawner.SetSpwans(GameObject.Find("Rosa"));
+        xoloSpawner.SetSpawns();
         photonView.RPC("HideSelectScreen", RpcTarget.All);
+        photonMatchManager.StartGame();
     }
 
     public void SelectCharacter()
@@ -119,6 +127,9 @@ public class UISelectScreenManager : MonoBehaviour
             HeroesCombatMaira combatScriptMaira = target[i].GetComponent<HeroesCombatMaira>();
             PlayerManagerMairaPhoton managerScriptMaira = target[i].GetComponent<PlayerManagerMairaPhoton>();
             
+            HeroesCombatTeo combatScriptTeo = target[i].GetComponent<HeroesCombatTeo>();
+            PlayerManagerTeo managerScriptTeo = target[i].GetComponent<PlayerManagerTeo>();
+            
             // For ROSA
             if(combatScriptRosa != null && managerScriptRosa != null)
             {
@@ -126,6 +137,8 @@ public class UISelectScreenManager : MonoBehaviour
                 target[i].GetComponent<HeroesCombatRosa>().enabled = true;
                 target[i].GetComponent<PlayerMovement>().enabled = true;
                 target[i].GetComponent<HealthSystem>().enabled = true;
+                target[i].GetComponent<PlayerManagerRosaPhoton>().ActivationUI();
+
             } 
             else if(combatScriptMaira != null && managerScriptMaira != null) 
             {
@@ -133,6 +146,16 @@ public class UISelectScreenManager : MonoBehaviour
                 target[i].GetComponent<HeroesCombatMaira>().enabled = true;
                 target[i].GetComponent<PlayerMovement>().enabled = true;
                 target[i].GetComponent<HealthSystem>().enabled = true;
+                target[i].GetComponent<PlayerManagerMairaPhoton>().ActivationUI();
+
+            }
+            else if(combatScriptTeo != null && managerScriptTeo != null) 
+            {
+                target[i].GetComponent<PlayerManagerTeo>().enabled = true;
+                target[i].GetComponent<HeroesCombatTeo>().enabled = true;
+                target[i].GetComponent<PlayerMovement>().enabled = true;
+                target[i].GetComponent<HealthSystem>().enabled = true;
+                target[i].GetComponent<PlayerManagerTeo>().ActivationUI();
 
             }
             else {
@@ -177,5 +200,13 @@ public class UISelectScreenManager : MonoBehaviour
                 startGameButton.interactable = true;
             }
         }
+    }
+
+    public void ChangeSelectedSprite(int id){
+        for (int i = 0; i < characterButtons.Length; i++)
+        {
+            characterButtons[i].GetComponent<Image>().sprite = normalSprites[i];
+        }
+        characterButtons[id].GetComponent<Image>().sprite = selectedSprites[id];
     }
 }

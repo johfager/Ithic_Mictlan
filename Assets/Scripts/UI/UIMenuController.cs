@@ -10,7 +10,9 @@ using UnityEngine.EventSystems;
 public class UIMenuController : MonoBehaviour
 {
     bool canMove = true;
-    float degrees = 0;
+    float degreesMainMenu = 0;
+
+    float degreesPlayOptions = 0;
 
     // Canvas Gropus
     [Header("All canvas groups in the main menu")]
@@ -41,6 +43,9 @@ public class UIMenuController : MonoBehaviour
     [SerializeField] private GameObject startGameButton;
     [SerializeField] private GameObject mainMenuButtonsGroup;
     [SerializeField] private GameObject playOptionsButtonsGroup;
+    [SerializeField] private Button[] buttonList;
+
+
 
 
 
@@ -200,60 +205,104 @@ public class UIMenuController : MonoBehaviour
         if(inputField == "roomNameInput")
         {
             roomNameInput.text = "";
-        }
+        }   
         else if(inputField == "nickNameInput")
         {
             nickNameInput.text = "";
         }
     }
 
+     
+     private void Awake() {
+        for(int i = 1; i < buttonList.Length; i++)
+        {
+            buttonList[i].interactable = false;
+        }
+        
+    } 
+
     public void ChangeButtonSelectionMainMenu()
     {
 
-        if (Input.GetKeyUp(KeyCode.UpArrow) && degrees < 90f)
+        if (Input.GetKeyUp(KeyCode.UpArrow) && degreesMainMenu < 90f)
         {
             canMove = false;
-            LeanTween.rotateAround(mainMenuButtonsGroup, Vector3.forward, 45, .5f).setOnComplete(() => {canMove = true;});
-            degrees += 45;
+            LeanTween.rotateAround(mainMenuButtonsGroup, Vector3.forward, 45, .5f).setOnComplete(() => {canMove = true; EnableButtonInPosition();});
+            degreesMainMenu += 45;
         }
-        else if (Input.GetKeyUp(KeyCode.DownArrow) && degrees > -45f)
+        else if (Input.GetKeyUp(KeyCode.DownArrow) && degreesMainMenu > -45f)
         {
             canMove = false;
-            LeanTween.rotateAround(mainMenuButtonsGroup, Vector3.forward, -45, .5f).setOnComplete(() => {canMove = true;});
-            degrees -= 45;
+            LeanTween.rotateAround(mainMenuButtonsGroup, Vector3.forward, -45, .5f).setOnComplete(() => {canMove = true; EnableButtonInPosition();});
+            degreesMainMenu -= 45;
         }
         
     }
        public void ChangeButtonSelectionPlayOptions()
     {
 
-        if (Input.GetKeyUp(KeyCode.UpArrow) && degrees < 45f)
+        if (Input.GetKeyUp(KeyCode.UpArrow) && degreesPlayOptions < 45f)
         {
             canMove = false;
-            LeanTween.rotateAround(playOptionsButtonsGroup, Vector3.forward, 45, .5f).setOnComplete(() => {canMove = true;});
-            degrees += 45;
+            LeanTween.rotateAround(playOptionsButtonsGroup, Vector3.forward, 45, .5f).setOnComplete(() => {canMove = true; EnableButtonInPosition();});
+            degreesPlayOptions += 45;
         }
-        else if (Input.GetKeyUp(KeyCode.DownArrow) && degrees > -45f)
+        else if (Input.GetKeyUp(KeyCode.DownArrow) && degreesPlayOptions > -45f)
         {
             canMove = false;
-            LeanTween.rotateAround(playOptionsButtonsGroup, Vector3.forward, -45, .5f).setOnComplete(() => {canMove = true;});
-            degrees -= 45;
+            LeanTween.rotateAround(playOptionsButtonsGroup, Vector3.forward, -45, .5f).setOnComplete(() => {canMove = true; EnableButtonInPosition();});
+            degreesPlayOptions -= 45;
         }
         
+    }
+
+    public void EnableButtonInPosition()
+    {
+        for(int i = 0; i < buttonList.Length; i++)
+        {
+            buttonList[i].interactable = false;
+        }
+
+        //mainMenuButtonsGroup
+        if(degreesMainMenu == 0)
+        {
+            buttonList[0].interactable = true;
+        }
+        else if(degreesMainMenu == 45)
+        {
+            buttonList[1].interactable = true;
+        }
+        else if(degreesMainMenu == 90)
+        {
+            buttonList[3].interactable = true;
+        }
+        else if(degreesMainMenu == -45)
+        {
+            buttonList[2].interactable = true;
+        }
+        //playOptionsButtonsGroup
+        if(degreesPlayOptions == 0)
+        {
+            buttonList[4].interactable = true;
+        }
+        else if(degreesPlayOptions == 45)
+        {
+            buttonList[6].interactable = true;
+        }
+        else if(degreesPlayOptions == -45)
+        {
+            buttonList[5].interactable = true;
+        }
     }
 
     private void Update() {
 
         if(canMove == true && GetCanvasGroupAlpha(mainMenuPanel)){
-            Debug.Log("estoy en main menu");
             ChangeButtonSelectionMainMenu();
         }
 
         if(canMove == true && GetCanvasGroupAlpha(playOptionsPanel)){
-            Debug.Log("estoy en play options");
             ChangeButtonSelectionPlayOptions();
         }
-        
-        
     }
 }

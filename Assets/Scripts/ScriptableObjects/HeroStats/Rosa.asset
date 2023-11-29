@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
     characterName: Rosa
-    description: "Descripci\xF3n de Rosa"
+    description: "Una joven apasionada por los libros con una determinaci\xF3n inigualable.
+      Rosa utiliza poderes oscuros amplificados por sus emociones en servicio del
+      quinto sol para defender todo lo que ama. (Antepasada: Xochizuatl, \u201CLa
+      bruja emplumada\u201D)"
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1

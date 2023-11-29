@@ -201,8 +201,12 @@ namespace Heroes.Maira
                         currentAttack = "PrimaryAttack";
                         basicAttackCooldown = 0f;
                         _currentAttackDirection = transform.forward * 2;
+<<<<<<< HEAD
                        StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection);
                        mairaSounds.PlayBasicAttackVoice();
+=======
+                    StartAttackAnimation(currentAttack, primaryAttack, _currentAttackDirection);
+>>>>>>> 159cd433c9f933750b46f17f786803cbe36ce6de
                     }
                 }
                 else if (Input.GetMouseButtonDown(1))
@@ -240,7 +244,7 @@ namespace Heroes.Maira
         
         private void HandleXoloCatch()
         {
-            Collider[] xolos = Physics.OverlapSphere(transform.position, 1.5f);
+            Collider[] xolos = Physics.OverlapSphere(transform.position, 2f);
 
             if(xolos != null)
             {
@@ -248,9 +252,9 @@ namespace Heroes.Maira
                 {
                     if(xolo.CompareTag("Xolo"))
                     {
-                        if(xolo.transform.GetChild(0).GetComponent<XoloController>() != null)
+                        if(xolo.GetComponent<XoloitzcuintleController>() != null)
                         {
-                            xolo.transform.GetChild(0).GetComponent<XoloController>().CatchXolo();
+                            xolo.GetComponent<XoloitzcuintleController>().SetWasCatched();
                         }
 
                     }

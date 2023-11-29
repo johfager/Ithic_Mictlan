@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
     characterName: Maira
-    description: "Descripci\xF3n de Maira"
+    description: "Una chica cuya fortaleza f\xEDsica y mental no tienen comparaci\xF3n,
+      dentro y fuera del cuadril\xE1tero. Maira fue bendecida con el esp\xEDritu
+      del jaguar para proteger al quinto sol y a sus amigos. (Antepasada: Aymara,
+      \u201CLa fuerza de la selva\u201D)"
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1

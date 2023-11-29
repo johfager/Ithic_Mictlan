@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:HeroManager.Scripts:HeroManagerStats
   baseAttributes:
     characterName: Ignacio
-    description: "Descripci\xF3n de Ignacio"
+    description: "Un joven servicial y simp\xE1tico, que siempre quiere ayudar a
+      los dem\xE1s. Como elegido del sol y la luna, tiene el poder de hacer que la
+      vida florezca o se marchite a su voluntad. (Antepasado: Icniuhtli, \u201CEl
+      juez de las estrellas\u201D)"
   movementAttributes:
     movementSpeed: 10
     gravitySpeed: 39.1

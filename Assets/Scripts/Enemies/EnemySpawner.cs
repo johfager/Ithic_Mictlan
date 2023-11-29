@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float radioTrigger = 4f;
     [SerializeField] private bool active = true;
     [SerializeField] private bool playerInsideTrigger = false;
+    [SerializeField] private PhotonView photonview;
 
     private SphereCollider trigger;
 
@@ -24,9 +25,12 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerInsideTrigger && active)
+        if(photonview.IsMine)
         {
-            SpawnEnemies();
+            if (playerInsideTrigger && active)
+            {
+                SpawnEnemies();
+            }
         }
     }
 
