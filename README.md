@@ -1,4 +1,4 @@
-Ihtic Mictlan: Between Life & Death
+# Ihtic Mictlan: Between Life & Death
 
 A 3D co-op roguelike inspired by Aztec mythology, developed in Unity during an exchange semester at Tec de Monterrey (TecMX).
 
